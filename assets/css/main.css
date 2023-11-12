@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.width-cal {
+  width: calc(100vw - 75px);
+  padding-left: 250px !important;
+}
+.container-main {
+  padding-top: 36px !important;
+}
+.container-main {
+  padding-top: 50px !important;
+}
+a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+input[type='datetime-local']::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0px;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  top: 0px;
+  width: auto;
+}
+input[type='date']::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0px;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  top: 0px;
+  width: auto;
+}
+.router-link-active,
+.router-link-exact-active {
+  background-color: #51b462;
+  color: white !important;
+  padding: 5px 10px 5px 8px !important;
+  border-radius: 8px;
+  font-weight: semibold;
+}
+.hover-image .delete-image {
+  display: none !important;
+}
+.hover-image:hover .delete-image {
+  display: block !important;
+}
