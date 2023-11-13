@@ -2,18 +2,24 @@
   <div>
     <div class="tw-space-y-2">
       <v-text-field
-        v-model="form.name"
-        label="อาชีพ"
-        variant="outlined"></v-text-field>
+        v-model.trim="form.label"
+        label="ชื่ออาชีพ(ใช้สำหรับแสดงบนเว็บ)"
+        variant="outlined" />
+      <v-text-field
+        v-model.trim="form.value"
+        label="ชื่ออาชีพ(ใช้สำหรับในระบบ ห้ามเว้นวรรค)"
+        variant="outlined" />
       <v-autocomplete
+        chips
+        multiple
         v-model="form.category"
         label="สายงาน"
-        variant="outlined"></v-autocomplete>
+        variant="outlined" />
       <v-textarea
         v-model="form.shortDesc"
         label="คำอธิบายสั้น"
         variant="outlined" />
-      <v-textarea v-model-="form.desc" label="คำอธิบาย" variant="outlined" />
+      <v-textarea v-model="form.desc" label="คำอธิบาย" variant="outlined" />
       <div class="tw-flex tw-justify-end">
         <div
           class="tw-bg-[#51b462] tw-px-8 tw-py-2 tw-text-white tw-rounded-md tw-cursor-pointer">
@@ -29,8 +35,9 @@ export default {
   data() {
     return {
       form: {
-        name: '',
-        category: '',
+        label: '',
+        value: '',
+        category: [],
         shortDesc: '',
         desc: '',
       },
