@@ -2,15 +2,19 @@
   <div>
     <div class="tw-space-y-2">
       <v-text-field
-        v-model.trim="form.name"
-        label="สายงาน"
-        variant="outlined"></v-text-field>
-      <div>
+        v-model.trim="form.label"
+        label="ชื่อทักษะ(ใช้สำหรับแสดงบนเว็บ)"
+        variant="outlined" />
+      <v-text-field
+        v-model.trim="form.value"
+        label="ชื่อทักษะ(ใช้สำหรับในระบบ ห้ามเว้นวรรค)"
+        variant="outlined" />
+      <div class="tw-pb-4">
         <div v-if="checkImage()">
           <label for="upload-image" class="tw-cursor-pointer">
             <div
               class="tw-w-full tw-h-40 tw-border-2 tw-flex tw-justify-center tw-items-center tw-border-dotted tw-border-black tw-bg-[#F4F4F4] tw-font-semibold tw-text-[#626262]">
-              อัปโหลดรูปภาพ
+              อัปโหลดไอคอนทักษะ
             </div>
           </label>
           <input
@@ -31,9 +35,25 @@
           </div>
         </div>
       </div>
-      <div class="tw-flex tw-justify-end tw-pt-4">
+      <v-autocomplete
+        chips
+        mulitple
+        :items="skillLevel"
+        item-title="label"
+        item-value="value"
+        v-model="form.level"
+        label="ระดับทักษะ"
+        variant="outlined" />
+      <v-autocomplete
+        chips
+        multiple
+        v-model="form.jobs"
+        label="อาชีพ"
+        variant="outlined" />
+      <v-textarea v-model="form.desc" label="คำอธิบาย" variant="outlined" />
+
+      <div class="tw-flex tw-justify-end">
         <div
-          @click="setForm()"
           class="tw-bg-[#51b462] tw-px-8 tw-py-2 tw-text-white tw-rounded-md tw-cursor-pointer">
           Create
         </div>
@@ -43,17 +63,31 @@
 </template>
 
 <script>
-import FirebaseProvider from '~/resources/FirebaseProvider'
-
-const FirebaseService = new FirebaseProvider()
-
 export default {
   data() {
     return {
       form: {
-        name: '',
+        label: '',
+        value: '',
+        level: [],
+        jobs: [],
+        desc: '',
         image: null,
       },
+      skillLevel: [
+        {
+          label: 'Basic',
+          value: 'basic',
+        },
+        {
+          label: 'Intermediate',
+          value: 'intermediate',
+        },
+        {
+          label: 'Advance',
+          value: 'advence',
+        },
+      ],
       previewImage: null,
     }
   },
@@ -71,7 +105,7 @@ export default {
       this.form.image = null
     },
     async setForm() {
-      const urlImage = await this.uploadFile(this.form.image, this.form.name)
+      const urlImage = await this.uploadFile(this.form.image, this.form.value)
       console.log(urlImage)
     },
     async uploadFile(file, name) {
@@ -84,10 +118,8 @@ export default {
         return file
       }
 
-      return await FirebaseService.uploadFile(`category/${name}`, file)
+      return await FirebaseService.uploadFile(`skill/${name}`, file)
     },
   },
 }
 </script>
-
-<style lang="scss" scoped></style>
