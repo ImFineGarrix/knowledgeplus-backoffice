@@ -2,7 +2,7 @@
   <div>
     <HeaderBack title="Create Category" link="/categories" />
     <div class="tw-my-8">
-      <FormCategory />
+      <FormCategory actionButton="Create" />
     </div>
   </div>
 </template>

@@ -55,7 +55,7 @@
       <div class="tw-flex tw-justify-end">
         <div
           class="tw-bg-[#51b462] tw-px-8 tw-py-2 tw-text-white tw-rounded-md tw-cursor-pointer">
-          Create
+          {{ actionButton }}
         </div>
       </div>
     </div>
@@ -64,6 +64,16 @@
 
 <script>
 export default {
+  props: {
+    idParams: {
+      type: String,
+      default: () => '',
+    },
+    actionButton: {
+      type: String,
+      default: () => '',
+    },
+  },
   data() {
     return {
       form: {

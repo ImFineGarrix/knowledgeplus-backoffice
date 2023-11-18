@@ -43,6 +43,10 @@ export default {
           name: 'Course',
           link: '/courses',
         },
+        {
+          name: 'Admin',
+          link: '/admins',
+        },
       ],
     }
   },
