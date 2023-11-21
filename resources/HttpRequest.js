@@ -1,11 +1,12 @@
 import axios from 'axios';
 import humps from 'humps';
+import { useRuntimeConfig } from 'nuxt/app';
 
 class HttpRequest {
   constructor() {
+    const config = useRuntimeConfig()
     this.axiosInstance = axios.create({
-      baseURL: 'http://localhost:8081/api',
-      // baseURL: process.env.NUXT_ENV_API_URL,
+      baseURL: config.public.apiBaseUrl,
       timeout: 120000,
       headers: {
         'Content-Type': 'application/json',
