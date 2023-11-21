@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-navigation-drawer permanent width="200">
-      <template v-solt:prepend>
-        <div class="tw-flex tw-justify-center tw-items-center tw-mt-6 tw-mb-1">
+      <template v-slot:prepend>
+        <div class="tw-flex tw-justify-center tw-items-center tw-mt-10 tw-mb-1">
           <IconLogo class="tw-w-36" />
         </div>
       </template>
