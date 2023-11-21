@@ -1,18 +1,23 @@
 <template>
   <div>
-    <div class="tw-space-y-2">
+    <v-form ref="form" class="tw-space-y-4">
       <v-text-field
         v-model.trim="form.label"
-        label="ชื่ออาชีพ(ใช้สำหรับแสดงบนเว็บ)"
+        :rules="[required]"
+        label="ชื่ออาชีพ (ใช้สำหรับแสดงบนเว็บ)"
         variant="outlined" />
       <v-text-field
         v-model.trim="form.value"
-        label="ชื่ออาชีพ(ใช้สำหรับในระบบ ห้ามเว้นวรรค)"
+        :rules="[required]"
+        label="ชื่ออาชีพ (ใช้สำหรับในระบบ ห้ามเว้นวรรค)"
         variant="outlined" />
       <v-autocomplete
         chips
         multiple
         v-model="form.category"
+        :items="categories"
+        item-title="label"
+        item-value="categoryId"
         label="สายงาน"
         variant="outlined" />
       <v-textarea
@@ -22,15 +27,20 @@
       <v-textarea v-model="form.desc" label="คำอธิบาย" variant="outlined" />
       <div class="tw-flex tw-justify-end">
         <div
+          @click="setForm()"
           class="tw-bg-[#51b462] tw-px-8 tw-py-2 tw-text-white tw-rounded-md tw-cursor-pointer">
           {{ actionButton }}
         </div>
       </div>
-    </div>
+    </v-form>
   </div>
 </template>
 
 <script>
+import CategoryProvider from '@/resources/CategoryProvider'
+
+const CategoryService = new CategoryProvider()
+
 export default {
   props: {
     idParams: {
@@ -44,6 +54,7 @@ export default {
   },
   data() {
     return {
+      categories: [],
       form: {
         label: '',
         value: '',
@@ -51,7 +62,35 @@ export default {
         shortDesc: '',
         desc: '',
       },
+      required: (v) => !!v || 'THIS FIELD IS REQUIRED',
     }
+  },
+  mounted() {
+    this.getCategories()
+  },
+  methods: {
+    async getCategories() {
+      const data = await CategoryService.getCategory()
+      this.categories = JSON.parse(JSON.stringify(data.data))
+    },
+    async setForm() {
+      const valid = await this.$refs.form.validate()
+      if (valid) {
+        const form = {
+          ...this.form,
+          category: this.form.category.map((cate) => ({
+            categoryId: cate,
+          })),
+        }
+        this.$emit('create-update', form)
+      } else {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        })
+      }
+    },
   },
 }
 </script>

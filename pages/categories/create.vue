@@ -2,13 +2,38 @@
   <div>
     <HeaderBack title="Create Category" link="/categories" />
     <div class="tw-my-8">
-      <FormCategory actionButton="Create" />
+      <FormCategory actionButton="Create" @create-update="createCategory" />
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import CategoryProvider from '~/resources/CategoryProvider'
+import Swal from 'sweetalert2'
+
+const CategoryService = new CategoryProvider()
+
+export default {
+  methods: {
+    async createCategory(form) {
+      const status = await CategoryService.createCategory(form)
+      if (status.message === 'success') {
+        Swal.fire({
+          title: 'Create Category Success',
+          icon: 'success',
+        }).then(() => {
+          this.$router.push('/categories')
+        })
+      } else {
+        Swal.fire({
+          title: `Create Category Fail`,
+          text: `${status.status} - ${status.message}`,
+          icon: 'error',
+        })
+      }
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped></style>

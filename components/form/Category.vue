@@ -1,9 +1,15 @@
 <template>
   <div>
-    <div class="tw-space-y-2">
+    <v-form ref="form" class="tw-space-y-4">
       <v-text-field
-        v-model.trim="form.name"
-        label="สายงาน"
+        v-model.trim="form.label"
+        label="ชื่อสายงาน (ใช้สำหรับแสดงบนเว็บ)"
+        :rules="[required]"
+        variant="outlined"></v-text-field>
+      <v-text-field
+        v-model.trim="form.value"
+        label="ชื่อสายงาน (ใช้สำหรับในระบบ ห้ามเว้นวรรค)"
+        :rules="[required]"
         variant="outlined"></v-text-field>
       <div>
         <div v-if="checkImage()">
@@ -38,7 +44,7 @@
           {{ actionButton }}
         </div>
       </div>
-    </div>
+    </v-form>
   </div>
 </template>
 
@@ -61,10 +67,12 @@ export default {
   data() {
     return {
       form: {
-        name: '',
+        label: '',
+        value: '',
         image: null,
       },
       previewImage: null,
+      required: (v) => !!v || 'THIS FIELD IS REQUIRED',
     }
   },
   methods: {
@@ -81,8 +89,21 @@ export default {
       this.form.image = null
     },
     async setForm() {
-      const urlImage = await this.uploadFile(this.form.image, this.form.name)
-      console.log(urlImage)
+      const valid = await this.$refs.form.validate()
+      if (valid) {
+        const urlImage = await this.uploadFile(this.form.image, this.form.name)
+        const form = {
+          ...this.form,
+          imageUrl: urlImage,
+        }
+        this.$emit('create-update', form)
+      } else {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        })
+      }
     },
     async uploadFile(file, name) {
       if (!file) {

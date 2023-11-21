@@ -3,13 +3,12 @@ import humps from 'humps';
 
 class HttpRequest {
   constructor() {
-    // const token = getAuthToken()
     this.axiosInstance = axios.create({
-      baseURL: 'api backend',
+      baseURL: 'http://localhost:8081/api',
+      // baseURL: process.env.NUXT_ENV_API_URL,
       timeout: 120000,
       headers: {
         'Content-Type': 'application/json',
-        // [token.key]: token.value
       },
     });
 
