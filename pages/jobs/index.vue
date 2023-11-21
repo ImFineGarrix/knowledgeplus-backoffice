@@ -34,12 +34,11 @@
 <script>
 import JobProvider from '@/resources/JobProvider'
 
-const JobService = new JobProvider()
-
 export default {
   data() {
     return {
       jobs: [],
+      JobService: new JobProvider(),
     }
   },
   mounted() {
@@ -47,7 +46,7 @@ export default {
   },
   methods: {
     async getJob() {
-      const data = await JobService.getJob()
+      const data = await this.JobService.getJob()
       this.jobs = JSON.parse(JSON.stringify(data.data))
     },
   },

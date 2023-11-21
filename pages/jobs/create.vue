@@ -10,12 +10,15 @@
 import JobProvider from '@/resources/JobProvider'
 import Swal from 'sweetalert2'
 
-const JobService = new JobProvider()
-
 export default {
+  data() {
+    return {
+      JobService: new JobProvider(),
+    }
+  },
   methods: {
     async createJob(form) {
-      const status = await JobService.createJob(form)
+      const status = await this.JobService.createJob(form)
       if (status.message === 'success') {
         Swal.fire({
           icon: 'success',

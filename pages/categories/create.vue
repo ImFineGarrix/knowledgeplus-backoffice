@@ -11,12 +11,15 @@
 import CategoryProvider from '~/resources/CategoryProvider'
 import Swal from 'sweetalert2'
 
-const CategoryService = new CategoryProvider()
-
 export default {
+  data() {
+    return {
+      CategoryService: new CategoryProvider(),
+    }
+  },
   methods: {
     async createCategory(form) {
-      const status = await CategoryService.createCategory(form)
+      const status = await this.CategoryService.createCategory(form)
       if (status.message === 'success') {
         Swal.fire({
           title: 'Create Category Success',

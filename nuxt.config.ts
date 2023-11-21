@@ -26,4 +26,9 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: { exclude: ['fsevents'] },
   },
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: process.env.API_BASE_URL,
+    },
+  },
 })

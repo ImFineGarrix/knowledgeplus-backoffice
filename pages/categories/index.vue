@@ -43,11 +43,10 @@
 <script>
 import CategoryProvider from '@/resources/CategoryProvider'
 
-const CategoryService = new CategoryProvider()
-
 export default {
   data() {
     return {
+      CategoryService: new CategoryProvider(),
       categories: [],
       dialog: {
         openDialog: false,
@@ -60,7 +59,7 @@ export default {
   },
   methods: {
     async getCategory() {
-      const data = await CategoryService.getCategory()
+      const data = await this.CategoryService.getCategory()
       this.categories = JSON.parse(JSON.stringify(data.data))
     },
     openDialog(image) {
