@@ -39,8 +39,6 @@
 <script>
 import CategoryProvider from '@/resources/CategoryProvider'
 
-const CategoryService = new CategoryProvider()
-
 export default {
   props: {
     idParams: {
@@ -54,6 +52,7 @@ export default {
   },
   data() {
     return {
+      CategoryService: new CategoryProvider(),
       categories: [],
       form: {
         label: '',
@@ -70,7 +69,7 @@ export default {
   },
   methods: {
     async getCategories() {
-      const data = await CategoryService.getCategory()
+      const data = await this.CategoryService.getCategory()
       this.categories = JSON.parse(JSON.stringify(data.data))
     },
     async setForm() {

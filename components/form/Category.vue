@@ -51,8 +51,6 @@
 <script>
 import FirebaseProvider from '~/resources/FirebaseProvider'
 
-const FirebaseService = new FirebaseProvider()
-
 export default {
   props: {
     idParams: {
@@ -66,6 +64,7 @@ export default {
   },
   data() {
     return {
+      FirebaseService: new FirebaseProvider(),
       form: {
         label: '',
         value: '',
@@ -115,7 +114,7 @@ export default {
         return file
       }
 
-      return await FirebaseService.uploadFile(`category/${name}`, file)
+      return await this.FirebaseService.uploadFile(`category/${name}`, file)
     },
   },
 }
