@@ -2,13 +2,8 @@
   <div>
     <v-form ref="form" class="tw-space-y-4">
       <v-text-field
-        v-model.trim="form.label"
-        label="ชื่อสายงาน (ใช้สำหรับแสดงบนเว็บ)"
-        :rules="[required]"
-        variant="outlined"></v-text-field>
-      <v-text-field
-        v-model.trim="form.value"
-        label="ชื่อสายงาน (ใช้สำหรับในระบบ ห้ามเว้นวรรค)"
+        v-model.trim="form.name"
+        label="ชื่อสายงาน"
         :rules="[required]"
         variant="outlined"></v-text-field>
       <div>
@@ -66,8 +61,7 @@ export default {
     return {
       FirebaseService: new FirebaseProvider(),
       form: {
-        label: '',
-        value: '',
+        name: '',
         image: null,
       },
       previewImage: null,

@@ -17,8 +17,7 @@
             </div>
           </template>
         </Column>
-        <Column field="label" header="สายงาน (ใช้สำหรับหน้าเว็บ)"></Column>
-        <Column field="value" header="สายงาน (ใช้ในระบบ)"></Column>
+        <Column field="name" header="สายงาน (ใช้สำหรับหน้าเว็บ)"></Column>
         <Column field="actionButton" header="" class="tw-w-2/12">
           <template #body="slotProps">
             <div class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end">

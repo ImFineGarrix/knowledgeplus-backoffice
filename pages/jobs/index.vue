@@ -7,7 +7,7 @@
       titleBtn="Create Job" />
     <div class="tw-my-8">
       <DataTable :value="jobs">
-        <Column field="label" header="อาชีพ"></Column>
+        <Column field="name" header="อาชีพ"></Column>
         <Column field="categories" header="สายงาน">
           <template #body="slotProps">
             <div

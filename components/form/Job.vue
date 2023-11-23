@@ -2,14 +2,9 @@
   <div>
     <v-form ref="form" class="tw-space-y-4">
       <v-text-field
-        v-model.trim="form.label"
+        v-model.trim="form.name"
         :rules="[required]"
-        label="ชื่ออาชีพ (ใช้สำหรับแสดงบนเว็บ)"
-        variant="outlined" />
-      <v-text-field
-        v-model.trim="form.value"
-        :rules="[required]"
-        label="ชื่ออาชีพ (ใช้สำหรับในระบบ ห้ามเว้นวรรค)"
+        label="ชื่ออาชีพ"
         variant="outlined" />
       <v-autocomplete
         chips
@@ -55,8 +50,7 @@ export default {
       CategoryService: new CategoryProvider(),
       categories: [],
       form: {
-        label: '',
-        value: '',
+        name: '',
         category: [],
         shortDesc: '',
         desc: '',

@@ -2,12 +2,8 @@
   <div>
     <div class="tw-space-y-2">
       <v-text-field
-        v-model.trim="form.label"
-        label="ชื่อทักษะ (ใช้สำหรับแสดงบนเว็บ)"
-        variant="outlined" />
-      <v-text-field
-        v-model.trim="form.value"
-        label="ชื่อทักษะ (ใช้สำหรับในระบบ ห้ามเว้นวรรค)"
+        v-model.trim="form.name"
+        label="ชื่อทักษะ"
         variant="outlined" />
       <div class="tw-pb-4">
         <div v-if="checkImage()">
@@ -77,8 +73,7 @@ export default {
   data() {
     return {
       form: {
-        label: '',
-        value: '',
+        name: '',
         level: [],
         jobs: [],
         desc: '',
