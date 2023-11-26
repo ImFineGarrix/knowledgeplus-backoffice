@@ -82,7 +82,7 @@ export default {
       this.form.image = null
     },
     async setForm() {
-      const valid = await this.$refs.form.validate()
+      const { valid } = await this.$refs.form.validate()
       if (valid) {
         const urlImage = await this.uploadFile(this.form.image, this.form.name)
         const form = {

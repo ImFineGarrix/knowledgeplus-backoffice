@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tw-space-y-2">
+    <v-form ref="form" class="tw-space-y-2">
       <v-text-field
         v-model.trim="form.name"
         label="ชื่อทักษะ"
@@ -16,13 +16,13 @@
           <input
             id="upload-image"
             type="file"
-            accept="image/*"
+            accept=".svg"
             hidden
             @change="uploadImage($event)" />
         </div>
         <div v-else>
           <div
-            class="tw-relative tw-w-full tw-h-64 tw-border tw-flex tw-justify-center tw-border-black hover-image">
+            class="tw-relative tw-w-full tw-h-64 tw-border tw-flex tw-justify-center tw-bg-[#cecece] tw-border-black hover-image">
             <div
               class="delete-image tw-absolute tw-text-rose-500 tw-top-[50%] tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%] tw-bg-white tw-p-5 tw-rounded-full tw-shadow-xl tw-cursor-pointer">
               <IconDelete @click="removeImage()" />
@@ -32,33 +32,41 @@
         </div>
       </div>
       <v-autocomplete
-        chips
-        mulitple
+        clearable
+        class="custom-autocomplete"
         :items="skillLevel"
-        item-title="label"
-        item-value="value"
+        item-title="name"
+        item-value="levelID"
         v-model="form.level"
         label="ระดับทักษะ"
         variant="outlined" />
       <v-autocomplete
         chips
         multiple
+        clearable
+        color="white"
+        color-hover="gray"
         v-model="form.jobs"
+        :items="jobs"
+        item-title="name"
+        itme-value="careerId"
         label="อาชีพ"
         variant="outlined" />
       <v-textarea v-model="form.desc" label="คำอธิบาย" variant="outlined" />
-
       <div class="tw-flex tw-justify-end">
-        <div
-          class="tw-bg-[#51b462] tw-px-8 tw-py-2 tw-text-white tw-rounded-md tw-cursor-pointer">
+        <button
+          @click="setForm()"
+          class="tw-bg-[#79af82] hover:tw-bg-[#51b462] tw-transition-all tw-px-8 tw-py-2 tw-text-white tw-rounded-md">
           {{ actionButton }}
-        </div>
+        </button>
       </div>
-    </div>
+    </v-form>
   </div>
 </template>
 
 <script>
+import LevelProvider from '~/resources/LevelProvider'
+import JobProvider from '~/resources/JobProvider'
 export default {
   props: {
     idParams: {
@@ -72,6 +80,8 @@ export default {
   },
   data() {
     return {
+      JobService: new JobProvider(),
+      LevelService: new LevelProvider(),
       form: {
         name: '',
         level: [],
@@ -79,20 +89,30 @@ export default {
         desc: '',
         image: null,
       },
-      skillLevel: [
-        {
-          label: 'Basic',
-          value: 'basic',
-        },
-        {
-          label: 'Advance',
-          value: 'advence',
-        },
-      ],
+      loading: false,
+      required: (v) => !!v || 'THIS FIELD IS REQUIRED',
+      skillLevel: [],
+      jobs: [],
       previewImage: null,
     }
   },
+  mounted() {
+    this.getLevel()
+    this.getJob()
+  },
   methods: {
+    async getLevel() {
+      const data = await this.LevelService.getLevel()
+      if (data.message === 'success') {
+        this.skillLevel = JSON.parse(JSON.stringify(data.data))
+      }
+    },
+    async getJob() {
+      const data = await this.JobService.getJob()
+      if (data.message === 'success') {
+        this.jobs = JSON.parse(JSON.stringify(data.data))
+      }
+    },
     uploadImage(e) {
       const file = e.target.files[0]
       this.form.image = file
@@ -106,8 +126,9 @@ export default {
       this.form.image = null
     },
     async setForm() {
-      const urlImage = await this.uploadFile(this.form.image, this.form.value)
-      console.log(urlImage)
+      this.loading = true
+      // const urlImage = await this.uploadFile(this.form.image, this.form.value)
+      // console.log(urlImage)
     },
     async uploadFile(file, name) {
       if (!file) {

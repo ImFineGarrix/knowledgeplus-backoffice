@@ -66,8 +66,9 @@ export default {
       const data = await this.CategoryService.getCategory()
       this.categories = JSON.parse(JSON.stringify(data.data))
     },
+
     async setForm() {
-      const valid = await this.$refs.form.validate()
+      const { valid } = await this.$refs.form.validate()
       if (valid) {
         const form = {
           ...this.form,

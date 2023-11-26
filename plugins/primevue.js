@@ -2,6 +2,7 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 import PrimeVue from "primevue/config";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
+import Button from "primevue/button";
 import ColumnGroup from "primevue/columngroup"; // optional
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -9,4 +10,5 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("DataTable", DataTable);
   nuxtApp.vueApp.component("Column", Column);
   nuxtApp.vueApp.component("ColumnGroup", ColumnGroup);
+  nuxtApp.vueApp.component("Button", Button);
 });

@@ -10,10 +10,15 @@
         <Column field="name" header="อาชีพ"></Column>
         <Column field="categories" header="สายงาน">
           <template #body="slotProps">
-            <div
-              v-for="(category, indexCategory) in slotProps.data.categories"
-              :key="`category-${indexCategory}`">
-              <p>{{ category.label }}</p>
+            <div class="tw-flex tw-gap-4">
+              <div
+                v-for="(category, indexCategory) in slotProps.data.categories"
+                :key="`category-${indexCategory}`">
+                <p
+                  class="tw-px-3 tw-border-2 tw-border-gray-500 tw-rounded-full tw-py-2">
+                  {{ category.name }}
+                </p>
+              </div>
             </div>
           </template>
         </Column>
@@ -47,7 +52,9 @@ export default {
   methods: {
     async getJob() {
       const data = await this.JobService.getJob()
-      this.jobs = JSON.parse(JSON.stringify(data.data))
+      if (data.message === 'success') {
+        this.jobs = JSON.parse(JSON.stringify(data.data))
+      }
     },
   },
 }
