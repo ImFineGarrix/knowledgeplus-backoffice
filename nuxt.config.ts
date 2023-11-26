@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import vuetify from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -18,7 +19,15 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify', 'primevue'],
   },
-  modules: ['dayjs-nuxt'],
+  modules: [
+    'dayjs-nuxt',
+    async (options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) =>
+        // @ts-ignore
+        config.plugins.push(vuetify())
+      )
+    },
+  ],
   dayjs: {
     locales: ['th', 'en'],
     plugins: ['advancedFormat', 'utc', 'timezone', 'localizedFormat'],

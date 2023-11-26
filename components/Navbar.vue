@@ -56,6 +56,6 @@ export default {
 .container-menu {
   color: black !important;
   font-size: 14px !important;
-  padding-left: 35px;
+  padding-left: 35px !important;
 }
 </style>
