@@ -19,9 +19,7 @@ export default {
   },
   methods: {
     async createCategory(form) {
-      console.log('category-form', form)
       const status = await this.CategoryService.createCategory(form)
-      console.log('status', status)
       if (status.message === 'success') {
         Swal.fire({
           title: 'Create Category Success',

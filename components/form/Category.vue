@@ -107,12 +107,10 @@ export default {
           this.form.imageUrl,
           this.form.name
         )
-        console.log('urlImage-setForm', urlImage)
         const form = {
           ...this.form,
           imageUrl: urlImage,
         }
-        console.log('form-setForm', form)
         this.$emit('create-update', form)
       } else {
         window.scrollTo({

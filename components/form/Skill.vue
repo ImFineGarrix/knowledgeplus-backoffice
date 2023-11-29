@@ -134,7 +134,6 @@ export default {
     async setForm() {
       this.loading = true
       // const urlImage = await this.uploadFile(this.form.imageUrl, this.form.value)
-      // console.log(urlImage)
     },
     async uploadFile(file, name) {
       if (!file) {
