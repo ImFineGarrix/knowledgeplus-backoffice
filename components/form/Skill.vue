@@ -87,7 +87,7 @@ export default {
         level: [],
         jobs: [],
         desc: '',
-        image: null,
+        imageUrl: null,
       },
       loading: false,
       required: (v) => !!v || 'THIS FIELD IS REQUIRED',
@@ -115,19 +115,19 @@ export default {
     },
     uploadImage(e) {
       const file = e.target.files[0]
-      this.form.image = file
+      this.form.imageUrl = file
       this.previewImage = URL.createObjectURL(file)
     },
     checkImage() {
-      return !this.previewImage && !this.form.image
+      return !this.previewImage && !this.form.imageUrl
     },
     removeImage() {
       this.previewImage = null
-      this.form.image = null
+      this.form.imageUrl = null
     },
     async setForm() {
       this.loading = true
-      // const urlImage = await this.uploadFile(this.form.image, this.form.value)
+      // const urlImage = await this.uploadFile(this.form.imageUrl, this.form.value)
       // console.log(urlImage)
     },
     async uploadFile(file, name) {

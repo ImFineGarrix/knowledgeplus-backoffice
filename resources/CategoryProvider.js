@@ -59,14 +59,14 @@ class CategoryProvider extends HttpRequest {
     } catch (e) {
       return {
         message: 'error',
-        status: e.statusCode,
+        status: e,
       }
     }
   }
 
   async deleteCategory(id) {
     try {
-      await this.delete('/categories', id)
+      await this.delete(`/categories/${id}`)
       return {
         message: 'success',
         status: 200
@@ -74,8 +74,7 @@ class CategoryProvider extends HttpRequest {
     } catch (e) {
       return {
         message: 'error',
-        status: e.statusCode,
-        msgError: messageError[e.statusCode]
+        status: e,
       }
     }
   }

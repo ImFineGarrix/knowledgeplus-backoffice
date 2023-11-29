@@ -59,14 +59,14 @@ class SkillProvider extends HttpRequest {
     } catch (e) {
       return {
         message: 'error',
-        status: e.statusCode,
+        status: e,
       }
     }
   }
 
   async deleteSkill(id) {
     try {
-      await this.delete('/skills', id)
+      await this.delete(`/skills/${id}`)
       return {
         message: 'success',
         status: 200
@@ -74,8 +74,7 @@ class SkillProvider extends HttpRequest {
     } catch (e) {
       return {
         message: 'error',
-        status: e.statusCode,
-        msgError: messageError[e.statusCode]
+        status: e,
       }
     }
   }

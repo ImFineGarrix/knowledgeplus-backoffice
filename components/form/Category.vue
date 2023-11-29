@@ -45,6 +45,7 @@
 
 <script>
 import FirebaseProvider from '~/resources/FirebaseProvider'
+import CategoryProvider from '~/resources/CategoryProvider'
 
 export default {
   props: {
@@ -59,36 +60,53 @@ export default {
   },
   data() {
     return {
+      CategoryService: new CategoryProvider(),
       FirebaseService: new FirebaseProvider(),
       form: {
         name: '',
-        image: null,
+        imageUrl: null,
       },
       previewImage: null,
       required: (v) => !!v || 'THIS FIELD IS REQUIRED',
     }
   },
+  mounted() {
+    if (this.idParams) {
+      this.getCategoryById(this.idParams)
+    }
+  },
   methods: {
+    async getCategoryById(id) {
+      const data = await this.CategoryService.getCategoryById(id)
+      if (data.message === 'success') {
+        this.form = data.data
+      }
+    },
     uploadImage(e) {
       const file = e.target.files[0]
-      this.form.image = file
+      this.form.imageUrl = file
       this.previewImage = URL.createObjectURL(file)
     },
     checkImage() {
-      return !this.previewImage && !this.form.image
+      return !this.previewImage && !this.form.imageUrl
     },
     removeImage() {
       this.previewImage = null
-      this.form.image = null
+      this.form.imageUrl = null
     },
     async setForm() {
       const { valid } = await this.$refs.form.validate()
       if (valid) {
-        const urlImage = await this.uploadFile(this.form.image, this.form.name)
+        const urlImage = await this.uploadFile(
+          this.form.imageUrl,
+          this.form.name
+        )
+        console.log('urlImage-setForm', urlImage)
         const form = {
           ...this.form,
           imageUrl: urlImage,
         }
+        console.log('form-setForm', form)
         this.$emit('create-update', form)
       } else {
         window.scrollTo({

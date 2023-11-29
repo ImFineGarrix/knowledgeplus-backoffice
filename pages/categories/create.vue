@@ -19,7 +19,9 @@ export default {
   },
   methods: {
     async createCategory(form) {
+      console.log('category-form', form)
       const status = await this.CategoryService.createCategory(form)
+      console.log('status', status)
       if (status.message === 'success') {
         Swal.fire({
           title: 'Create Category Success',
@@ -30,7 +32,7 @@ export default {
       } else {
         Swal.fire({
           title: `Create Category Fail`,
-          text: `${status.status} - ${status.message}`,
+          text: `${status.status}`,
           icon: 'error',
         })
       }
