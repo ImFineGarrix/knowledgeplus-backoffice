@@ -25,8 +25,12 @@
         <Column field="actionButton" header="" class="tw-w-2/12">
           <template #body="slotProps">
             <div class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end">
-              <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
-              <v-icon class="tw-cursor-pointer tw-text-rose-600"
+              <NuxtLink :to="`/jobs/edit/${slotProps.data.careerId}`">
+                <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
+              </NuxtLink>
+              <v-icon
+                class="tw-cursor-pointer tw-text-rose-600"
+                @click="deleteJob(slotProps.data.careerId, slotProps.data.name)"
                 >mdi-delete</v-icon
               >
             </div>
@@ -55,6 +59,35 @@ export default {
       if (data.message === 'success') {
         this.jobs = JSON.parse(JSON.stringify(data.data))
       }
+    },
+    async deleteJob(id, name) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        text: `คุณต้องการจะลบอาชีพ ${name}`,
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'ต้องการลบ',
+        cancelButtonText: 'ยกเลิก',
+        reverseButtons: true,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const status = await this.JobService.deleteJob(id)
+          if (status.message === 'success') {
+            this.getJob()
+            Swal.fire({
+              icon: 'success',
+              title: 'Delete Job Success',
+            })
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Delete Job Fail',
+              text: `${status.status}`,
+            })
+          }
+        }
+      })
     },
   },
 }

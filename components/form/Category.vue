@@ -28,7 +28,11 @@
               class="delete-image tw-absolute tw-text-rose-500 tw-top-[50%] tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%] tw-bg-white tw-p-5 tw-rounded-full tw-shadow-xl tw-cursor-pointer">
               <IconDelete @click="removeImage()" />
             </div>
-            <img :src="previewImage" />
+            <img
+              :src="
+                previewImage ||
+                `${config.public.firebaseBaseUrl}${form.imageUrl}`
+              " />
           </div>
         </div>
       </div>
@@ -45,6 +49,8 @@
 
 <script>
 import FirebaseProvider from '~/resources/FirebaseProvider'
+import CategoryProvider from '~/resources/CategoryProvider'
+import { useRuntimeConfig } from 'nuxt/app'
 
 export default {
   props: {
@@ -59,32 +65,48 @@ export default {
   },
   data() {
     return {
+      CategoryService: new CategoryProvider(),
       FirebaseService: new FirebaseProvider(),
       form: {
         name: '',
-        image: null,
+        imageUrl: null,
       },
       previewImage: null,
       required: (v) => !!v || 'THIS FIELD IS REQUIRED',
+      config: useRuntimeConfig(),
+    }
+  },
+  mounted() {
+    if (this.idParams) {
+      this.getCategoryById(this.idParams)
     }
   },
   methods: {
+    async getCategoryById(id) {
+      const data = await this.CategoryService.getCategoryById(id)
+      if (data.message === 'success') {
+        this.form = data.data
+      }
+    },
     uploadImage(e) {
       const file = e.target.files[0]
-      this.form.image = file
+      this.form.imageUrl = file
       this.previewImage = URL.createObjectURL(file)
     },
     checkImage() {
-      return !this.previewImage && !this.form.image
+      return !this.previewImage && !this.form.imageUrl
     },
     removeImage() {
       this.previewImage = null
-      this.form.image = null
+      this.form.imageUrl = null
     },
     async setForm() {
       const { valid } = await this.$refs.form.validate()
       if (valid) {
-        const urlImage = await this.uploadFile(this.form.image, this.form.name)
+        const urlImage = await this.uploadFile(
+          this.form.imageUrl,
+          this.form.name
+        )
         const form = {
           ...this.form,
           imageUrl: urlImage,

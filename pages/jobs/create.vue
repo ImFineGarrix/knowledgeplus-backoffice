@@ -30,7 +30,7 @@ export default {
         Swal.fire({
           icon: 'error',
           title: 'Create Job Fail',
-          text: `${status.status} - ${status.message}`,
+          text: `${status.status}`,
         })
       }
     },

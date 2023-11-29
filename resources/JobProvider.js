@@ -59,14 +59,14 @@ class JobProvider extends HttpRequest {
     } catch (e) {
       return {
         message: 'error',
-        status: e.statusCode,
+        status: e,
       }
     }
   }
 
   async deleteJob(id) {
     try {
-      await this.delete('/careers', id)
+      await this.delete(`/careers/${id}`)
       return {
         message: 'success',
         status: 200
@@ -74,8 +74,7 @@ class JobProvider extends HttpRequest {
     } catch (e) {
       return {
         message: 'error',
-        status: e.statusCode,
-        msgError: messageError[e.statusCode]
+        status: e,
       }
     }
   }

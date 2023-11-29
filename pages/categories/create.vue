@@ -30,7 +30,7 @@ export default {
       } else {
         Swal.fire({
           title: `Create Category Fail`,
-          text: `${status.status} - ${status.message}`,
+          text: `${status.status}`,
           icon: 'error',
         })
       }
