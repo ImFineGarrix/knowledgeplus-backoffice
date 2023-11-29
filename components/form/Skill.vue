@@ -27,7 +27,11 @@
               class="delete-image tw-absolute tw-text-rose-500 tw-top-[50%] tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%] tw-bg-white tw-p-5 tw-rounded-full tw-shadow-xl tw-cursor-pointer">
               <IconDelete @click="removeImage()" />
             </div>
-            <img :src="previewImage" />
+            <img
+              :src="
+                previewImage ||
+                `${config.public.firebaseBaseUrl}${form.imageUrl}`
+              " />
           </div>
         </div>
       </div>
@@ -67,6 +71,7 @@
 <script>
 import LevelProvider from '~/resources/LevelProvider'
 import JobProvider from '~/resources/JobProvider'
+import { useRuntimeConfig } from 'nuxt/app'
 export default {
   props: {
     idParams: {
@@ -94,6 +99,7 @@ export default {
       skillLevel: [],
       jobs: [],
       previewImage: null,
+      config: useRuntimeConfig(),
     }
   },
   mounted() {

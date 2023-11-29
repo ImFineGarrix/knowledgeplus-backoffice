@@ -28,7 +28,11 @@
               class="delete-image tw-absolute tw-text-rose-500 tw-top-[50%] tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%] tw-bg-white tw-p-5 tw-rounded-full tw-shadow-xl tw-cursor-pointer">
               <IconDelete @click="removeImage()" />
             </div>
-            <img :src="previewImage" />
+            <img
+              :src="
+                previewImage ||
+                `${config.public.firebaseBaseUrl}${form.imageUrl}`
+              " />
           </div>
         </div>
       </div>
@@ -46,6 +50,7 @@
 <script>
 import FirebaseProvider from '~/resources/FirebaseProvider'
 import CategoryProvider from '~/resources/CategoryProvider'
+import { useRuntimeConfig } from 'nuxt/app'
 
 export default {
   props: {
@@ -68,6 +73,7 @@ export default {
       },
       previewImage: null,
       required: (v) => !!v || 'THIS FIELD IS REQUIRED',
+      config: useRuntimeConfig(),
     }
   },
   mounted() {
