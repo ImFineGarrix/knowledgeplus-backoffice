@@ -14,12 +14,18 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  app: {
+    head: {
+      titleTemplate: 'Knowledge Back-office',
+    },
+  },
   plugins: [{ src: '~/plugins/sweetalert2', mode: 'client' }],
   pages: true,
   build: {
     transpile: ['vuetify', 'primevue'],
   },
   modules: [
+    '@pinia/nuxt',
     'dayjs-nuxt',
     async (options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) =>

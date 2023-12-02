@@ -38,31 +38,19 @@
       <v-autocomplete
         clearable
         class="custom-autocomplete"
-        :items="skillLevel"
+        :items="levels"
         item-title="name"
-        item-value="levelID"
-        v-model="form.level"
+        item-value="levelId"
+        v-model="form.levelId"
         label="ระดับทักษะ"
-        variant="outlined" />
-      <v-autocomplete
-        chips
-        multiple
-        clearable
-        color="white"
-        color-hover="gray"
-        v-model="form.jobs"
-        :items="jobs"
-        item-title="name"
-        itme-value="careerId"
-        label="อาชีพ"
         variant="outlined" />
       <v-textarea v-model="form.desc" label="คำอธิบาย" variant="outlined" />
       <div class="tw-flex tw-justify-end">
-        <button
+        <div
           @click="setForm()"
-          class="tw-bg-[#79af82] hover:tw-bg-[#51b462] tw-transition-all tw-px-8 tw-py-2 tw-text-white tw-rounded-md">
+          class="tw-bg-[#51b462] tw-px-8 tw-py-2 tw-text-white tw-rounded-md tw-cursor-pointer">
           {{ actionButton }}
-        </button>
+        </div>
       </div>
     </v-form>
   </div>
@@ -70,8 +58,11 @@
 
 <script>
 import LevelProvider from '~/resources/LevelProvider'
-import JobProvider from '~/resources/JobProvider'
+import SkillProvider from '~/resources/SkillProvider'
+import FirebaseProvider from '~/resources/FirebaseProvider'
 import { useRuntimeConfig } from 'nuxt/app'
+import { useFormRules } from '~/composables/rules'
+
 export default {
   props: {
     idParams: {
@@ -85,39 +76,35 @@ export default {
   },
   data() {
     return {
-      JobService: new JobProvider(),
       LevelService: new LevelProvider(),
+      SkillService: new SkillProvider(),
+      FirebaseService: new FirebaseProvider(),
       form: {
         name: '',
-        level: [],
-        jobs: [],
-        desc: '',
+        levelId: null,
+        description: '',
         imageUrl: null,
       },
-      loading: false,
-      required: (v) => !!v || 'THIS FIELD IS REQUIRED',
-      skillLevel: [],
-      jobs: [],
+      rules: useFormRules(),
+      levels: [],
       previewImage: null,
       config: useRuntimeConfig(),
     }
   },
   mounted() {
+    if (this.idParams) {
+      this.getSkillById(this.idParams)
+    }
     this.getLevel()
-    this.getJob()
   },
   methods: {
     async getLevel() {
-      const data = await this.LevelService.getLevel()
-      if (data.message === 'success') {
-        this.skillLevel = JSON.parse(JSON.stringify(data.data))
-      }
+      const { data } = await this.LevelService.getLevel()
+      this.levels = JSON.parse(JSON.stringify(data))
     },
-    async getJob() {
-      const data = await this.JobService.getJob()
-      if (data.message === 'success') {
-        this.jobs = JSON.parse(JSON.stringify(data.data))
-      }
+    async getSkillById(id) {
+      const { data } = await this.SkillService.getSkillById(id)
+      this.form = data
     },
     uploadImage(e) {
       const file = e.target.files[0]
@@ -132,8 +119,24 @@ export default {
       this.form.imageUrl = null
     },
     async setForm() {
-      this.loading = true
-      // const urlImage = await this.uploadFile(this.form.imageUrl, this.form.value)
+      const { valid } = await this.$refs.form.validate()
+      if (valid) {
+        const urlImage = await this.uploadFile(
+          this.form.imageUrl,
+          this.form.name
+        )
+        const form = {
+          ...this.form,
+          imageUrl: urlImage,
+        }
+        this.$emit('create-update', form)
+      } else {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        })
+      }
     },
     async uploadFile(file, name) {
       if (!file) {
@@ -145,7 +148,7 @@ export default {
         return file
       }
 
-      return await FirebaseService.uploadFile(`skill/${name}`, file)
+      return await this.FirebaseService.uploadFile(`skill/${name}`, file)
     },
   },
 }

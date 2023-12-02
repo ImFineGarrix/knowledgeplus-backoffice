@@ -2,9 +2,9 @@ import HttpRequest from './HttpRequest'
 
 class JobProvider extends HttpRequest {
 
-  async getJob() {
+  async getJob(page, limit) {
     try {
-      const data = await this.get(`/careers`)
+      const data = await this.get(`/careers?page=${page}&limit=${limit}`)
       return {
         message: 'success',
         status: 200,

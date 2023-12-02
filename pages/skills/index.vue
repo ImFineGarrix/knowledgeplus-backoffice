@@ -20,12 +20,18 @@
                 "
                 :src="`${config.public.firebaseBaseUrl}${slotProps.data.imageUrl}`"
                 :class="slotProps.data.imageUrl ? `tw-bg-emerald-600` : ''"
-                class="tw-w-20 tw-rounded-xl tw-p-2" />
+                class="tw-w-12 tw-rounded-xl tw-p-2" />
             </div>
           </template>
         </Column>
         <Column field="name" header="ทักษะ"></Column>
-        <Column field="levelID" header="Level"></Column>
+        <Column field="levels" header="Level">
+          <template #body="slotProps">
+            <div class="tw-uppercase">
+              {{ getLevelName(slotProps.data.levelId) }}
+            </div>
+          </template>
+        </Column>
         <Column field="actionButton" header="" class="tw-w-2/12">
           <template #body="slotProps">
             <div class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end">
@@ -43,10 +49,16 @@
           </template>
         </Column>
       </DataTable>
+      <div class="tw-my-4">
+        <v-pagination
+          v-model="page"
+          :length="pages"
+          :total-visible="7"></v-pagination>
+      </div>
     </div>
     <v-dialog
       v-model="dialog.openDialog"
-      max-width="30%"
+      max-width="40%"
       @click:outside="closeDialog()">
       <img :src="dialog.image" class="tw-rounded-xl" />
     </v-dialog>
@@ -55,12 +67,19 @@
 <script>
 import { useRuntimeConfig } from 'nuxt/app'
 import SkillProvider from '~/resources/SkillProvider'
+import LevelProvider from '~/resources/LevelProvider'
 import Swal from 'sweetalert2'
 export default {
   data() {
     return {
       SkillService: new SkillProvider(),
+      LevelService: new LevelProvider(),
       skills: [],
+      levels: [],
+      page: 0,
+      pages: 1,
+      total: 0,
+      limit: 10,
       config: useRuntimeConfig(),
       dialog: {
         openDialog: false,
@@ -68,15 +87,33 @@ export default {
       },
     }
   },
+  watch: {
+    page(newVal) {
+      this.page = newVal
+      this.getSkill()
+    },
+  },
   mounted() {
     this.getSkill()
+    this.getLevel()
   },
   methods: {
+    getPages() {
+      return Math.ceil(this.total / this.limit)
+    },
     async getSkill() {
-      const data = await this.SkillService.getSkill()
-      if (data.message === 'success') {
-        this.skills = JSON.parse(JSON.stringify(data.data))
+      const status = await this.SkillService.getSkill(this.page, this.limit)
+      if (status.message === 'success') {
+        const { data } = status
+        this.skills = JSON.parse(JSON.stringify(data.skills))
+        this.page = data.pagination.page
+        this.total = data.pagination.total
+        this.pages = this.getPages()
       }
+    },
+    async getLevel() {
+      const { data } = await this.LevelService.getLevel()
+      this.levels = data
     },
     async deleteSkill(id, name) {
       Swal.fire({
@@ -106,6 +143,12 @@ export default {
           }
         }
       })
+    },
+    getLevelName(id) {
+      return (
+        this.levels.find((level) => (level.levelId === id ? level.name : ''))
+          ?.name || ''
+      )
     },
     openDialog(image) {
       this.dialog.openDialog = true
