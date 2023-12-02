@@ -125,13 +125,6 @@ export default {
         })
       }
     },
-    requiredArray() {
-      const tags = this.cleanTags(this.form.tags)
-      if (!tags.length) {
-        return 'THIS FIELD IS REQUIRED'
-      }
-      return true
-    },
   },
 }
 </script>
