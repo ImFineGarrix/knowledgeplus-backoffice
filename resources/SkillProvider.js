@@ -2,9 +2,9 @@ import HttpRequest from './HttpRequest'
 
 class SkillProvider extends HttpRequest {
 
-  async getSkill() {
+  async getSkill(page, limit) {
     try {
-      const data = await this.get(`/skills`)
+      const data = await this.get(`/skills?page=${page}&limit=${limit}`)
       return {
         message: 'success',
         status: 200,

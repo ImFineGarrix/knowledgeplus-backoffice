@@ -44,7 +44,7 @@
     </div>
     <v-dialog
       v-model="dialog.openDialog"
-      max-width="30%"
+      max-width="70%"
       @click:outside="closeDialog()">
       <img :src="dialog.image" class="tw-rounded-xl" />
     </v-dialog>
@@ -73,8 +73,10 @@ export default {
   },
   methods: {
     async getCategory() {
-      const data = await this.CategoryService.getCategory()
-      this.categories = JSON.parse(JSON.stringify(data.data))
+      const status = await this.CategoryService.getCategory()
+      if (status.message === 'success') {
+        this.categories = JSON.parse(JSON.stringify(status.data))
+      }
     },
     async deleteCategory(id, name) {
       Swal.fire({

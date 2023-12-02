@@ -37,27 +37,51 @@
           </template>
         </Column>
       </DataTable>
+      <div class="tw-my-4">
+        <v-pagination
+          v-model="page"
+          :length="pages"
+          :total-visible="7"></v-pagination>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import JobProvider from '@/resources/JobProvider'
+import Swal from 'sweetalert2'
 
 export default {
   data() {
     return {
       jobs: [],
       JobService: new JobProvider(),
+      page: 0,
+      pages: 0,
+      total: 1,
+      limit: 10,
     }
+  },
+  watch: {
+    page(newVal) {
+      this.page = newVal
+      this.getJob()
+    },
   },
   mounted() {
     this.getJob()
   },
   methods: {
+    getPages() {
+      return Math.ceil(this.total / this.limit)
+    },
     async getJob() {
-      const data = await this.JobService.getJob()
-      if (data.message === 'success') {
-        this.jobs = JSON.parse(JSON.stringify(data.data))
+      const status = await this.JobService.getJob(this.page, this.limit)
+      if (status.message === 'success') {
+        const { data } = status
+        this.jobs = JSON.parse(JSON.stringify(data.careers))
+        this.page = data.pagination.page
+        this.total = data.pagination.total
+        this.pages = this.getPages()
       }
     },
     async deleteJob(id, name) {

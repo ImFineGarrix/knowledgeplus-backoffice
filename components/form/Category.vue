@@ -4,7 +4,7 @@
       <v-text-field
         v-model.trim="form.name"
         label="ชื่อสายงาน"
-        :rules="[required]"
+        :rules="[rules.ruleRequired]"
         variant="outlined"></v-text-field>
       <div>
         <div v-if="checkImage()">
@@ -51,6 +51,7 @@
 import FirebaseProvider from '~/resources/FirebaseProvider'
 import CategoryProvider from '~/resources/CategoryProvider'
 import { useRuntimeConfig } from 'nuxt/app'
+import { useFormRules } from '~/composables/rules'
 
 export default {
   props: {
@@ -72,8 +73,8 @@ export default {
         imageUrl: null,
       },
       previewImage: null,
-      required: (v) => !!v || 'THIS FIELD IS REQUIRED',
       config: useRuntimeConfig(),
+      rules: useFormRules(),
     }
   },
   mounted() {
