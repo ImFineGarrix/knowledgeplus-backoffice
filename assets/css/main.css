@@ -56,7 +56,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
 .hover-image:hover .delete-image {
   display: block !important;
 }
-.loading {
+.bg-loading {
   justify-content: center;
   position: fixed;
   z-index: 100;

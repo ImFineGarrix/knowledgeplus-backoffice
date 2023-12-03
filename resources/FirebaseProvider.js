@@ -11,7 +11,7 @@ class FirebaseProvider {
       const linkFile = await getDownloadURL(snapshot.ref)
       return linkFile.replace(config.public.firebaseBaseUrl, '')
     } catch (err) {
-      console.error(err)
+      return 'error'
     }
   }
 }

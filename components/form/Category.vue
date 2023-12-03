@@ -44,6 +44,9 @@
         </div>
       </div>
     </v-form>
+    <div v-if="loading" class="bg-loading">
+      <Loading />
+    </div>
   </div>
 </template>
 
@@ -75,7 +78,13 @@ export default {
       previewImage: null,
       config: useRuntimeConfig(),
       rules: useFormRules(),
+      loading: false,
     }
+  },
+  watch: {
+    loading(newVal) {
+      this.loading = newVal
+    },
   },
   mounted() {
     if (this.idParams) {
@@ -104,6 +113,7 @@ export default {
     async setForm() {
       const { valid } = await this.$refs.form.validate()
       if (valid) {
+        this.loading = true
         const urlImage = await this.uploadFile(
           this.form.imageUrl,
           this.form.name
@@ -113,6 +123,7 @@ export default {
           imageUrl: urlImage,
         }
         this.$emit('create-update', form)
+        this.loading = false
       } else {
         window.scrollTo({
           top: 0,

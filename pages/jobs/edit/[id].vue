@@ -7,6 +7,9 @@
         :idParams="idParams"
         @create-update="updateJob" />
     </div>
+    <div v-if="load" class="bg-loading">
+      <Loading />
+    </div>
   </div>
 </template>
 <script>
@@ -16,6 +19,7 @@ export default {
   data() {
     return {
       JobService: new JobProvider(),
+      load: false,
     }
   },
   computed: {
@@ -25,6 +29,7 @@ export default {
   },
   methods: {
     async updateJob(form) {
+      this.load = true
       const status = await this.JobService.updateJob(this.idParams, form)
       if (status.message === 'success') {
         Swal.fire({
@@ -39,6 +44,7 @@ export default {
           text: `${status.status}`,
           icon: 'error',
         })
+        this.load = false
       }
     },
   },

@@ -7,6 +7,9 @@
         :idParams="idParams"
         @create-update="updateSkill" />
     </div>
+    <div v-if="load" class="bg-loading">
+      <Loading />
+    </div>
   </div>
 </template>
 <script>
@@ -16,6 +19,7 @@ export default {
   data() {
     return {
       SkillService: new SkillProvider(),
+      load: false,
     }
   },
   computed: {
@@ -25,6 +29,7 @@ export default {
   },
   methods: {
     async updateSkill(form) {
+      this.load = true
       const status = await this.SkillService.updateSkill(this.idParams, form)
       if (status.message === 'success') {
         Swal.fire({
@@ -39,6 +44,7 @@ export default {
           text: `${status.status}`,
           icon: 'error',
         })
+        this.load = false
       }
     },
   },

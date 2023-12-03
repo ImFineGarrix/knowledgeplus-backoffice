@@ -38,7 +38,7 @@
       <v-autocomplete
         clearable
         class="custom-autocomplete"
-        :items="levels"
+        :items="levelStore.level"
         item-title="name"
         item-value="levelId"
         v-model="form.levelId"
@@ -53,6 +53,9 @@
         </div>
       </div>
     </v-form>
+    <div v-if="loading" class="bg-loading">
+      <Loading />
+    </div>
   </div>
 </template>
 
@@ -62,6 +65,7 @@ import SkillProvider from '~/resources/SkillProvider'
 import FirebaseProvider from '~/resources/FirebaseProvider'
 import { useRuntimeConfig } from 'nuxt/app'
 import { useFormRules } from '~/composables/rules'
+import { useLevelStore } from '~/stores/Levels'
 
 export default {
   props: {
@@ -79,6 +83,7 @@ export default {
       LevelService: new LevelProvider(),
       SkillService: new SkillProvider(),
       FirebaseService: new FirebaseProvider(),
+      loading: false,
       form: {
         name: '',
         levelId: null,
@@ -86,7 +91,7 @@ export default {
         imageUrl: null,
       },
       rules: useFormRules(),
-      levels: [],
+      levelStore: useLevelStore(),
       previewImage: null,
       config: useRuntimeConfig(),
     }
@@ -95,12 +100,14 @@ export default {
     if (this.idParams) {
       this.getSkillById(this.idParams)
     }
-    this.getLevel()
+    if (!this.levelStore.level.length) {
+      this.getLevel()
+    }
   },
   methods: {
     async getLevel() {
       const { data } = await this.LevelService.getLevel()
-      this.levels = JSON.parse(JSON.stringify(data))
+      this.levelStore.setLevel(data)
     },
     async getSkillById(id) {
       const { data } = await this.SkillService.getSkillById(id)
@@ -121,6 +128,7 @@ export default {
     async setForm() {
       const { valid } = await this.$refs.form.validate()
       if (valid) {
+        this.loading = true
         const urlImage = await this.uploadFile(
           this.form.imageUrl,
           this.form.name
@@ -130,6 +138,7 @@ export default {
           imageUrl: urlImage,
         }
         this.$emit('create-update', form)
+        this.loading = false
       } else {
         window.scrollTo({
           top: 0,

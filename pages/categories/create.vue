@@ -4,6 +4,9 @@
     <div class="tw-my-8">
       <FormCategory actionButton="Create" @create-update="createCategory" />
     </div>
+    <div v-if="load" class="bg-loading">
+      <Loading />
+    </div>
   </div>
 </template>
 
@@ -15,10 +18,12 @@ export default {
   data() {
     return {
       CategoryService: new CategoryProvider(),
+      load: false,
     }
   },
   methods: {
     async createCategory(form) {
+      this.load = true
       const status = await this.CategoryService.createCategory(form)
       if (status.message === 'success') {
         Swal.fire({
@@ -33,6 +38,7 @@ export default {
           text: `${status.status}`,
           icon: 'error',
         })
+        this.load = false
       }
     },
   },
