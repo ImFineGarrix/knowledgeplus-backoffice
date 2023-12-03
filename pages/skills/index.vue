@@ -21,7 +21,7 @@
                   "
                   :src="`${config.public.firebaseBaseUrl}${slotProps.data.imageUrl}`"
                   :class="slotProps.data.imageUrl ? `tw-bg-emerald-600` : ''"
-                  class="tw-w-12 tw-rounded-xl tw-p-2" />
+                  class="tw-w-12 tw-h-12 tw-object-cover tw-rounded-xl tw-p-3" />
               </div>
             </template>
           </Column>
@@ -59,12 +59,11 @@
       </div>
       <Loading v-else />
     </div>
-    <v-dialog
-      v-model="dialog.openDialog"
-      max-width="40%"
-      @click:outside="closeDialog()">
-      <img :src="dialog.image" class="tw-rounded-xl" />
-    </v-dialog>
+    <ImagePreview
+      :status="dialog.openDialog"
+      :img="dialog.image"
+      isSkill
+      @update-status="closeDialog" />
   </div>
 </template>
 <script>
@@ -161,8 +160,8 @@ export default {
       )
     },
     openDialog(image) {
-      this.dialog.openDialog = true
       this.dialog.image = image
+      this.dialog.openDialog = !!this.dialog.image
     },
     closeDialog() {
       this.dialog.openDialog = false
