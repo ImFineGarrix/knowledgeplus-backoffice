@@ -11,7 +11,7 @@ export const useLevelStore = defineStore('level', {
 
   actions: {
     setLevel(item) {
-      this.level = item
+      this.levels = item
     },
   },
 })

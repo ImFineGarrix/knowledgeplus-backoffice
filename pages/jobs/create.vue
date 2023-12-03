@@ -4,6 +4,9 @@
     <div class="tw-my-8">
       <FormJob actionButton="Create" @create-update="createJob" />
     </div>
+    <div v-if="load" class="bg-loading">
+      <Loading />
+    </div>
   </div>
 </template>
 <script>
@@ -14,10 +17,12 @@ export default {
   data() {
     return {
       JobService: new JobProvider(),
+      load: false,
     }
   },
   methods: {
     async createJob(form) {
+      this.load = true
       const status = await this.JobService.createJob(form)
       if (status.message === 'success') {
         Swal.fire({
@@ -32,6 +37,7 @@ export default {
           title: 'Create Job Fail',
           text: `${status.status}`,
         })
+        this.load = false
       }
     },
   },

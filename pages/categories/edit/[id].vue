@@ -7,6 +7,9 @@
         :idParams="idParams"
         @create-update="updateCategory" />
     </div>
+    <div v-if="load" class="bg-loading">
+      <Loading />
+    </div>
   </div>
 </template>
 <script>
@@ -16,6 +19,7 @@ export default {
   data() {
     return {
       CategoryService: new CategoryProvider(),
+      load: false,
     }
   },
   computed: {
@@ -25,6 +29,7 @@ export default {
   },
   methods: {
     async updateCategory(form) {
+      this.load = true
       const status = await this.CategoryService.updateCategory(
         this.idParams,
         form
@@ -42,6 +47,7 @@ export default {
           text: `${status.status}`,
           icon: 'error',
         })
+        this.load = false
       }
     },
   },

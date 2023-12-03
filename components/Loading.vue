@@ -5,8 +5,8 @@
 .spinner-loading {
   width: 50px;
   height: 50px;
-  border: 0.5rem solid #4eacff;
-  margin: 250px auto;
+  border: 0.5rem solid #319f43;
+  margin: 200px auto;
   animation: spinning 2.5s infinite;
 }
 @keyframes spinning {
