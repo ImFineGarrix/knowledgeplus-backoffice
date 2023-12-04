@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import vuetify from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
@@ -19,6 +18,7 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: 'Knowledge Back-office',
     },
+    baseURL: '/backoffice',
   },
   plugins: [{ src: '~/plugins/sweetalert2', mode: 'client' }],
   pages: true,
@@ -35,10 +35,6 @@ export default defineNuxtConfig({
       )
     },
   ],
-  dayjs: {
-    locales: ['th', 'en'],
-    plugins: ['advancedFormat', 'utc', 'timezone', 'localizedFormat'],
-  },
   vite: {
     optimizeDeps: { exclude: ['fsevents'] },
   },
