@@ -43,9 +43,6 @@
         </div>
       </div>
     </v-form>
-    <div v-if="loading" class="bg-loading">
-      <Loading />
-    </div>
   </div>
 </template>
 
@@ -71,7 +68,6 @@ export default {
       JobService: new JobProvider(),
       SkillService: new SkillProvider(),
       CategoryService: new CategoryProvider(),
-      loading: false,
       categories: [],
       skills: [],
       form: {
@@ -111,18 +107,7 @@ export default {
     async setForm() {
       const { valid } = await this.$refs.form.validate()
       if (valid) {
-        this.loading = true
-        const form = {
-          ...this.form,
-          categories: this.form.categories.map((category) => ({
-            categoryId: category,
-          })),
-          skills: this.form.skills.map((skill) => ({
-            skillId: skill,
-          })),
-        }
-        this.$emit('create-update', form)
-        this.loading = false
+        this.$emit('create-update', this.form)
       } else {
         window.scrollTo({
           top: 0,

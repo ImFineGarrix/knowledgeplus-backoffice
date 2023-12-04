@@ -7,7 +7,7 @@
         :idParams="idParams"
         @create-update="updateJob" />
     </div>
-    <div v-if="load" class="bg-loading">
+    <div v-if="loading" class="bg-loading">
       <Loading />
     </div>
   </div>
@@ -29,8 +29,17 @@ export default {
   },
   methods: {
     async updateJob(form) {
-      this.load = true
-      const status = await this.JobService.updateJob(this.idParams, form)
+      this.loading = true
+      const formJob = {
+        ...form,
+        categories: form.categories.map((category) => ({
+          categoryId: category,
+        })),
+        skills: form.skills.map((skill) => ({
+          skillId: skill,
+        })),
+      }
+      const status = await this.JobService.updateJob(this.idParams, formJob)
       if (status.message === 'success') {
         Swal.fire({
           title: 'Update Job Success',
@@ -44,7 +53,7 @@ export default {
           text: `${status.status}`,
           icon: 'error',
         })
-        this.load = false
+        this.loading = false
       }
     },
   },
