@@ -81,11 +81,6 @@ export default {
       loading: false,
     }
   },
-  watch: {
-    loading(newVal) {
-      this.loading = newVal
-    },
-  },
   mounted() {
     if (this.idParams) {
       this.getCategoryById(this.idParams)

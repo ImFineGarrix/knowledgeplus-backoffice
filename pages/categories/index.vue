@@ -8,7 +8,10 @@
     <div class="tw-my-8">
       <div v-if="ready">
         <DataTable :value="categories">
-          <Column field="imageUrl" header="" class="tw-w-2/12">
+          <Column field="imageUrl" header="" class="tw-w-2/12 tw-py-2">
+            <template #header>
+              <div class="tw-py-5"></div>
+            </template>
             <template #body="slotProps">
               <div
                 class="tw-flex tw-justify-center"
@@ -32,7 +35,7 @@
                   <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
                 </NuxtLink>
                 <v-icon
-                  class="tw-cursor-pointer tw-text-rose-600"
+                  class="tw-cursor-pointer tw-text-rose-500"
                   @click="
                     deleteCategory(
                       slotProps.data.categoryId,
@@ -51,7 +54,6 @@
     <ImagePreview
       :status="dialog.openDialog"
       :img="dialog.image"
-      isSkill
       @update-status="closeDialog" />
   </div>
 </template>
