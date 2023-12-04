@@ -4,7 +4,7 @@
       <div class="preview-image-box">
         <img
           :src="img"
-          :class="isSkill ? 'preview-image-skill' : 'preview-image'"
+          :class="activeClass ? 'preview-image-skill' : 'preview-image'"
           alt="preview-image" />
       </div>
       <v-btn
@@ -27,7 +27,7 @@ export default {
     },
     img: {
       type: String,
-      default: null,
+      default: () => null,
     },
     isSkill: {
       type: Boolean,
@@ -37,6 +37,9 @@ export default {
   computed: {
     dialog() {
       return this.status
+    },
+    activeClass() {
+      return this.isSkill
     },
   },
   methods: {
@@ -51,9 +54,10 @@ export default {
 .preview-image-card {
   position: relative;
   img.preview-image {
-    height: 80vh;
+    height: 70vh;
     width: auto;
     object-fit: contain;
+    background-color: white;
   }
   img.preview-image-skill {
     height: 60vh;

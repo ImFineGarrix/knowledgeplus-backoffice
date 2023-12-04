@@ -10,7 +10,7 @@
         <div v-for="(menu, indexMenu) in menus" :key="`menu-${indexMenu}`">
           <div class="tw-my-4 tw-font-semibold text-capitalize tw-flex">
             <NuxtLink :to="menu.link" class="tw-flex">
-              <span class="ml-4">{{ menu.name }}</span>
+              <span class="mx-1">{{ menu.name }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -56,6 +56,6 @@ export default {
 .container-menu {
   color: black !important;
   font-size: 14px !important;
-  padding-left: 35px !important;
+  padding-left: 28px !important;
 }
 </style>

@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@/assets/css/main.css',
     '@/assets/css/font.css',
     '@mdi/font/css/materialdesignicons.css',
+    'vuetify/styles',
   ],
   postcss: {
     plugins: {
