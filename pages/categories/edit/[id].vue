@@ -1,19 +1,20 @@
 <template>
   <div>
-    <HeaderBack title="Create Category" link="/categories" />
+    <HeaderBack title="Edit Category" link="/categories" />
     <div class="tw-my-8">
-      <FormCategory actionButton="Create" @create-update="createCategory" />
+      <FormCategory
+        actionButton="Save"
+        :idParams="idParams"
+        @create-update="updateCategory" />
     </div>
     <div v-if="load" class="bg-loading">
       <Loading />
     </div>
   </div>
 </template>
-
 <script>
 import CategoryProvider from '~/resources/CategoryProvider'
 import Swal from 'sweetalert2'
-
 export default {
   data() {
     return {
@@ -21,20 +22,28 @@ export default {
       load: false,
     }
   },
+  computed: {
+    idParams() {
+      return this.$route.params.id || ''
+    },
+  },
   methods: {
-    async createCategory(form) {
+    async updateCategory(form) {
       this.load = true
-      const status = await this.CategoryService.createCategory(form)
+      const status = await this.CategoryService.updateCategory(
+        this.idParams,
+        form
+      )
       if (status.message === 'success') {
         Swal.fire({
-          title: 'Create Category Success',
+          title: 'Update Category Success',
           icon: 'success',
         }).then(() => {
           this.$router.push('/categories')
         })
       } else {
         Swal.fire({
-          title: `Create Category Fail`,
+          title: `Update Category Fail`,
           text: `${status.status}`,
           icon: 'error',
         })
@@ -44,5 +53,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped></style>

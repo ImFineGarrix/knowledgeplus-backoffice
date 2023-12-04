@@ -1,8 +1,11 @@
 <template>
   <div>
-    <HeaderBack title="Create Jobs" link="/jobs" />
+    <HeaderBack title="Edit Jobs" link="/jobs" />
     <div class="tw-my-8">
-      <FormJob actionButton="Create" @create-update="createJob" />
+      <FormJob
+        actionButton="Save"
+        :idParams="idParams"
+        @create-update="updateJob" />
     </div>
     <div v-if="load" class="bg-loading">
       <Loading />
@@ -10,9 +13,8 @@
   </div>
 </template>
 <script>
-import JobProvider from '@/resources/JobProvider'
 import Swal from 'sweetalert2'
-
+import JobProvider from '~/resources/JobProvider'
 export default {
   data() {
     return {
@@ -20,22 +22,27 @@ export default {
       load: false,
     }
   },
+  computed: {
+    idParams() {
+      return this.$route.params.id || ''
+    },
+  },
   methods: {
-    async createJob(form) {
+    async updateJob(form) {
       this.load = true
-      const status = await this.JobService.createJob(form)
+      const status = await this.JobService.updateJob(this.idParams, form)
       if (status.message === 'success') {
         Swal.fire({
+          title: 'Update Job Success',
           icon: 'success',
-          title: 'Create Job Success',
         }).then(() => {
           this.$router.push('/jobs')
         })
       } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Create Job Fail',
+          title: `Update Job Fail`,
           text: `${status.status}`,
+          icon: 'error',
         })
         this.load = false
       }

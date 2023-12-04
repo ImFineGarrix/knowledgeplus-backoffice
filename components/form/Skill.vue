@@ -1,29 +1,28 @@
 <template>
   <div>
-    <v-form ref="form" class="tw-space-y-4">
+    <v-form ref="form" class="tw-space-y-2">
       <v-text-field
         v-model.trim="form.name"
-        label="ชื่อสายงาน"
-        :rules="[rules.ruleRequired]"
-        variant="outlined"></v-text-field>
-      <div>
+        label="ชื่อทักษะ"
+        variant="outlined" />
+      <div class="tw-pb-4">
         <div v-if="checkImage()">
           <label for="upload-image" class="tw-cursor-pointer">
             <div
               class="tw-w-full tw-h-40 tw-border-2 tw-flex tw-justify-center tw-items-center tw-border-dotted tw-border-black tw-bg-[#F4F4F4] tw-font-semibold tw-text-[#626262]">
-              อัปโหลดรูปภาพ
+              อัปโหลดไอคอนทักษะ
             </div>
           </label>
           <input
             id="upload-image"
             type="file"
-            accept="image/*"
+            accept=".svg"
             hidden
             @change="uploadImage($event)" />
         </div>
         <div v-else>
           <div
-            class="tw-relative tw-w-full tw-h-64 tw-border tw-flex tw-justify-center tw-border-black hover-image">
+            class="tw-relative tw-w-full tw-h-64 tw-border tw-flex tw-justify-center tw-bg-[#cecece] tw-border-black hover-image">
             <div
               class="delete-image tw-absolute tw-text-rose-500 tw-top-[50%] tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%] tw-bg-white tw-p-5 tw-rounded-full tw-shadow-xl tw-cursor-pointer">
               <IconDelete @click="removeImage()" />
@@ -36,7 +35,17 @@
           </div>
         </div>
       </div>
-      <div class="tw-flex tw-justify-end tw-pt-4">
+      <v-autocomplete
+        clearable
+        class="custom-autocomplete"
+        :items="levelStore.level"
+        item-title="name"
+        item-value="levelId"
+        v-model="form.levelId"
+        label="ระดับทักษะ"
+        variant="outlined" />
+      <v-textarea v-model="form.desc" label="คำอธิบาย" variant="outlined" />
+      <div class="tw-flex tw-justify-end">
         <div
           @click="setForm()"
           class="tw-bg-[#51b462] tw-px-8 tw-py-2 tw-text-white tw-rounded-md tw-cursor-pointer">
@@ -51,10 +60,12 @@
 </template>
 
 <script>
+import LevelProvider from '~/resources/LevelProvider'
+import SkillProvider from '~/resources/SkillProvider'
 import FirebaseProvider from '~/resources/FirebaseProvider'
-import CategoryProvider from '~/resources/CategoryProvider'
 import { useRuntimeConfig } from 'nuxt/app'
 import { useFormRules } from '~/composables/rules'
+import { useLevelStore } from '~/stores/Levels'
 
 export default {
   props: {
@@ -69,29 +80,38 @@ export default {
   },
   data() {
     return {
-      CategoryService: new CategoryProvider(),
+      LevelService: new LevelProvider(),
+      SkillService: new SkillProvider(),
       FirebaseService: new FirebaseProvider(),
+      loading: false,
       form: {
         name: '',
+        levelId: null,
+        description: '',
         imageUrl: null,
       },
+      rules: useFormRules(),
+      levelStore: useLevelStore(),
       previewImage: null,
       config: useRuntimeConfig(),
-      rules: useFormRules(),
-      loading: false,
     }
   },
   mounted() {
     if (this.idParams) {
-      this.getCategoryById(this.idParams)
+      this.getSkillById(this.idParams)
+    }
+    if (!this.levelStore.level.length) {
+      this.getLevel()
     }
   },
   methods: {
-    async getCategoryById(id) {
-      const data = await this.CategoryService.getCategoryById(id)
-      if (data.message === 'success') {
-        this.form = data.data
-      }
+    async getLevel() {
+      const { data } = await this.LevelService.getLevel()
+      this.levelStore.setLevel(data)
+    },
+    async getSkillById(id) {
+      const { data } = await this.SkillService.getSkillById(id)
+      this.form = data
     },
     uploadImage(e) {
       const file = e.target.files[0]
@@ -137,10 +157,8 @@ export default {
         return file
       }
 
-      return await this.FirebaseService.uploadFile(`category/${name}`, file)
+      return await this.FirebaseService.uploadFile(`skill/${name}`, file)
     },
   },
 }
 </script>
-
-<style lang="scss" scoped></style>

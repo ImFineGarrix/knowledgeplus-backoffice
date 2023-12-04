@@ -1,8 +1,11 @@
 <template>
   <div>
-    <HeaderBack title="Create Skill" link="/skills" />
+    <HeaderBack title="Edit Skill" link="/skills" />
     <div class="tw-my-8">
-      <FormSkill actionButton="Create" @create-update="createSkill" />
+      <FormSkill
+        actionButton="Save"
+        :idParams="idParams"
+        @create-update="updateSkill" />
     </div>
     <div v-if="load" class="bg-loading">
       <Loading />
@@ -10,8 +13,8 @@
   </div>
 </template>
 <script>
-import SkillProvider from '~/resources/SkillProvider'
 import Swal from 'sweetalert2'
+import SkillProvider from '~/resources/SkillProvider'
 export default {
   data() {
     return {
@@ -19,22 +22,27 @@ export default {
       load: false,
     }
   },
+  computed: {
+    idParams() {
+      return this.$route.params.id || ''
+    },
+  },
   methods: {
-    async createSkill(form) {
+    async updateSkill(form) {
       this.load = true
-      const status = await this.SkillService.createSkill(form)
+      const status = await this.SkillService.updateSkill(this.idParams, form)
       if (status.message === 'success') {
         Swal.fire({
+          title: 'Update Skill Success',
           icon: 'success',
-          title: 'Create Skill Success',
         }).then(() => {
           this.$router.push('/skills')
         })
       } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Create Skill Fail',
+          title: `Update Skill Fail`,
           text: `${status.status}`,
+          icon: 'error',
         })
         this.load = false
       }

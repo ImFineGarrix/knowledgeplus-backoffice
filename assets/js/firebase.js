@@ -1,14 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
+import { useRuntimeConfig } from "nuxt/app";
+
+const config = useRuntimeConfig()
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBD9Sib0McpeRzQ7RLWlgw2f83x-O4UEiE",
-  authDomain: "knowledge-project-7e224.firebaseapp.com",
-  projectId: "knowledge-project-7e224",
-  storageBucket: "knowledge-project-7e224.appspot.com",
+  apiKey: config.public.firebaseApiKey,
+  authDomain: config.public.firebaseAuthDomain,
+  projectId: config.public.firebaseProjectId,
+  storageBucket: config.public.firebaseStorageBucket,
   messagingSenderId: "334590771194",
-  appId: "1:334590771194:web:d2d63763aee80c8ce56e43",
+  appId: config.public.firebaseAppId,
   measurementId: "G-4263LPRR8L"
 };
 
