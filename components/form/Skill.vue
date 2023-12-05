@@ -44,7 +44,10 @@
         v-model="form.levelId"
         label="ระดับทักษะ"
         variant="outlined" />
-      <v-textarea v-model="form.desc" label="คำอธิบาย" variant="outlined" />
+      <v-textarea
+        v-model="form.description"
+        label="คำอธิบาย"
+        variant="outlined" />
       <div class="tw-flex tw-justify-end">
         <div
           @click="setForm()"
