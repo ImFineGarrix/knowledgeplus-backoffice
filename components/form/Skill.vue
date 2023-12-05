@@ -53,16 +53,12 @@
         </div>
       </div>
     </v-form>
-    <div v-if="loading" class="bg-loading">
-      <Loading />
-    </div>
   </div>
 </template>
 
 <script>
 import LevelProvider from '~/resources/LevelProvider'
 import SkillProvider from '~/resources/SkillProvider'
-import FirebaseProvider from '~/resources/FirebaseProvider'
 import { useRuntimeConfig } from 'nuxt/app'
 import { useFormRules } from '~/composables/rules'
 import { useLevelStore } from '~/stores/Levels'
@@ -82,8 +78,6 @@ export default {
     return {
       LevelService: new LevelProvider(),
       SkillService: new SkillProvider(),
-      FirebaseService: new FirebaseProvider(),
-      loading: false,
       form: {
         name: '',
         levelId: null,
@@ -128,17 +122,7 @@ export default {
     async setForm() {
       const { valid } = await this.$refs.form.validate()
       if (valid) {
-        this.loading = true
-        const urlImage = await this.uploadFile(
-          this.form.imageUrl,
-          this.form.name
-        )
-        const form = {
-          ...this.form,
-          imageUrl: urlImage,
-        }
-        this.$emit('create-update', form)
-        this.loading = false
+        this.$emit('create-update', this.form)
       } else {
         window.scrollTo({
           top: 0,
@@ -146,18 +130,6 @@ export default {
           behavior: 'smooth',
         })
       }
-    },
-    async uploadFile(file, name) {
-      if (!file) {
-        return ''
-      }
-
-      const typeFile = typeof file
-      if (typeFile === 'string') {
-        return file
-      }
-
-      return await this.FirebaseService.uploadFile(`skill/${name}`, file)
     },
   },
 }

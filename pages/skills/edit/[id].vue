@@ -7,7 +7,7 @@
         :idParams="idParams"
         @create-update="updateSkill" />
     </div>
-    <div v-if="load" class="bg-loading">
+    <div v-if="loading" class="bg-loading">
       <Loading />
     </div>
   </div>
@@ -15,11 +15,13 @@
 <script>
 import Swal from 'sweetalert2'
 import SkillProvider from '~/resources/SkillProvider'
+import FirebaseProvider from '~/resources/FirebaseProvider'
 export default {
   data() {
     return {
       SkillService: new SkillProvider(),
-      load: false,
+      FirebaseService: new FirebaseProvider(),
+      loading: false,
     }
   },
   computed: {
@@ -29,23 +31,51 @@ export default {
   },
   methods: {
     async updateSkill(form) {
-      this.load = true
-      const status = await this.SkillService.updateSkill(this.idParams, form)
-      if (status.message === 'success') {
-        Swal.fire({
-          title: 'Update Skill Success',
-          icon: 'success',
-        }).then(() => {
-          this.$router.push('/skills')
-        })
+      this.loading = true
+      const urlImage = await this.uploadFile(form.imageUrl, form.name)
+      if (urlImage !== 'error') {
+        const formSkill = {
+          ...form,
+          imageUrl: urlImage,
+        }
+        const status = await this.SkillService.updateSkill(
+          this.idParams,
+          formSkill
+        )
+        if (status.message === 'success') {
+          Swal.fire({
+            title: 'Update Skill Success',
+            icon: 'success',
+          }).then(() => {
+            this.$router.push('/skills')
+          })
+        } else {
+          Swal.fire({
+            title: `Update Skill Fail`,
+            text: `${status.status}`,
+            icon: 'error',
+          })
+          this.loading = false
+        }
       } else {
         Swal.fire({
-          title: `Update Skill Fail`,
-          text: `${status.status}`,
           icon: 'error',
+          title: 'Upload Image Fail',
         })
-        this.load = false
+        this.loading = false
       }
+    },
+    async uploadFile(file, name) {
+      if (!file) {
+        return ''
+      }
+
+      const typeFile = typeof file
+      if (typeFile === 'string') {
+        return file
+      }
+
+      return await this.FirebaseService.uploadFile(`skill/${name}`, file)
     },
   },
 }

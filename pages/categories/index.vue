@@ -7,47 +7,53 @@
       link="/categories/create" />
     <div class="tw-my-8">
       <div v-if="ready">
-        <DataTable :value="categories">
-          <Column field="imageUrl" header="" class="tw-w-2/12 tw-py-2">
-            <template #header>
-              <div class="tw-py-5"></div>
-            </template>
-            <template #body="slotProps">
-              <div
-                class="tw-flex tw-justify-center"
-                v-if="slotProps.data.imageUrl">
-                <img
-                  @click="
-                    openDialog(
-                      `${config.public.firebaseBaseUrl}${slotProps.data.imageUrl}`
-                    )
-                  "
-                  :src="`${config.public.firebaseBaseUrl}${slotProps.data.imageUrl}`"
-                  class="tw-w-16 tw-h-16 tw-object-cover tw-rounded-xl tw-p-2" />
-              </div>
-            </template>
-          </Column>
-          <Column field="name" header="สายงาน (ใช้สำหรับหน้าเว็บ)"></Column>
-          <Column field="actionButton" header="" class="tw-w-2/12">
-            <template #body="slotProps">
-              <div class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end">
-                <NuxtLink :to="`/categories/edit/${slotProps.data.categoryId}`">
-                  <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
-                </NuxtLink>
-                <v-icon
-                  class="tw-cursor-pointer tw-text-rose-500"
-                  @click="
-                    deleteCategory(
-                      slotProps.data.categoryId,
-                      slotProps.data.name
-                    )
-                  "
-                  >mdi-delete</v-icon
-                >
-              </div>
-            </template>
-          </Column>
-        </DataTable>
+        <v-card>
+          <DataTable :value="categories">
+            <Column field="imageUrl" header="" class="tw-w-2/12 tw-py-2">
+              <template #header>
+                <div class="tw-py-5"></div>
+              </template>
+              <template #body="slotProps">
+                <div
+                  class="tw-flex tw-justify-center"
+                  v-if="slotProps.data.imageUrl">
+                  <img
+                    @click="
+                      openDialog(
+                        `${config.public.firebaseBaseUrl}${slotProps.data.imageUrl}`
+                      )
+                    "
+                    :src="`${config.public.firebaseBaseUrl}${slotProps.data.imageUrl}`"
+                    class="tw-w-16 tw-h-16 tw-object-cover tw-rounded-xl tw-p-2" />
+                </div>
+              </template>
+            </Column>
+            <Column field="name" header="สายงาน (ใช้สำหรับหน้าเว็บ)"></Column>
+            <Column field="actionButton" header="" class="tw-w-2/12">
+              <template #body="slotProps">
+                <div
+                  :class="slotProps.data.imageUrl ? '' : 'tw-py-8'"
+                  class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end">
+                  <NuxtLink
+                    :to="`/categories/edit/${slotProps.data.categoryId}`">
+                    <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
+                  </NuxtLink>
+                  <v-icon
+                    color="error"
+                    class="tw-cursor-pointer"
+                    @click="
+                      deleteCategory(
+                        slotProps.data.categoryId,
+                        slotProps.data.name
+                      )
+                    "
+                    >mdi-delete</v-icon
+                  >
+                </div>
+              </template>
+            </Column>
+          </DataTable>
+        </v-card>
       </div>
       <Loading v-else />
     </div>
