@@ -4,34 +4,47 @@
       <v-text-field
         v-model.trim="form.name"
         label="ชื่อทักษะ"
+        :rules="[rules.ruleRequired]"
         variant="outlined" />
-      <div class="tw-pb-4">
+      <div class="tw-pb-4 tw-space-y-2">
+        <p class="text-lg tw-font-semibold">
+          อัปโหลดไอคอนทักษะ (แนะนำเป็นไฟล์ SVG)<span
+            class="tw-text-rose-600 tw-ml-2"
+            >*</span
+          >
+        </p>
         <div v-if="checkImage()">
           <label for="upload-image" class="tw-cursor-pointer">
             <div
+              :class="validImage ? 'tw-bg-rose-100 tw-border-rose-600' : ''"
               class="tw-w-full tw-h-40 tw-border-2 tw-flex tw-justify-center tw-items-center tw-border-dotted tw-border-black tw-bg-[#F4F4F4] tw-font-semibold tw-text-[#626262]">
-              อัปโหลดไอคอนทักษะ
+              <v-icon :color="validImage ? 'error' : ''" size="x-large"
+                >mdi-image-filter-hdr</v-icon
+              >
             </div>
           </label>
           <input
             id="upload-image"
             type="file"
-            accept=".svg"
+            accept="image/*"
             hidden
             @change="uploadImage($event)" />
         </div>
         <div v-else>
           <div
-            class="tw-relative tw-w-full tw-h-64 tw-border tw-flex tw-justify-center tw-bg-[#cecece] tw-border-black hover-image">
+            class="tw-relative tw-w-full tw-h-64 tw-border tw-flex tw-justify-center tw-border-black hover-image">
             <div
               class="delete-image tw-absolute tw-text-rose-500 tw-top-[50%] tw-left-[50%] tw-translate-x-[-50%] tw-translate-y-[-50%] tw-bg-white tw-p-5 tw-rounded-full tw-shadow-xl tw-cursor-pointer">
               <IconDelete @click="removeImage()" />
             </div>
-            <img
-              :src="
-                previewImage ||
-                `${config.public.firebaseBaseUrl}${form.imageUrl}`
-              " />
+            <div class="tw-flex tw-items-center">
+              <img
+                class="tw-h-40 tw-w-auto"
+                :src="
+                  previewImage ||
+                  `${config.public.firebaseBaseUrl}${form.imageUrl}`
+                " />
+            </div>
           </div>
         </div>
       </div>
@@ -43,6 +56,7 @@
         item-value="levelId"
         v-model="form.levelId"
         label="ระดับทักษะ"
+        :rules="[rules.ruleRequired]"
         variant="outlined" />
       <v-textarea
         v-model="form.description"
@@ -91,6 +105,7 @@ export default {
       levelStore: useLevelStore(),
       previewImage: null,
       config: useRuntimeConfig(),
+      validImage: false,
     }
   },
   mounted() {
@@ -124,9 +139,12 @@ export default {
     },
     async setForm() {
       const { valid } = await this.$refs.form.validate()
-      if (valid) {
+      if (valid && this.form.imageUrl) {
         this.$emit('create-update', this.form)
       } else {
+        if (!this.form.imageUrl) {
+          this.validImage = true
+        }
         window.scrollTo({
           top: 0,
           left: 0,

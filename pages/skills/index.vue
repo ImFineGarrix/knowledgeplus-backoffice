@@ -24,8 +24,12 @@
                       )
                     "
                     :src="`${config.public.firebaseBaseUrl}${slotProps.data.imageUrl}`"
-                    :class="slotProps.data.imageUrl ? `tw-bg-emerald-600` : ''"
                     class="tw-w-12 tw-h-12 tw-object-cover tw-rounded-xl tw-p-3" />
+                </div>
+                <div
+                  v-else
+                  class="tw-font-semibold tw-text-xs tw-flex tw-justify-center tw-text-black">
+                  NO IMAGE
                 </div>
               </template>
             </Column>

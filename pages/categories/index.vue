@@ -26,6 +26,11 @@
                     :src="`${config.public.firebaseBaseUrl}${slotProps.data.imageUrl}`"
                     class="tw-w-16 tw-h-16 tw-object-cover tw-rounded-xl tw-p-2" />
                 </div>
+                <div
+                  v-else
+                  class="tw-font-semibold tw-text-xs tw-flex tw-justify-center tw-text-black">
+                  NO IMAGE
+                </div>
               </template>
             </Column>
             <Column field="name" header="สายงาน (ใช้สำหรับหน้าเว็บ)"></Column>
