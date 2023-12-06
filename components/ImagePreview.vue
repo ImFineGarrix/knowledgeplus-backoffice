@@ -64,7 +64,6 @@ export default {
     width: auto;
     object-fit: contain;
     padding: 40px;
-    background-color: rgb(5 150 105);
   }
   .preview-image-close {
     position: absolute;

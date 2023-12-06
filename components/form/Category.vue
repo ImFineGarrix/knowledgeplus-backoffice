@@ -6,12 +6,18 @@
         label="ชื่อสายงาน"
         :rules="[rules.ruleRequired]"
         variant="outlined"></v-text-field>
-      <div>
+      <div class="tw-space-y-2">
+        <p class="text-lg tw-font-semibold">
+          อัปโหลดรูปภาพ<span class="tw-text-rose-600 tw-ml-2">*</span>
+        </p>
         <div v-if="checkImage()">
           <label for="upload-image" class="tw-cursor-pointer">
             <div
+              :class="validImage ? 'tw-bg-rose-100 tw-border-rose-600' : ''"
               class="tw-w-full tw-h-40 tw-border-2 tw-flex tw-justify-center tw-items-center tw-border-dotted tw-border-black tw-bg-[#F4F4F4] tw-font-semibold tw-text-[#626262]">
-              อัปโหลดรูปภาพ
+              <v-icon :color="validImage ? 'error' : ''" size="x-large"
+                >mdi-image-filter-hdr</v-icon
+              >
             </div>
           </label>
           <input
@@ -73,6 +79,7 @@ export default {
       previewImage: null,
       config: useRuntimeConfig(),
       rules: useFormRules(),
+      validImage: false,
     }
   },
   mounted() {
@@ -101,9 +108,12 @@ export default {
     },
     async setForm() {
       const { valid } = await this.$refs.form.validate()
-      if (valid) {
+      if (valid && this.form.imageUrl) {
         this.$emit('create-update', this.form)
       } else {
+        if (!this.form.imageUrl) {
+          this.validImage = true
+        }
         window.scrollTo({
           top: 0,
           left: 0,
