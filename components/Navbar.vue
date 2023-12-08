@@ -39,14 +39,14 @@ export default {
           name: 'Skills',
           link: '/skills',
         },
-        {
-          name: 'Course',
-          link: '/courses',
-        },
-        {
-          name: 'Admin',
-          link: '/admins',
-        },
+        // {
+        //   name: 'Course',
+        //   link: '/courses',
+        // },
+        // {
+        //   name: 'Admin',
+        //   link: '/admins',
+        // },
       ],
     }
   },
