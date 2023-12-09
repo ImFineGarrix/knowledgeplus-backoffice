@@ -68,3 +68,15 @@ input[type='date']::-webkit-calendar-picker-indicator {
   right: 0;
   bottom: 0;
 }
+.text-no-data {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+.text-please-add-data {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 0;
+  color: gray;
+}
