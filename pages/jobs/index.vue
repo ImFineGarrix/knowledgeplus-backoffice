@@ -139,7 +139,7 @@ export default {
       })
     },
     checkEmpty(items) {
-      return !!items
+      return !!items.length
     },
   },
 }
