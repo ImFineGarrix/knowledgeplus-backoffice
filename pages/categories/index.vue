@@ -142,7 +142,7 @@ export default {
       this.dialog.image = null
     },
     checkEmpty(items) {
-      return !!items
+      return !!items.length
     },
   },
 }
