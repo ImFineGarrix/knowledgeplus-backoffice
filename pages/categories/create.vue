@@ -43,7 +43,6 @@ export default {
         } else {
           Swal.fire({
             title: `Create Category Fail`,
-            text: `${status.status}`,
             icon: 'error',
           })
           this.load = false
@@ -55,6 +54,7 @@ export default {
         })
         this.loading = false
       }
+      this.loading = false
     },
     async uploadFile(file, name) {
       if (!file) {

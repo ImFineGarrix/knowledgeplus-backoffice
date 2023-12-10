@@ -163,7 +163,6 @@ export default {
             Swal.fire({
               icon: 'error',
               title: 'Delete Skill Fail',
-              text: `${status.status}`,
             })
           }
         }

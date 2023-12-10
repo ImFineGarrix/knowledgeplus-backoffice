@@ -44,10 +44,10 @@ export default {
         Swal.fire({
           icon: 'error',
           title: 'Create Job Fail',
-          text: `${status.status}`,
         })
         this.loading = false
       }
+      this.loading = false
     },
   },
 }

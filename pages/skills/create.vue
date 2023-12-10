@@ -42,7 +42,6 @@ export default {
           Swal.fire({
             icon: 'error',
             title: 'Create Skill Fail',
-            text: `${status.status}`,
           })
           this.loading = false
         }
@@ -53,6 +52,7 @@ export default {
         })
         this.loading = false
       }
+      this.loading = false
     },
     async uploadFile(file, name) {
       if (!file) {

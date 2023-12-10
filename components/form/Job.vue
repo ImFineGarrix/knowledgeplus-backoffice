@@ -3,8 +3,8 @@
     <v-form ref="form" class="tw-space-y-4">
       <v-text-field
         v-model.trim="form.name"
-        :rules="[rules.ruleRequired]"
-        label="ชื่ออาชีพ"
+        :rules="[rules.ruleRequired, rules.ruleLength255]"
+        label="ชื่ออาชีพ(ภาษาอังกฤษ)"
         variant="outlined" />
       <v-autocomplete
         chips
@@ -26,10 +26,6 @@
         item-title="name"
         item-value="skillId"
         label="ทักษะ"
-        variant="outlined" />
-      <v-textarea
-        v-model="form.shortDesc"
-        label="คำอธิบายสั้น"
         variant="outlined" />
       <v-textarea
         v-model="form.description"
@@ -74,7 +70,6 @@ export default {
         name: '',
         categories: [],
         skills: [],
-        shortDesc: '',
         description: '',
       },
       rules: useFormRules(),
