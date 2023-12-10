@@ -132,7 +132,6 @@ export default {
             Swal.fire({
               icon: 'error',
               title: 'Delete Job Fail',
-              text: `${status.status}`,
             })
           }
         }

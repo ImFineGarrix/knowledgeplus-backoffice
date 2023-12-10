@@ -15,6 +15,12 @@ export const useFormRules = () => {
     ruleWhiteSpace: (v) => {
       const pattern = /\s/
       return pattern.test(v) || "Empty space not allow"
+    },
+    ruleLength255: (v) => {
+      if (v.length > 255) {
+        return 'Required character less than 255'
+      }
+      return true
     }
   };
 };

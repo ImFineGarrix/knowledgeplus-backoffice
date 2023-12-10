@@ -57,6 +57,7 @@ class CategoryProvider extends HttpRequest {
         status: 200
       }
     } catch (e) {
+      console.log(e);
       return {
         message: 'error',
         status: e,

@@ -127,7 +127,6 @@ export default {
             Swal.fire({
               icon: 'error',
               title: 'Delete Category Fail',
-              text: `${status.status}`,
             })
           }
         }

@@ -3,8 +3,8 @@
     <v-form ref="form" class="tw-space-y-2">
       <v-text-field
         v-model.trim="form.name"
-        label="ชื่อทักษะ"
-        :rules="[rules.ruleRequired]"
+        label="ชื่อทักษะ(ภาษาอังกฤษ)"
+        :rules="[rules.ruleRequired, rules.ruleLength255]"
         variant="outlined" />
       <div class="tw-pb-4 tw-space-y-2">
         <p class="text-lg tw-font-semibold">

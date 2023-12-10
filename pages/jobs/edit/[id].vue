@@ -50,11 +50,11 @@ export default {
       } else {
         Swal.fire({
           title: `Update Job Fail`,
-          text: `${status.status}`,
           icon: 'error',
         })
         this.loading = false
       }
+      this.loading = false
     },
   },
 }
