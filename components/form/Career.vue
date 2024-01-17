@@ -15,7 +15,7 @@
         :items="categories"
         item-title="name"
         item-value="categoryId"
-        label="สายงาน"
+        label="groups"
         variant="outlined" />
       <v-autocomplete
         chips
@@ -43,10 +43,10 @@
 </template>
 
 <script>
-import CategoryProvider from '@/resources/CategoryProvider'
-import SkillProvider from '@/resources/SkillProvider'
-import JobProvider from '@/resources/JobProvider'
-import { useFormRules } from '@/composables/rules'
+import CategoryProvider from '@/resources/CategoryProvider';
+import SkillProvider from '@/resources/SkillProvider';
+import CareerProvider from '@/resources/CareerProvider';
+import { useFormRules } from '@/composables/rules';
 
 export default {
   props: {
@@ -61,7 +61,7 @@ export default {
   },
   data() {
     return {
-      JobService: new JobProvider(),
+      CareerService: new CareerProvider(),
       SkillService: new SkillProvider(),
       CategoryService: new CategoryProvider(),
       categories: [],
@@ -73,46 +73,46 @@ export default {
         description: '',
       },
       rules: useFormRules(),
-    }
+    };
   },
   mounted() {
     if (this.idParams) {
-      this.getJobById(this.idParams)
+      this.getCareerById(this.idParams);
     }
-    this.getCategories()
-    this.getSkills()
+    this.getCategories();
+    this.getSkills();
   },
   methods: {
     async getCategories() {
-      const { data } = await this.CategoryService.getCategory()
-      this.categories = JSON.parse(JSON.stringify(data))
+      const { data } = await this.CategoryService.getCategory();
+      this.categories = JSON.parse(JSON.stringify(data));
     },
     async getSkills() {
-      const { data } = await this.SkillService.getSkill(1, 9999)
-      this.skills = JSON.parse(JSON.stringify(data.skills))
+      const { data } = await this.SkillService.getSkill(1, 9999);
+      this.skills = JSON.parse(JSON.stringify(data.skills));
     },
-    async getJobById(id) {
-      const { data } = await this.JobService.getJobById(id)
+    async getCareerById(id) {
+      const { data } = await this.CareerService.getCareerById(id);
       this.form = {
         ...data,
         skills: data.skills.map((skill) => skill.skillId),
         categories: data.categories.map((category) => category.categoryId),
-      }
+      };
     },
     async setForm() {
-      const { valid } = await this.$refs.form.validate()
+      const { valid } = await this.$refs.form.validate();
       if (valid) {
-        this.$emit('create-update', this.form)
+        this.$emit('create-update', this.form);
       } else {
         window.scrollTo({
           top: 0,
           left: 0,
           behavior: 'smooth',
-        })
+        });
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped></style>

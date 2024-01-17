@@ -1,8 +1,8 @@
 import HttpRequest from './HttpRequest'
 
-class JobProvider extends HttpRequest {
+class CareerProvider extends HttpRequest {
 
-  async getJob(page, limit) {
+  async getCareer(page, limit) {
     try {
       const data = await this.get(`/careers?page=${page}&limit=${limit}`)
       return {
@@ -18,7 +18,7 @@ class JobProvider extends HttpRequest {
     }
   }
 
-  async getJobById(id) {
+  async getCareerById(id) {
     try {
       const data = await this.get(`/careers/${id}`)
       return {
@@ -34,7 +34,7 @@ class JobProvider extends HttpRequest {
     }
   }
 
-  async createJob(body) {
+  async createCareer(body) {
     try {
       await this.post('/careers', body)
       return {
@@ -49,7 +49,7 @@ class JobProvider extends HttpRequest {
     }
   }
 
-  async updateJob(id, body) {
+  async updateCareer(id, body) {
     try {
       await this.put(`/careers/${id}`, body)
       return {
@@ -64,7 +64,7 @@ class JobProvider extends HttpRequest {
     }
   }
 
-  async deleteJob(id) {
+  async deleteCareer(id) {
     try {
       await this.delete(`/careers/${id}`)
       return {
@@ -81,4 +81,4 @@ class JobProvider extends HttpRequest {
 
 }
 
-export default JobProvider
+export default CareerProvider

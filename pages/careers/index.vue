@@ -1,15 +1,15 @@
 <template>
   <div>
     <HeaderPage
-      title="Jobs"
-      link="/jobs/create"
+      title="Careers"
+      link="/careers/create"
       showBtn
-      titleBtn="Create Job" />
+      titleBtn="Create Career" />
     <div class="tw-my-8">
       <div v-if="ready">
-        <div v-if="checkEmpty(jobs)">
+        <div v-if="checkEmpty(careers)">
           <v-card>
-            <DataTable :value="jobs">
+            <DataTable :value="careers">
               <Column field="name" header="อาชีพ">
                 <template #header>
                   <div class="tw-py-6 tw-px-3"></div>
@@ -37,14 +37,17 @@
                 <template #body="slotProps">
                   <div
                     class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end tw-py-5">
-                    <NuxtLink :to="`/jobs/edit/${slotProps.data.careerId}`">
+                    <NuxtLink :to="`/careers/edit/${slotProps.data.careerId}`">
                       <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
                     </NuxtLink>
                     <v-icon
                       color="error"
                       class="tw-cursor-pointer"
                       @click="
-                        deleteJob(slotProps.data.careerId, slotProps.data.name)
+                        deleteCareer(
+                          slotProps.data.careerId,
+                          slotProps.data.name
+                        )
                       "
                       >mdi-delete</v-icon
                     >
@@ -62,22 +65,22 @@
         </div>
         <EmptyData
           v-else
-          name="NOT HAVE ANY JOBS"
-          desc="PLEASE ADD JOB IN JOBS PAGE" />
+          name="NOT HAVE ANY CAREERS"
+          desc="PLEASE ADD CAREER IN CAREERS PAGE" />
       </div>
       <Loading v-else />
     </div>
   </div>
 </template>
 <script>
-import JobProvider from '@/resources/JobProvider'
+import CareerProvider from '@/resources/CareerProvider'
 import Swal from 'sweetalert2'
 
 export default {
   data() {
     return {
-      jobs: [],
-      JobService: new JobProvider(),
+      careers: [],
+      CareerService: new CareerProvider(),
       page: 1,
       pages: 0,
       total: 0,
@@ -88,28 +91,28 @@ export default {
   watch: {
     page(newVal) {
       this.page = newVal
-      this.getJob()
+      this.getCareer()
     },
   },
   mounted() {
-    this.getJob()
+    this.getCareer()
   },
   methods: {
     getPages() {
       return Math.ceil(this.total / this.limit)
     },
-    async getJob() {
-      const status = await this.JobService.getJob(this.page, this.limit)
+    async getCareer() {
+      const status = await this.CareerService.getCareer(this.page, this.limit)
       if (status.message === 'success') {
         const { data } = status
-        this.jobs = JSON.parse(JSON.stringify(data.careers))
+        this.careers = JSON.parse(JSON.stringify(data.careers))
         this.page = data.pagination.page
         this.total = data.pagination.total
         this.pages = this.getPages()
         this.ready = true
       }
     },
-    async deleteJob(id, name) {
+    async deleteCareer(id, name) {
       Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -121,17 +124,17 @@ export default {
         reverseButtons: true,
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const status = await this.JobService.deleteJob(id)
+          const status = await this.CareerService.deleteCareer(id)
           if (status.message === 'success') {
-            this.getJob()
+            this.getCareer()
             Swal.fire({
               icon: 'success',
-              title: 'Delete Job Success',
+              title: 'Delete Career Success',
             })
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'Delete Job Fail',
+              title: 'Delete Career Fail',
             })
           }
         }

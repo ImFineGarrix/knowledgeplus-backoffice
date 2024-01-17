@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: 'Knowledge Back-office',
     },
-    baseURL: '/backoffice',
+    baseURL: '/sj2/backoffice',
   },
   plugins: [{ src: '~/plugins/sweetalert2', mode: 'client' }],
   pages: true,

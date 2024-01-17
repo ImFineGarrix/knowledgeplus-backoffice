@@ -48,9 +48,23 @@
           </div>
         </div>
       </div>
+      <v-textarea
+        v-model="form.description"
+        label="คำอธิบาย Skill"
+        variant="outlined" />
       <v-autocomplete
         clearable
-        class="custom-autocomplete"
+        label="ประเภท"
+        :items="typeSkill"
+        item-title="label"
+        item-value="val"
+        :rules="[rules.ruleRequired]"
+        variant="outlined" />
+      <v-autocomplete
+        clearable
+        multiple
+        chips
+        class="tw-uppercase"
         :items="levelStore.level"
         item-title="name"
         item-value="levelId"
@@ -59,8 +73,12 @@
         :rules="[rules.ruleRequired]"
         variant="outlined" />
       <v-textarea
-        v-model="form.description"
-        label="คำอธิบาย"
+        v-model="form.knowledgeDesc"
+        label="คำอธิบาย Knowledge"
+        variant="outlined" />
+      <v-textarea
+        v-model="form.abilityDesc"
+        label="คำอธิบาย Ability"
         variant="outlined" />
       <div class="tw-flex tw-justify-end">
         <div
@@ -74,11 +92,11 @@
 </template>
 
 <script>
-import LevelProvider from '~/resources/LevelProvider'
-import SkillProvider from '~/resources/SkillProvider'
-import { useRuntimeConfig } from 'nuxt/app'
-import { useFormRules } from '~/composables/rules'
-import { useLevelStore } from '~/stores/Levels'
+import LevelProvider from '~/resources/LevelProvider';
+import SkillProvider from '~/resources/SkillProvider';
+import { useRuntimeConfig } from 'nuxt/app';
+import { useFormRules } from '~/composables/rules';
+import { useLevelStore } from '~/stores/Levels';
 
 export default {
   props: {
@@ -99,6 +117,8 @@ export default {
         name: '',
         levelId: null,
         description: '',
+        knowledgeDesc: '',
+        abilityDesc: '',
         imageUrl: null,
       },
       rules: useFormRules(),
@@ -106,52 +126,62 @@ export default {
       previewImage: null,
       config: useRuntimeConfig(),
       validImage: false,
-    }
+      typeSkill: [
+        {
+          label: 'Softskill',
+          val: 'SOFT',
+        },
+        {
+          label: 'Hardskill',
+          val: 'HARD',
+        },
+      ],
+    };
   },
   mounted() {
     if (this.idParams) {
-      this.getSkillById(this.idParams)
+      this.getSkillById(this.idParams);
     }
     if (!this.levelStore.level.length) {
-      this.getLevel()
+      this.getLevel();
     }
   },
   methods: {
     async getLevel() {
-      const { data } = await this.LevelService.getLevel()
-      this.levelStore.setLevel(data)
+      const { data } = await this.LevelService.getLevel();
+      this.levelStore.setLevel(data);
     },
     async getSkillById(id) {
-      const { data } = await this.SkillService.getSkillById(id)
-      this.form = data
+      const { data } = await this.SkillService.getSkillById(id);
+      this.form = data;
     },
     uploadImage(e) {
-      const file = e.target.files[0]
-      this.form.imageUrl = file
-      this.previewImage = URL.createObjectURL(file)
+      const file = e.target.files[0];
+      this.form.imageUrl = file;
+      this.previewImage = URL.createObjectURL(file);
     },
     checkImage() {
-      return !this.previewImage && !this.form.imageUrl
+      return !this.previewImage && !this.form.imageUrl;
     },
     removeImage() {
-      this.previewImage = null
-      this.form.imageUrl = null
+      this.previewImage = null;
+      this.form.imageUrl = null;
     },
     async setForm() {
-      const { valid } = await this.$refs.form.validate()
+      const { valid } = await this.$refs.form.validate();
       if (valid && this.form.imageUrl) {
-        this.$emit('create-update', this.form)
+        this.$emit('create-update', this.form);
       } else {
         if (!this.form.imageUrl) {
-          this.validImage = true
+          this.validImage = true;
         }
         window.scrollTo({
           top: 0,
           left: 0,
           behavior: 'smooth',
-        })
+        });
       }
     },
   },
-}
+};
 </script>

@@ -28,29 +28,41 @@ export default {
           link: '/',
         },
         {
-          name: 'Categories',
-          link: '/categories',
+          name: 'Section',
+          link: '/sections',
         },
         {
-          name: 'Jobs',
-          link: '/jobs',
+          name: 'Groups',
+          link: '/groups',
+        },
+        {
+          name: 'Careers',
+          link: '/careers',
         },
         {
           name: 'Skills',
           link: '/skills',
         },
+        {
+          name: 'Categories',
+          link: '/categories',
+        },
+        {
+          name: 'Organization',
+          link: '/organization',
+        },
         // {
         //   name: 'Course',
         //   link: '/courses',
         // },
-        // {
-        //   name: 'Admin',
-        //   link: '/admins',
-        // },
+        {
+          name: 'Admins',
+          link: '/admins',
+        },
       ],
-    }
+    };
   },
-}
+};
 </script>
 <style scope>
 .container-menu {
