@@ -1,10 +1,10 @@
 <template>
   <div>
     <HeaderPage
-      title="Groups"
+      title="Career Groups"
       link="/groups/create"
       showBtn
-      titleBtn="Create Groups" />
+      titleBtn="Create Career Groups" />
     <div class="tw-my-8">
       <v-card> </v-card>
       <div class="tw-my-4">

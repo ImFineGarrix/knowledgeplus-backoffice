@@ -1,12 +1,18 @@
 <template>
   <div>
     <v-form ref="form" class="tw-space-y-4">
-      <v-text-field label="ชื่อกลุ่ม" variant="outlined"></v-text-field>
+      <v-text-field
+        label="ชื่อกลุ่ม"
+        variant="outlined"
+        v-model.trim="form.name"
+        :rules="[rules.ruleRequired]"></v-text-field>
       <v-autocomplete
         chips
         multiple
         clearable
-        label="section"
+        v-model="form.groups"
+        label="สายงาน"
+        :rules="[rules.ruleArray]"
         variant="outlined"></v-autocomplete>
       <div class="tw-flex tw-justify-end tw-pt-4">
         <div
@@ -19,6 +25,8 @@
 </template>
 
 <script>
+import { useFormRules } from '~/composables/rules'
+
 export default {
   props: {
     idParams: {
@@ -30,5 +38,28 @@ export default {
       default: () => '',
     },
   },
-};
+  data() {
+    return {
+      rules: useFormRules(),
+      form: {
+        name: '',
+        groups: [],
+      },
+    }
+  },
+  methods: {
+    async setForm() {
+      const { valid } = await this.$refs.form.validate()
+      if (valid) {
+        this.$emit('create-update', this.form)
+      } else {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth',
+        })
+      }
+    },
+  },
+}
 </script>

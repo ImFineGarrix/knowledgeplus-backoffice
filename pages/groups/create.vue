@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderBack title="Create Group" link="/groups" />
+    <HeaderBack title="Create Career Group" link="/groups" />
     <div class="tw-my-8">
       <FormGroup actionButton="Create" />
     </div>
