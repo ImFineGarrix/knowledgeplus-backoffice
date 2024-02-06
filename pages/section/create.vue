@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderBack title="Create Category" link="/categories" />
+    <HeaderBack title="Create Section" link="/section" />
     <div class="tw-my-8">
       <FormCategory actionButton="Create" @create-update="createCategory" />
     </div>

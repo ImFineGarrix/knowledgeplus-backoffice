@@ -29,10 +29,10 @@ export default {
         },
         {
           name: 'Section',
-          link: '/sections',
+          link: '/section',
         },
         {
-          name: 'Groups',
+          name: 'Career Groups',
           link: '/groups',
         },
         {
@@ -44,17 +44,13 @@ export default {
           link: '/skills',
         },
         {
-          name: 'Categories',
-          link: '/categories',
-        },
-        {
           name: 'Organization',
           link: '/organization',
         },
-        // {
-        //   name: 'Course',
-        //   link: '/courses',
-        // },
+        {
+          name: 'Course',
+          link: '/courses',
+        },
         {
           name: 'Admins',
           link: '/admins',

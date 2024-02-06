@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderBack title="Edit Category" link="/categories" />
+    <HeaderBack title="Edit Section" link="/section" />
     <div class="tw-my-8">
       <FormCategory
         actionButton="Save"

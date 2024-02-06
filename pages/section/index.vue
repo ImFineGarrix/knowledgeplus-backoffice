@@ -1,10 +1,10 @@
 <template>
   <div>
     <HeaderPage
-      title="Categories"
+      title="Section"
       showBtn
-      titleBtn="Create Category"
-      link="/categories/create" />
+      titleBtn="Create Section"
+      link="/section/create" />
     <div class="tw-my-8">
       <div v-if="ready">
         <div v-if="checkEmpty(categories)">

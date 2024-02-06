@@ -3,12 +3,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev --port=3001",
+    "build": "cp .env.production .env && NODE_ENV=prd nuxt build",
+    "build:stg": "cp .env.dev .env && NODE_ENV=dev nuxt build",
+    "dev": "cp .env.production .env && NODE_ENV=prd nuxt dev --port=3001",
+    "dev:stg": "cp .env.dev .env && NODE_ENV=dev nuxt dev --port=3001",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "PORT=3001 nuxt start"
+    "start": "cp .env.production .env && NODE_ENV=prd PORT=3001 nuxt start",
+    "start:stg": "cp .env.dev .env && NODE_ENV=dev PORT=3001 nuxt start"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",

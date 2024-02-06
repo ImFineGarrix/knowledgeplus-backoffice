@@ -64,7 +64,6 @@
         clearable
         multiple
         chips
-        class="tw-uppercase"
         :items="levelStore.level"
         item-title="name"
         item-value="levelId"
