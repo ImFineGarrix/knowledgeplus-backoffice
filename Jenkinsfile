@@ -16,7 +16,7 @@ pipeline {
         stage('Build') {
     steps {
         script {
-            def envConvert = """
+            def envContent = """
                 BASE_URL=${ENV == 'dev' ? '/sj2/dev/backoffice' : '/sj2/backoffice'}
                 BASE_TITLE='Knowledge Back-office${ENV == 'dev' ? ' | dev' : ''}'
 
@@ -31,10 +31,12 @@ pipeline {
                 FIREBASE_MESSAGEING_SERDER_ID=${ENV == 'dev' ? "'335806051107'" : "'334590771194'"}
                 FIREBASE_MEASUREMENT_ID=${ENV == 'dev' ? "'G-R7J9K17CPC'" : "'G-4263LPRR8L'"}
             """
+            writeFile file: '.env', text: envContent
+
             sh '''
                 docker build \
                 --build-arg ENV=${ENV} \
-                --build-arg ENV_CONVERT="${envConvert}" \
+                --build-arg ENV_CONTENT="${envContent}" \
                 -t sj2vue-backoffice-nuxt-${ENV}:latest .                       
             '''
         }
