@@ -15,10 +15,11 @@ RUN npm install
 COPY . .
 
 # Build the Nuxt.js application
-# RUN npm run build
-RUN if ["$ENV" = "prod"]; then \
-  npm run build:prod; \
-  echo "BUILD-PRODUCTION" \
+
+RUN echo "$ENV" \
+  if ["$ENV" = "prod"]; then \
+  npm run build:prod \
+  echo "BUILD-PRODUCTION"; \
   else \
   echo "BUILD-DEV" \
   npm run build:dev; fi
