@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import { clearAuth } from '~/utils/auth'
+import { clearAuth } from '~/utils/Auth'
 
 export default {
   data() {
