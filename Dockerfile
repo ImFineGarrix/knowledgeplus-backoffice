@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 ARG ENV
 
-ENV ENV=${ENV}
+ENV ENV=$ENV
 
 # Install dependencies
 RUN npm install
@@ -18,16 +18,10 @@ COPY . .
 
 # Build the Nuxt.js application
 # RUN npm run build
-RUN echo "$ENV" \
-  if ["$ENV" = "prod"]; then \
-  npm run build:prod \
-  echo "BUILD-PRODUCTION"; \
-  else \
-  echo "BUILD-DEV" \
-  npm run build:dev; fi
+RUN npm run build
 
 # Expose the port that Nuxt.js will run on
 EXPOSE 3001
 
 # Command to start the application
-CMD ["npm", "start:${ENV}"]
+CMD ["npm", "start"]
