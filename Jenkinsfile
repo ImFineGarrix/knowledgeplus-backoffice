@@ -9,7 +9,7 @@ pipeline {
                         docker rm -f backoffice-container-${ENV} || true
                         docker image prune -af
                     '''
-                    echo ${ENV}
+                    echo "${ENV}"
                 }
             }
         }
