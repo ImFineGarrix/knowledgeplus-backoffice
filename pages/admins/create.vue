@@ -2,7 +2,7 @@
   <div>
     <HeaderBack title="Create Admin" link="/admins" />
     <div class="tw-my-8">
-      <FormAdmin />
+      <FormAdmin action-button="Create" />
     </div>
   </div>
 </template>

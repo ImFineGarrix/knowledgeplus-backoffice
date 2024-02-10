@@ -4,7 +4,7 @@
       title="Section"
       showBtn
       titleBtn="Create Section"
-      link="/section/create" />
+      link="/sections/create" />
     <div class="tw-my-8">
       <div v-if="ready">
         <div v-if="checkEmpty(categories)">
@@ -41,14 +41,14 @@
                     :class="slotProps.data.imageUrl ? '' : 'tw-py-8'"
                     class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end">
                     <NuxtLink
-                      :to="`/categories/edit/${slotProps.data.categoryId}`">
+                      :to="`/sections/edit/${slotProps.data.categoryId}`">
                       <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
                     </NuxtLink>
                     <v-icon
                       color="error"
                       class="tw-cursor-pointer"
                       @click="
-                        deleteCategory(
+                        deleteSection(
                           slotProps.data.categoryId,
                           slotProps.data.name
                         )
@@ -77,13 +77,13 @@
 
 <script>
 import { useRuntimeConfig } from 'nuxt/app'
-import CategoryProvider from '@/resources/CategoryProvider'
+import SectionProvider from '@/resources/SectionProvider'
 import Swal from 'sweetalert2'
 
 export default {
   data() {
     return {
-      CategoryService: new CategoryProvider(),
+      SectionService: new SectionProvider(),
       categories: [],
       config: useRuntimeConfig(),
       ready: false,
@@ -94,17 +94,17 @@ export default {
     }
   },
   mounted() {
-    this.getCategory()
+    this.getSection()
   },
   methods: {
-    async getCategory() {
-      const status = await this.CategoryService.getCategory()
+    async getSection() {
+      const status = await this.SectionService.getSection()
       if (status.message === 'success') {
         this.categories = JSON.parse(JSON.stringify(status.data))
         this.ready = true
       }
     },
-    async deleteCategory(id, name) {
+    async deleteSection(id, name) {
       Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
@@ -116,17 +116,17 @@ export default {
         reverseButtons: true,
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const status = await this.CategoryService.deleteCategory(id)
+          const status = await this.SectionService.deleteSection(id)
           if (status.message === 'success') {
-            this.getCategory()
+            this.getSection()
             Swal.fire({
               icon: 'success',
-              title: 'Delete Category Success',
+              title: 'Delete Section Success',
             })
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'Delete Category Fail',
+              title: 'Delete Section Fail',
             })
           }
         }
@@ -148,3 +148,4 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
+~/resources/SectionProvider

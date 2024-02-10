@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import CategoryProvider from '~/resources/CategoryProvider'
+import SectionProvider from '~/resources/SectionProvider'
 import { useRuntimeConfig } from 'nuxt/app'
 import { useFormRules } from '~/composables/rules'
 
@@ -71,7 +71,7 @@ export default {
   },
   data() {
     return {
-      CategoryService: new CategoryProvider(),
+      SectionService: new SectionProvider(),
       form: {
         name: '',
         imageUrl: null,
@@ -84,12 +84,12 @@ export default {
   },
   mounted() {
     if (this.idParams) {
-      this.getCategoryById(this.idParams)
+      this.getSectionById(this.idParams)
     }
   },
   methods: {
-    async getCategoryById(id) {
-      const data = await this.CategoryService.getCategoryById(id)
+    async getSectionById(id) {
+      const data = await this.SectionService.getSectionById(id)
       if (data.message === 'success') {
         this.form = data.data
       }
@@ -126,3 +126,4 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
+~/resources/SectionProvider

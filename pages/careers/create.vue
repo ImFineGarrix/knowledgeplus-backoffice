@@ -25,8 +25,8 @@ export default {
       this.loading = true
       const formCareer = {
         ...form,
-        categories: form.categories.map((category) => ({
-          categoryId: category,
+        sections: form.sections.map((sec) => ({
+          sectionId: sec,
         })),
         skills: form.skills.map((skill) => ({
           skillId: skill,

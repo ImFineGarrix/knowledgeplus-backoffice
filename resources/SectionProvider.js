@@ -1,8 +1,8 @@
 import HttpRequest from './HttpRequest'
 
-class CategoryProvider extends HttpRequest {
+class SectionProvider extends HttpRequest {
 
-  async getCategory() {
+  async getSection() {
     try {
       const data = await this.get(`/categories`)
       return {
@@ -18,7 +18,7 @@ class CategoryProvider extends HttpRequest {
     }
   }
 
-  async getCategoryById(id) {
+  async getSectionById(id) {
     try {
       const data = await this.get(`/categories/${id}`)
       return {
@@ -34,7 +34,7 @@ class CategoryProvider extends HttpRequest {
     }
   }
 
-  async createCategory(body) {
+  async createSection(body) {
     try {
       await this.post('/categories', body)
       return {
@@ -49,7 +49,7 @@ class CategoryProvider extends HttpRequest {
     }
   }
 
-  async updateCategory(id, body) {
+  async updateSection(id, body) {
     try {
       await this.put(`/categories/${id}`, body)
       return {
@@ -64,7 +64,7 @@ class CategoryProvider extends HttpRequest {
     }
   }
 
-  async deleteCategory(id) {
+  async deleteSection(id) {
     try {
       await this.delete(`/categories/${id}`)
       return {
@@ -81,4 +81,4 @@ class CategoryProvider extends HttpRequest {
 
 }
 
-export default CategoryProvider
+export default SectionProvider

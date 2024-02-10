@@ -10,12 +10,12 @@
         chips
         multiple
         clearable
-        v-model="form.categories"
+        v-model="form.sections"
         :rules="[rules.ruleArray]"
-        :items="categories"
+        :items="sections"
         item-title="name"
         item-value="categoryId"
-        label="groups"
+        label="กลุ่มสายงาน"
         variant="outlined" />
       <v-autocomplete
         chips
@@ -27,10 +27,10 @@
         item-value="skillId"
         label="ทักษะ"
         variant="outlined" />
-      <v-textarea
-        v-model="form.description"
-        label="คำอธิบาย"
-        variant="outlined" />
+      <div class="tw-space-y-2">
+        <p class="text-lg tw-font-semibold">คำอธิบาย</p>
+        <Editor v-model="form.description" />
+      </div>
       <div class="tw-flex tw-justify-end">
         <div
           @click="setForm()"
@@ -43,10 +43,9 @@
 </template>
 
 <script>
-import CategoryProvider from '@/resources/CategoryProvider';
+import SectionProvider from '@/resources/SectionProvider';
 import SkillProvider from '@/resources/SkillProvider';
 import CareerProvider from '@/resources/CareerProvider';
-import { useFormRules } from '@/composables/rules';
 
 export default {
   props: {
@@ -63,12 +62,12 @@ export default {
     return {
       CareerService: new CareerProvider(),
       SkillService: new SkillProvider(),
-      CategoryService: new CategoryProvider(),
-      categories: [],
+      SectionService: new SectionProvider(),
+      sections: [],
       skills: [],
       form: {
         name: '',
-        categories: [],
+        sections: [],
         skills: [],
         description: '',
       },
@@ -84,8 +83,8 @@ export default {
   },
   methods: {
     async getCategories() {
-      const { data } = await this.CategoryService.getCategory();
-      this.categories = JSON.parse(JSON.stringify(data));
+      const { data } = await this.SectionService.getSection();
+      this.sections = JSON.parse(JSON.stringify(data));
     },
     async getSkills() {
       const { data } = await this.SkillService.getSkill(1, 9999);
@@ -96,7 +95,7 @@ export default {
       this.form = {
         ...data,
         skills: data.skills.map((skill) => skill.skillId),
-        categories: data.categories.map((category) => category.categoryId),
+        sections: data.sections.map((sec) => sec.categoryId),
       };
     },
     async setForm() {
@@ -116,3 +115,4 @@ export default {
 </script>
 
 <style lang="scss" scoped></style>
+~/resources/SectionProvider

@@ -15,10 +15,20 @@
           </div>
         </div>
       </v-list>
+      <template v-slot:append>
+        <div
+          @click="logout()"
+          class="tw-mx-[28px] tw-border-2 tw-border-rose-700 tw-transition-all tw-duration-150 hover:tw-bg-rose-50 tw-cursor-pointer tw-rounded-lg tw-text-rose-700 tw-py-2 tw-px-2 tw-my-6 tw-flex tw-justify-between">
+          <p class="tw-font-semibold">Logout</p>
+          <v-icon>mdi-logout</v-icon>
+        </div>
+      </template>
     </v-navigation-drawer>
   </div>
 </template>
 <script>
+import { clearAuth } from '~/utils/auth'
+
 export default {
   data() {
     return {
@@ -28,8 +38,8 @@ export default {
           link: '/',
         },
         {
-          name: 'Section',
-          link: '/section',
+          name: 'Sections',
+          link: '/sections',
         },
         {
           name: 'Career Groups',
@@ -58,6 +68,12 @@ export default {
       ],
     };
   },
+  methods: {
+    logout () {
+      clearAuth()
+      this.$router.push('/login')
+    }
+  }
 };
 </script>
 <style scope>
@@ -67,3 +83,4 @@ export default {
   padding-left: 28px !important;
 }
 </style>
+~/utils/auth
