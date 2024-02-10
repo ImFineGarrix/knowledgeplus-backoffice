@@ -16,10 +16,15 @@ COPY . .
 
 # Build the Nuxt.js application
 # RUN npm run build
-RUN if ["$ENV" = "prod"]; then npm run build:prod; else npm run build:dev; fi
+RUN if ["$ENV" = "prod"]; then \
+  npm run build:prod; \
+  echo "BUILD-PRODUCTION" \
+  else \
+  echo "BUILD-DEV" \
+  npm run build:dev; fi
 
 # Expose the port that Nuxt.js will run on
 EXPOSE 3001
 
 # Command to start the application
-CMD ["npm", "start${ENV}"]
+CMD ["npm", "start:${ENV}"]
