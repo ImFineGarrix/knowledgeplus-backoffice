@@ -8,6 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 ARG ENV
 
+ENV ENV=${ENV}
+
 # Install dependencies
 RUN npm install
 
@@ -15,7 +17,7 @@ RUN npm install
 COPY . .
 
 # Build the Nuxt.js application
-
+# RUN npm run build
 RUN echo "$ENV" \
   if ["$ENV" = "prod"]; then \
   npm run build:prod \
