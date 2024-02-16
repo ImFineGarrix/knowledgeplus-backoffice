@@ -1,11 +1,11 @@
 <template>
   <div>
-    <HeaderBack title="Edit Careers" link="/careers" />
+    <HeaderBack title="Edit Career Group Group" link="/groups" />
     <div class="tw-my-8">
-      <FormCareer
+      <FormGroup
         actionButton="Save"
         :idParams="idParams"
-        @create-update="updateCareer" />
+        @create-update="updateGroup" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
@@ -13,13 +13,13 @@
   </div>
 </template>
 <script>
+import GroupProvider from '~/resources/GroupProvider'
 import Swal from 'sweetalert2'
-import CareerProvider from '~/resources/CareerProvider'
 export default {
-  data() {
+  data () {
     return {
-      CareerService: new CareerProvider(),
-      loading: false,
+      GroupService: new GroupProvider(),
+      loading: false
     }
   },
   computed: {
@@ -28,34 +28,30 @@ export default {
     },
   },
   methods: {
-    async updateCareer(form) {
+    async updateGroup (form) {
       this.loading = true
-      const formCareer = {
+      const formGroup = {
         ...form,
-        groups: form.groups.map((group) => ({
-          groupId: group,
-        })),
+        sections: form.sections.map((sec) => ({sectionId: sec}))
       }
-      const status = await this.CareerService.updateCareer(
-        this.idParams,
-        formCareer
-      )
+
+      const status = await this.GroupService.updateGroup(this.idParams, formGroup)
       if (status.message === 'success') {
         Swal.fire({
-          title: 'Update Career Success',
+          title: 'Update Career Group Success',
           icon: 'success',
         }).then(() => {
-          this.$router.push('/careers')
+          this.$router.push('/groups')
         })
       } else {
         Swal.fire({
-          title: `Update Career Fail`,
+          title: `Update Career Group Fail`,
           icon: 'error',
         })
         this.loading = false
       }
       this.loading = false
-    },
-  },
-}
+    }
+  }
+};
 </script>

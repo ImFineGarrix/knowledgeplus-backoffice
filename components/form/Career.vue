@@ -10,21 +10,21 @@
         chips
         multiple
         clearable
-        v-model="form.sections"
+        v-model="form.groups"
         :rules="[rules.ruleArray]"
-        :items="sections"
+        :items="groups"
         item-title="name"
-        item-value="categoryId"
+        item-value="groupId"
         label="กลุ่มสายงาน"
         variant="outlined" />
       <v-autocomplete
         chips
         multiple
         clearable
-        v-model="form.skills"
-        :items="skills"
+        v-model="form.skillsLevels"
+        :items="skillsLevels"
         item-title="name"
-        item-value="skillId"
+        item-value="skillLevel"
         label="ทักษะ"
         variant="outlined" />
       <div class="tw-space-y-2">
@@ -43,9 +43,10 @@
 </template>
 
 <script>
-import SectionProvider from '@/resources/SectionProvider';
-import SkillProvider from '@/resources/SkillProvider';
-import CareerProvider from '@/resources/CareerProvider';
+import GroupProvider from '~/resources/GroupProvider'
+import SkillProvider from '@/resources/SkillProvider'
+import CareerProvider from '@/resources/CareerProvider'
+import LevelProvider from '~/resources/LevelProvider'
 
 export default {
   props: {
@@ -62,57 +63,82 @@ export default {
     return {
       CareerService: new CareerProvider(),
       SkillService: new SkillProvider(),
-      SectionService: new SectionProvider(),
-      sections: [],
-      skills: [],
+      GroupService: new GroupProvider(),
+      LevelService: new LevelProvider(),
+      LevelStore: useLevelStore(),
+      groups: [],
+      skillsLevels: [],
       form: {
         name: '',
-        sections: [],
-        skills: [],
+        groups: [],
+        skillsLevels: [],
         description: '',
       },
       rules: useFormRules(),
-    };
+    }
   },
   mounted() {
     if (this.idParams) {
-      this.getCareerById(this.idParams);
+      this.getCareerById(this.idParams)
     }
-    this.getCategories();
-    this.getSkills();
+    if (!this.LevelStore.level.length) {
+      this.getLevel()
+    }
+    this.getSection()
+    this.getSkill()
   },
   methods: {
-    async getCategories() {
-      const { data } = await this.SectionService.getSection();
-      this.sections = JSON.parse(JSON.stringify(data));
+    async getSection() {
+      const { data } = await this.GroupService.getGroup()
+      this.groups = JSON.parse(JSON.stringify(data))
     },
-    async getSkills() {
-      const { data } = await this.SkillService.getSkill(1, 9999);
-      this.skills = JSON.parse(JSON.stringify(data.skills));
+    async getSkill() {
+      const { data } = await this.SkillService.getSkill(1, 9999)
+      const transformedSkills = []
+      data.skills.forEach((skill) => {
+        skill.skillsLevels.forEach((skillLevel) => {
+          transformedSkills.push({
+            name: `${skill.name} (${this.getLevelName(skillLevel.levelId)})`,
+            skillLevel: {
+              skillId: skill.skillId,
+              levelId: skillLevel.levelId
+            }
+          })
+        })
+      })
+
+      this.skillsLevels = transformedSkills
+    },
+    async getLevel () {
+      const { data } = await this.LevelService.getLevel()
+      this.LevelStore.setLevel(data)
     },
     async getCareerById(id) {
-      const { data } = await this.CareerService.getCareerById(id);
+      const { data } = await this.CareerService.getCareerById(id)
       this.form = {
         ...data,
-        skills: data.skills.map((skill) => skill.skillId),
-        sections: data.sections.map((sec) => sec.categoryId),
-      };
+        skillsLevels: data.skillsLevels.map((skill) => ({skillId: skill.skillId, levelId: skill.levelId})),
+        groups: data.groups.map((group) => group.groupId),
+      }
+    },
+    getLevelName (id) {
+      if (id <= 6) {
+        return this.LevelStore.level.hard.find((hd) => hd.levelId === id)?.level || ''
+      }
+      return this.LevelStore.level.soft.find((st) => st.levelId === id)?.level || ''
     },
     async setForm() {
-      const { valid } = await this.$refs.form.validate();
+      const { valid } = await this.$refs.form.validate()
       if (valid) {
-        this.$emit('create-update', this.form);
+        this.$emit('create-update', this.form)
       } else {
         window.scrollTo({
           top: 0,
           left: 0,
           behavior: 'smooth',
-        });
+        })
       }
     },
   },
-};
+}
 </script>
-
-<style lang="scss" scoped></style>
-~/resources/SectionProvider

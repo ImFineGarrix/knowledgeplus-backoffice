@@ -1,11 +1,10 @@
 <template>
   <div>
-    <HeaderBack title="Edit Section" link="/sections" />
+    <HeaderBack title="Create Organization" link="/organizations" />
     <div class="tw-my-8">
-      <FormSection
-        actionButton="Save"
-        :idParams="idParams"
-        @create-update="updateSection" />
+      <FormOrganization
+        actionButton="Create"
+        @create-update="createOrganization" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
@@ -13,46 +12,39 @@
   </div>
 </template>
 <script>
-import SectionProvider from '~/resources/SectionProvider'
+import OrganizationProvider from '~/resources/OrganizationProvider'
 import FirebaseProvider from '~/resources/FirebaseProvider'
 import Swal from 'sweetalert2'
 export default {
-  data() {
+  data () {
     return {
-      SectionService: new SectionProvider(),
+      OrganizationService: new OrganizationProvider(),
       FirebaseService: new FirebaseProvider(),
-      loading: false,
+      loading: false
     }
   },
-  computed: {
-    idParams() {
-      return this.$route.params.id || ''
-    },
-  },
   methods: {
-    async updateSection(form) {
+    async createOrganization (form) {
       this.loading = true
       const urlImage = await this.uploadFile(form.imageUrl, form.name)
       if (urlImage !== 'error') {
-        const formSection = {
+        const formSkill = {
           ...form,
-          imageUrl: urlImage,
+          imageUrl: urlImage
         }
-        const status = await this.SectionService.updateSection(
-          this.idParams,
-          formSection
-        )
+
+        const status = await this.OrganizationService.createOrganization(formSkill)
         if (status.message === 'success') {
           Swal.fire({
-            title: 'Update Section Success',
             icon: 'success',
+            title: 'Create Organization Success',
           }).then(() => {
-            this.$router.push('/sections')
+            this.$router.push('/organizations')
           })
         } else {
           Swal.fire({
-            title: `Update Section Fail`,
             icon: 'error',
+            title: 'Create Organization Fail',
           })
           this.loading = false
         }
@@ -64,18 +56,20 @@ export default {
         this.loading = false
       }
       this.loading = false
+
     },
     async uploadFile(file, name) {
       if (!file) {
         return ''
       }
+
       const typeFile = typeof file
       if (typeFile === 'string') {
         return file
       }
 
-      return await this.FirebaseService.uploadFile(`sections/${name}`, file)
+      return await this.FirebaseService.uploadFile(`organization/${name}`, file)
     },
-  },
+  }
 }
 </script>

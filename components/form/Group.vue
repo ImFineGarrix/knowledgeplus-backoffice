@@ -10,12 +10,16 @@
         chips
         multiple
         clearable
-        v-model="form.groups"
+        v-model="form.sections"
         label="สายงาน"
         :rules="[rules.ruleArray]"
+        :items="sections"
+        item-title="name"
+        item-value="sectionId"
         variant="outlined"></v-autocomplete>
       <div class="tw-flex tw-justify-end tw-pt-4">
         <div
+          @click="setForm()"
           class="tw-bg-[#51b462] tw-px-8 tw-py-2 tw-text-white tw-rounded-md tw-cursor-pointer">
           {{ actionButton }}
         </div>
@@ -26,6 +30,8 @@
 
 <script>
 import { useFormRules } from '~/composables/rules'
+import GroupProvider from '~/resources/GroupProvider'
+import SectionProvider from '~/resources/SectionProvider'
 
 export default {
   props: {
@@ -40,14 +46,34 @@ export default {
   },
   data() {
     return {
+      GroupService: new GroupProvider(),
+      SectionService: new SectionProvider(),
       rules: useFormRules(),
       form: {
         name: '',
-        groups: [],
+        sections: [],
       },
+      sections: []
     }
   },
+  mounted () {
+    if (this.idParams) {
+      this.getGroupById(this.idParams)
+    }
+    this.getSection()
+  },
   methods: {
+    async getSection () {
+      const { data } = await this.SectionService.getSection()
+      this.sections = JSON.parse(JSON.stringify(data))
+    },
+    async getGroupById (id) {
+      const { data } = await this.GroupService.getGroupById(id)
+      this.form = {
+        ...data,
+        sections: data.sections.map((section) => section.sectionId)
+      }
+    },
     async setForm() {
       const { valid } = await this.$refs.form.validate()
       if (valid) {

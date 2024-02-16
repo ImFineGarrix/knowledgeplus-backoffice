@@ -50,23 +50,27 @@
       </div>
       <div class="tw-space-y-2 tw-py-4">
         <p class="text-lg tw-font-semibold">คำอธิบาย</p>
-        <Editor />
+        <Editor v-model="form.description" />
       </div>
       <v-autocomplete
         clearable
         label="ประเภท"
+        v-model="form.type"
         :items="typeSkill"
         item-title="label"
         item-value="val"
         :rules="[rules.ruleRequired]"
         variant="outlined" />
       <div
-        v-for="(skillLevel, indexSkillLevel) in form.skillLevels"
+        v-for="(skillLevel, indexSkillLevel) in form.skillsLevels"
         :key="`skill-level-${indexSkillLevel}`"
         class="tw-space-y-4">
         <v-autocomplete
           clearable
           v-model="skillLevel.levelId"
+          :items="levelFollwByType"
+          item-title="level"
+          item-value="levelId"
           chips
           label="ระดับทักษะ"
           variant="outlined" />
@@ -79,7 +83,7 @@
           <Editor v-model="skillLevel.abilityDesc" />
         </div>
         <div
-          v-if="form.skillLevels.length !== 1"
+          v-if="form.skillsLevels.length !== 1"
           @click="removeSkillLevelFollyByIndex(indexSkillLevel)"
           class="tw-cursor-pointer tw-flex tw-justify-end tw-pb-4">
           <div class="tw-bg-rose-600 tw-py-1 tw-px-5 tw-rounded-md">
@@ -106,10 +110,10 @@
 </template>
 
 <script>
-import LevelProvider from '~/resources/LevelProvider';
-import SkillProvider from '~/resources/SkillProvider';
-import { useRuntimeConfig } from 'nuxt/app';
-import { useLevelStore } from '~/stores/Levels';
+import LevelProvider from '~/resources/LevelProvider'
+import SkillProvider from '~/resources/SkillProvider'
+import { useRuntimeConfig } from 'nuxt/app'
+import { useLevelStore } from '~/stores/Levels'
 
 export default {
   props: {
@@ -130,14 +134,15 @@ export default {
         name: '',
         description: '',
         imageUrl: null,
-        skillLevels: [{
+        type: null,
+        skillsLevels: [{
           levelId: null,
           abilityDesc: '',
           knowledgeDesc: ''
         }]
       },
       rules: useFormRules(),
-      levelStore: useLevelStore(),
+      LevelStore: useLevelStore(),
       previewImage: null,
       config: useRuntimeConfig(),
       validImage: false,
@@ -151,62 +156,70 @@ export default {
           val: 'HARD',
         },
       ],
-    };
+    }
+  },
+  computed: {
+    levelFollwByType () {
+      if (this.form.type === 'SOFT') {
+        return this.LevelStore.level.soft
+      }
+      return this.LevelStore.level.hard
+    }
   },
   mounted() {
     if (this.idParams) {
-      this.getSkillById(this.idParams);
+      this.getSkillById(this.idParams)
     }
-    if (!this.levelStore.level.length) {
-      this.getLevel();
+    if (!this.LevelStore.level.length) {
+      this.getLevel()
     }
   },
   methods: {
     async getLevel() {
-      const { data } = await this.LevelService.getLevel();
-      this.levelStore.setLevel(data);
+      const { data } = await this.LevelService.getLevel()
+      this.LevelStore.setLevel(data)
     },
     async getSkillById(id) {
-      const { data } = await this.SkillService.getSkillById(id);
-      this.form = data;
+      const { data } = await this.SkillService.getSkillById(id)
+      this.form = data
     },
     uploadImage(e) {
-      const file = e.target.files[0];
-      this.form.imageUrl = file;
-      this.previewImage = URL.createObjectURL(file);
+      const file = e.target.files[0]
+      this.form.imageUrl = file
+      this.previewImage = URL.createObjectURL(file)
     },
     checkImage() {
-      return !this.previewImage && !this.form.imageUrl;
+      return !this.previewImage && !this.form.imageUrl
     },
     removeImage() {
-      this.previewImage = null;
-      this.form.imageUrl = null;
+      this.previewImage = null
+      this.form.imageUrl = null
     },
     addSkillLevel () {
-      this.form.skillLevels.push({
+      this.form.skillsLevels.push({
         levelId: null,
         abilityDesc: '',
         knowledgeDesc: ''
       })
     },
     removeSkillLevelFollyByIndex (index) {
-      this.form.skillLevels.splice(index, 1)
+      this.form.skillsLevels.splice(index, 1)
     },
     async setForm() {
-      const { valid } = await this.$refs.form.validate();
+      const { valid } = await this.$refs.form.validate()
       if (valid && this.form.imageUrl) {
-        this.$emit('create-update', this.form);
+        this.$emit('create-update', this.form)
       } else {
         if (!this.form.imageUrl) {
-          this.validImage = true;
+          this.validImage = true
         }
         window.scrollTo({
           top: 0,
           left: 0,
           behavior: 'smooth',
-        });
+        })
       }
     },
   },
-};
+}
 </script>

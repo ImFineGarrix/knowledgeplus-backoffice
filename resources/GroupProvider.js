@@ -1,10 +1,10 @@
 import HttpRequest from './HttpRequest'
 
-class SectionProvider extends HttpRequest {
+class GroupProvider extends HttpRequest {
 
-  async getSection() {
+  async getGroup() {
     try {
-      const data = await this.get(`/sections`)
+      const data = await this.get(`/groups`)
       return {
         message: 'success',
         status: 200,
@@ -18,9 +18,9 @@ class SectionProvider extends HttpRequest {
     }
   }
 
-  async getSectionById(id) {
+  async getGroupById(id) {
     try {
-      const data = await this.get(`/sections/${id}`)
+      const data = await this.get(`/groups/${id}`)
       return {
         message: 'success',
         status: 200,
@@ -34,9 +34,9 @@ class SectionProvider extends HttpRequest {
     }
   }
 
-  async createSection(body) {
+  async createGroup(body) {
     try {
-      await this.post('/sections', body)
+      await this.post('/groups', body)
       return {
         message: 'success',
         status: 200,
@@ -49,9 +49,9 @@ class SectionProvider extends HttpRequest {
     }
   }
 
-  async updateSection(id, body) {
+  async updateGroup(id, body) {
     try {
-      await this.put(`/sections/${id}`, body)
+      await this.put(`/groups/${id}`, body)
       return {
         message: 'success',
         status: 200
@@ -64,9 +64,9 @@ class SectionProvider extends HttpRequest {
     }
   }
 
-  async deleteSection(id) {
+  async deleteGroup(id) {
     try {
-      await this.delete(`/sections/${id}`)
+      await this.delete(`/groups/${id}`)
       return {
         message: 'success',
         status: 200
@@ -81,4 +81,4 @@ class SectionProvider extends HttpRequest {
 
 }
 
-export default SectionProvider
+export default GroupProvider

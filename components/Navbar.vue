@@ -9,7 +9,7 @@
       <v-list class="tw-flex-col container-menu tw-overflow-auto">
         <div v-for="(menu, indexMenu) in menus" :key="`menu-${indexMenu}`">
           <div class="tw-my-4 tw-font-semibold text-capitalize tw-flex">
-            <NuxtLink :to="menu.link" class="tw-flex">
+            <NuxtLink :to="menu.path" class="tw-flex">
               <span class="mx-1">{{ menu.name }}</span>
             </NuxtLink>
           </div>
@@ -17,58 +17,95 @@
       </v-list>
       <template v-slot:append>
         <div
-          @click="logout()"
-          class="tw-mx-[28px] tw-border-2 tw-border-rose-700 tw-transition-all tw-duration-150 hover:tw-bg-rose-50 tw-cursor-pointer tw-rounded-lg tw-text-rose-700 tw-py-2 tw-px-2 tw-my-6 tw-flex tw-justify-between">
-          <p class="tw-font-semibold">Logout</p>
-          <v-icon>mdi-logout</v-icon>
+          class="tw-mx-[20px] tw-py-2  tw-my-6 tw-flex tw-justify-between tw-items-center tw-space-x-2">
+          <div>
+            <div
+              class="tw-flex tw-font-semibold tw-text-lg tw-truncate tw-w-32">
+              {{ removeAfterAddress(user.email) }}
+            </div>
+            <p class="tw-text-xs">
+              Role: <span class="tw-uppercase">{{ user.role }}</span>
+            </p>
+          </div>
+          <v-icon color="error" @click="logout()">mdi-logout</v-icon>
         </div>
       </template>
     </v-navigation-drawer>
   </div>
 </template>
 <script>
-import { clearAuth } from '~/utils/Auth'
+import { clearAuth, getAuthDecode } from '~/utils/Auth'
 
 export default {
   data() {
     return {
+      user: {
+        email: '',
+        role: ''
+      },
       menus: [
         {
           name: 'Home',
-          link: '/',
+          role: 'All',
+          path: '/',
         },
         {
           name: 'Sections',
-          link: '/sections',
+          role: 'All',
+          path: '/sections',
         },
         {
           name: 'Career Groups',
-          link: '/groups',
+          role: 'All',
+          path: '/groups',
         },
         {
           name: 'Careers',
-          link: '/careers',
+          role: 'All',
+          path: '/careers',
         },
         {
           name: 'Skills',
-          link: '/skills',
+          role: 'All',
+          path: '/skills',
         },
         {
-          name: 'Organization',
-          link: '/organization',
+          name: 'Organizations',
+          role: 'All',
+          path: '/organizations',
         },
         {
           name: 'Course',
-          link: '/courses',
+          role: 'All',
+          path: '/courses',
         },
         {
           name: 'Admins',
-          link: '/admins',
+          role: 'Owner',
+          path: '/admins',
         },
       ],
     };
   },
+  mounted () {
+    this.getAuth()
+  },
   methods: {
+    getAuth () {
+      const data = getAuthDecode()
+      if (data) {
+        this.user = data
+        if (data.role !== 'owner') {
+          this.menus = this.menus.filter((menu) => menu.role === 'All')
+        }
+      }
+    },
+    removeAfterAddress (email) {
+      if (email) {
+        return email.split('@')[0]
+      }
+      return ''
+    },
     logout () {
       clearAuth()
       this.$router.push('/login')
@@ -83,4 +120,3 @@ export default {
   padding-left: 28px !important;
 }
 </style>
-~/utils/auth

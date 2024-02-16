@@ -1,8 +1,11 @@
 <template>
   <div>
-    <HeaderBack title="Create Admin" link="/admins" />
+    <HeaderBack title="Edit Admin" link="/admins" />
     <div class="tw-my-8">
-      <FormAdmin action-button="Create" @create-update="createAdmin" />
+      <FormAdmin
+        action-button="Save"
+        :idParams="idParams"
+        @create-update="updateAdmin" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
@@ -19,23 +22,28 @@ export default {
       loading: false
     }
   },
+  computed: {
+    idParams() {
+      return this.$route.params.id || ''
+    }
+  },
   methods: {
-    async createAdmin (form) {
+    async updateAdmin (form) {
       this.loading = true
       const formAdmin = form
 
-      const status = await this.AdminService.createAdmin(formAdmin)
+      const status = await this.AdminService.updateAdmin(this.idParams ,formAdmin)
       if (status.message === 'success') {
         Swal.fire({
           icon: 'success',
-          title: 'Create Admin Success',
+          title: 'Update Admin Success',
         }).then(() => {
           this.$router.push('/admins')
         })
       } else {
         Swal.fire({
           icon: 'error',
-          title: 'Create Admin Fail',
+          title: 'Update Admin Fail',
         })
         this.loading = false
       }

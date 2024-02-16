@@ -1,11 +1,11 @@
 <template>
   <div>
-    <HeaderBack title="Edit Section" link="/sections" />
+    <HeaderBack title="Edit Organization" link="/organizations" />
     <div class="tw-my-8">
-      <FormSection
+      <FormOrganization
         actionButton="Save"
         :idParams="idParams"
-        @create-update="updateSection" />
+        @create-update="updateOrganizartion" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
@@ -13,15 +13,15 @@
   </div>
 </template>
 <script>
-import SectionProvider from '~/resources/SectionProvider'
+import OrganizationProvider from '~/resources/OrganizationProvider'
 import FirebaseProvider from '~/resources/FirebaseProvider'
 import Swal from 'sweetalert2'
 export default {
-  data() {
+  data () {
     return {
-      SectionService: new SectionProvider(),
+      OrganizationService: new OrganizationProvider(),
       FirebaseService: new FirebaseProvider(),
-      loading: false,
+      loading: false
     }
   },
   computed: {
@@ -30,28 +30,28 @@ export default {
     },
   },
   methods: {
-    async updateSection(form) {
+    async updateOrganizartion (form) {
       this.loading = true
       const urlImage = await this.uploadFile(form.imageUrl, form.name)
       if (urlImage !== 'error') {
-        const formSection = {
+        const FormOrganization = {
           ...form,
           imageUrl: urlImage,
         }
-        const status = await this.SectionService.updateSection(
+        const status = await this.OrganizationService.updateOrganization(
           this.idParams,
-          formSection
+          FormOrganization
         )
         if (status.message === 'success') {
           Swal.fire({
-            title: 'Update Section Success',
+            title: 'Update Organization Success',
             icon: 'success',
           }).then(() => {
-            this.$router.push('/sections')
+            this.$router.push('/organizations')
           })
         } else {
           Swal.fire({
-            title: `Update Section Fail`,
+            title: `Update Organization Fail`,
             icon: 'error',
           })
           this.loading = false
@@ -69,13 +69,14 @@ export default {
       if (!file) {
         return ''
       }
+
       const typeFile = typeof file
       if (typeFile === 'string') {
         return file
       }
 
-      return await this.FirebaseService.uploadFile(`sections/${name}`, file)
+      return await this.FirebaseService.uploadFile(`skill/${name}`, file)
     },
-  },
+  }
 }
 </script>

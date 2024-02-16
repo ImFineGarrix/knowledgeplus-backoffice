@@ -1,8 +1,11 @@
 <template>
   <div>
-    <HeaderBack title="Create Course" link="/courses" />
+    <HeaderBack title="Edit Course" link="/courses" />
     <div class="tw-my-8">
-      <FormCourse actionButton="Create" @create-update="createCourse" />
+      <FormCourse
+        actionButton="Save"
+        @create-update="updateCourse"
+        :idParams="idParams" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
@@ -19,25 +22,30 @@ export default {
       loading: false
     }
   },
+  computed: {
+    idParams() {
+      return this.$route.params.id || ''
+    },
+  },
   methods: {
-    async createCourse (form) {
+    async updateCourse (form) {
       this.loading = true
       const formCourse = {
-        ...form,
+        ...form
       }
 
-      const status = await this.CourseService.createCourse(formCourse)
+      const status = await this.CourseService.updateCourse(this.idParams, formCourse)
       if (status.message === 'success') {
         Swal.fire({
           icon: 'success',
-          title: 'Create Course Success',
+          title: 'Update Course Success',
         }).then(() => {
           this.$router.push('/courses')
         })
       } else {
         Swal.fire({
           icon: 'error',
-          title: 'Create Course Fail',
+          title: 'Update Course Fail',
         })
         this.loading = false
       }

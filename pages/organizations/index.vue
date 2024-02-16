@@ -1,16 +1,16 @@
 <template>
   <div>
     <HeaderPage
-      title="Section"
+      title="Organizations"
+      link="/organizations/create"
       showBtn
-      titleBtn="Create Section"
-      link="/sections/create" />
+      titleBtn="Create Organization" />
     <div class="tw-my-8">
       <div v-if="ready">
         <div v-if="!error.isError">
-          <div v-if="check.checkEmpty(categories)">
+          <div v-if="check.checkEmpty(organizations)">
             <v-card>
-              <DataTable :value="categories">
+              <DataTable :value="organizations">
                 <Column field="imageUrl" header="" class="tw-w-2/12 tw-py-2">
                   <template #header>
                     <div class="tw-py-5"></div>
@@ -35,25 +35,20 @@
                     </div>
                   </template>
                 </Column>
-                <Column field="name" header="สายงาน"></Column>
+                <Column field="name" header="ชื่อ"></Column>
                 <Column field="actionButton" header="" class="tw-w-2/12">
                   <template #body="slotProps">
                     <div
                       :class="slotProps.data.imageUrl ? '' : 'tw-py-8'"
                       class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end">
                       <NuxtLink
-                        :to="`/sections/edit/${slotProps.data.sectionId}`">
+                        :to="`/organizations/edit/${slotProps.data.organizationId}`">
                         <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
                       </NuxtLink>
                       <v-icon
                         color="error"
                         class="tw-cursor-pointer"
-                        @click="
-                          deleteSection(
-                            slotProps.data.sectionId,
-                            slotProps.data.name
-                          )
-                        "
+                        @click="deleteOrganization(slotProps.data.adminId, slotProps.data.name)"
                         >mdi-delete</v-icon
                       >
                     </div>
@@ -64,10 +59,10 @@
           </div>
           <EmptyData
             v-else
-            name="NOT HAVE ANY CATEGORIES"
-            desc="PLEASE ADD CATEGORY IN CATEGORIES PAGE" />
+            name="NOT HAVE ANY ORGANIZATIONS"
+            desc="PLEASE ADD ORGANIZATION IN ORGANIZATIONS PAGE" />
         </div>
-        <MessageError v-else />
+        <MessageError v-else :msg="error.message" />
       </div>
       <Loading v-else />
     </div>
@@ -80,20 +75,19 @@
 <script>
 import { useRuntimeConfig } from 'nuxt/app'
 import { useCheck } from '~/composables/check'
-import SectionProvider from '@/resources/SectionProvider'
+import OrganizationProvider from '~/resources/OrganizationProvider'
 import Swal from 'sweetalert2'
-
 export default {
   data() {
     return {
-      SectionService: new SectionProvider(),
-      categories: [],
+      OrganizationService: new OrganizationProvider(),
+      organizations: [],
       config: useRuntimeConfig(),
       check: useCheck(),
       ready: false,
       dialog: {
         openDialog: false,
-        image: null,
+        image: null
       },
       error: {
         isError: false,
@@ -101,24 +95,24 @@ export default {
       }
     }
   },
-  mounted() {
-    this.getSection()
+  mounted () {
+    this.getOrganization()
   },
   methods: {
-    async getSection() {
-      const status = await this.SectionService.getSection()
+    async getOrganization () {
+      const status = await this.OrganizationService.getOrganization()
       if (status.message === 'success') {
-        this.categories = JSON.parse(JSON.stringify(status.data))
+        this.organizations = JSON.parse(JSON.stringify(status.data))
       } else {
         this.error.isError = true
       }
       this.ready = true
     },
-    async deleteSection(id, name) {
+    async deleteOrganization (id, name) {
       Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
-        text: `คุณต้องการจะลบสายงาน ${name}`,
+        text: `คุณต้องการจะลบองค์กร ${name}`,
         showCancelButton: true,
         cancelButtonColor: '#d33',
         confirmButtonText: 'ต้องการลบ',
@@ -126,30 +120,30 @@ export default {
         reverseButtons: true,
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const status = await this.SectionService.deleteSection(id)
+          const status = await this.OrganizationService.deleteOrganization(id)
           if (status.message === 'success') {
-            this.getSection()
+            this.getOrganization()
             Swal.fire({
               icon: 'success',
-              title: 'Delete Section Success',
+              title: 'Delete Organization Success',
             })
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'Delete Section Fail',
+              title: 'Delete Organization Fail',
             })
           }
         }
       })
     },
-    openDialog(image) {
+    openDialog (image) {
       this.dialog.image = image
       this.dialog.openDialog = !!this.dialog.image
     },
-    closeDialog() {
+    closeDialog () {
       this.dialog.openDialog = false
       this.dialog.image = null
     },
-  },
+  }
 }
 </script>

@@ -89,10 +89,8 @@ export default {
   },
   methods: {
     async getSectionById(id) {
-      const data = await this.SectionService.getSectionById(id)
-      if (data.message === 'success') {
-        this.form = data.data
-      }
+      const { data } = await this.SectionService.getSectionById(id)
+      this.form = data
     },
     uploadImage(e) {
       const file = e.target.files[0]
@@ -124,6 +122,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped></style>
-~/resources/SectionProvider

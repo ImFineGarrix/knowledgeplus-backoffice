@@ -1,10 +1,10 @@
 import HttpRequest from './HttpRequest'
 
-class SectionProvider extends HttpRequest {
+class CourseProvider extends HttpRequest {
 
-  async getSection() {
+  async getCourse(page, limit) {
     try {
-      const data = await this.get(`/sections`)
+      const data = await this.get(`/courses?page=${page}&limit=${limit}`)
       return {
         message: 'success',
         status: 200,
@@ -18,9 +18,9 @@ class SectionProvider extends HttpRequest {
     }
   }
 
-  async getSectionById(id) {
+  async getCourseById(id) {
     try {
-      const data = await this.get(`/sections/${id}`)
+      const data = await this.get(`/courses/${id}`)
       return {
         message: 'success',
         status: 200,
@@ -34,9 +34,9 @@ class SectionProvider extends HttpRequest {
     }
   }
 
-  async createSection(body) {
+  async createCourse(body) {
     try {
-      await this.post('/sections', body)
+      await this.post('/courses', body)
       return {
         message: 'success',
         status: 200,
@@ -49,9 +49,9 @@ class SectionProvider extends HttpRequest {
     }
   }
 
-  async updateSection(id, body) {
+  async updateCourse(id, body) {
     try {
-      await this.put(`/sections/${id}`, body)
+      await this.put(`/courses/${id}`, body)
       return {
         message: 'success',
         status: 200
@@ -64,9 +64,9 @@ class SectionProvider extends HttpRequest {
     }
   }
 
-  async deleteSection(id) {
+  async deleteCourse(id) {
     try {
-      await this.delete(`/sections/${id}`)
+      await this.delete(`/courses/${id}`)
       return {
         message: 'success',
         status: 200
@@ -81,4 +81,4 @@ class SectionProvider extends HttpRequest {
 
 }
 
-export default SectionProvider
+export default CourseProvider

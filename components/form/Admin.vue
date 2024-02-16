@@ -8,7 +8,7 @@
         label="ชื่อ"></v-text-field>
       <v-text-field
         v-model="form.email"
-        :rules="[rules.ruleRequired, rules.ruleEmail, rules.ruleWhiteSpace]"
+        :rules="[rules.ruleRequired, rules.ruleEmail]"
         variant="outlined"
         label="อีเมล"></v-text-field>
       <v-text-field
@@ -16,6 +16,15 @@
         :rules="[rules.ruleRequired]"
         variant="outlined"
         label="รหัสผ่าน"></v-text-field>
+      <v-autocomplete
+        clearable
+        label="ตำแหน่ง"
+        :items="roles"
+        item-title="label"
+        item-value="val"
+        :rules="[rules.ruleRequired]"
+        v-model="form.role"
+        variant="outlined" />
       <div class="tw-flex tw-justify-end">
         <div
           @click="setForm()"
@@ -27,6 +36,7 @@
   </div>
 </template>
 <script>
+import AdminProvider from '~/resources/AdminProvider';
 export default {
   props: {
     idParams: {
@@ -40,12 +50,38 @@ export default {
   },
   data () {
     return {
+      AdminService: new AdminProvider(),
       form: {
         name: '',
         email: '',
-        password: ''
+        password: '',
+        role: null
       },
-      rules: useFormRules()
+      rules: useFormRules(),
+      roles: [{ label: 'Admin', val: 'admin' }]
+    }
+  },
+  mounted () {
+    if (this.idParams) {
+      this.getAdminById(this.idParams)
+    }
+  },
+  methods: {
+    async getAdminById (id) {
+      const { data } = await this.AdminService.getAdminById(id)
+      this.form = data
+    },
+    async setForm () {
+      const { valid } = await this.$refs.form.validate()
+      if (valid) {
+        this.$emit('create-update', this.form)
+      } else {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        })
+      }
     }
   }
 }
