@@ -20,7 +20,7 @@ pipeline {
                 BASE_URL=${ENV == 'dev' ? '/sj2/dev/backoffice' : '/sj2/backoffice'}
                 BASE_TITLE='Knowledge Back-office${ENV == 'dev' ? ' | dev' : ''}'
 
-                API_BASE_URL=https://cp23sj2.sit.kmutt.ac.th/sj2${ENV == 'dev' ? '/dev/api/backoffice' : '/api/backoffice'}
+                API_BASE_URL=https://capstone23.sit.kmutt.ac.th/sj2${ENV == 'dev' ? '/dev/api/backoffice' : '/api/backoffice'}
 
                 FIREBASE_BASE_URL=https://firebasestorage.googleapis.com/v0/b/knowledge-project-${ENV == 'dev' ? 'devmode' : '7e224'}.appspot.com/o
                 FIREBASE_API_KEY=${ENV == 'dev' ? 'AIzaSyCvrkrZ82WtdCNdnJRs23K94JnQqErPxl0' : 'AIzaSyBD9Sib0McpeRzQ7RLWlgw2f83x-O4UEiE'}
