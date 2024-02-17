@@ -17,7 +17,7 @@ pipeline {
     steps {
         script {
             def envContent = """
-                BASE_URL=${ENV == 'dev' ? '/sj2/dev/backoffice' : '/sj2/backoffice'}
+                BASE_URL=${ENV == 'dev' ? '/dev/backoffice' : '/backoffice'}
                 BASE_TITLE='Knowledge Back-office${ENV == 'dev' ? ' | dev' : ''}'
 
                 API_BASE_URL=https://capstone23.sit.kmutt.ac.th/sj2${ENV == 'dev' ? '/dev/api/backoffice' : '/api/backoffice'}
