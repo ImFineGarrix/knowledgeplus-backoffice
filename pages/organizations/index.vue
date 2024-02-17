@@ -62,7 +62,7 @@
             name="NOT HAVE ANY ORGANIZATIONS"
             desc="PLEASE ADD ORGANIZATION IN ORGANIZATIONS PAGE" />
         </div>
-        <MessageError v-else :msg="error.message" />
+        <MessageError v-else />
       </div>
       <Loading v-else />
     </div>
