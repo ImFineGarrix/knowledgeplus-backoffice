@@ -48,10 +48,10 @@
           </div>
         </div>
       </div>
-      <div class="tw-space-y-2 tw-py-4">
-        <p class="text-lg tw-font-semibold">คำอธิบาย</p>
-        <Editor v-model="form.description" />
-      </div>
+      <v-textarea
+        variant="outlined"
+        label="คำอธิบาย"
+        v-model="form.description"></v-textarea>
       <v-autocomplete
         clearable
         label="ประเภท"
@@ -74,14 +74,14 @@
           chips
           label="ระดับทักษะ"
           variant="outlined" />
-        <div class="tw-space-y-2">
-          <p class="text-lg tw-font-semibold">คำอธิบาย Knowledge</p>
-          <Editor v-model="skillLevel.knowledgeDesc" />
-        </div>
-        <div class="tw-space-y-2">
-          <p class="text-lg tw-font-semibold">คำอธิบาย Ability</p>
-          <Editor v-model="skillLevel.abilityDesc" />
-        </div>
+        <v-textarea
+          variant="outlined"
+          label="คำอธิบาย Knowledge"
+          v-model="skillLevel.knowledgeDesc"></v-textarea>
+        <v-textarea
+          variant="outlined"
+          label="คำอธิบาย Ability"
+          v-model="skillLevel.abilityDesc"></v-textarea>
         <div
           v-if="form.skillsLevels.length !== 1"
           @click="removeSkillLevelFollyByIndex(indexSkillLevel)"

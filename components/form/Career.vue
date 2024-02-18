@@ -27,10 +27,10 @@
         item-value="skillLevel"
         label="ทักษะ"
         variant="outlined" />
-      <div class="tw-space-y-2">
-        <p class="text-lg tw-font-semibold">คำอธิบาย</p>
-        <Editor v-model="form.description" />
-      </div>
+      <v-textarea
+        variant="outlined"
+        label="คำอธิบาย"
+        v-model="form.description"></v-textarea>
       <div class="tw-flex tw-justify-end">
         <div
           @click="setForm()"

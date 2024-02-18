@@ -18,7 +18,7 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: process.env.BASE_TITLE,
     },
-    baseURL: process.env.BASE_URL,
+    baseURL: process.env.BASE_PATH,
   },
   plugins: [{ src: '~/plugins/sweetalert2', mode: 'client' }],
   pages: true,

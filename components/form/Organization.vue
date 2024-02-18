@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import SectionProvider from '~/resources/SectionProvider'
+import OrganizationProvider from '~/resources/OrganizationProvider'
 import { useRuntimeConfig } from 'nuxt/app'
 import { useFormRules } from '~/composables/rules'
 
@@ -71,7 +71,7 @@ export default {
   },
   data() {
     return {
-      SectionService: new SectionProvider(),
+      OrganizationService: new OrganizationProvider(),
       form: {
         name: '',
         imageUrl: null,
@@ -84,12 +84,12 @@ export default {
   },
   mounted() {
     if (this.idParams) {
-      this.getSectionById(this.idParams)
+      this.getOrganizationById(this.idParams)
     }
   },
   methods: {
-    async getSectionById(id) {
-      const { data } = await this.SectionService.getSectionById(id)
+    async getOrganizationById(id) {
+      const { data } = await this.OrganizationService.getOrganizationById(id)
       this.form = data
     },
     uploadImage(e) {

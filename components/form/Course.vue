@@ -23,14 +23,14 @@
           label="ปี (ค.ศ.)"
           variant="outlined"></v-text-field>
       </div>
-      <div class="tw-space-y-2 tw-pb-4">
-        <p class="text-lg tw-font-semibold">คำอธิบาย</p>
-        <Editor v-model="form.description" />
-      </div>
-      <div class="tw-space-y-2 tw-pb-4">
-        <p class="text-lg tw-font-semibold">Learning Outcome</p>
-        <Editor v-model="form.learningOutcome" />
-      </div>
+      <v-textarea
+        variant="outlined"
+        label="คำอธิบาย"
+        v-model="form.description"></v-textarea>
+      <v-textarea
+        variant="outlined"
+        label="Learning Outcome"
+        v-model="form.learningOutcome"></v-textarea>
       <v-autocomplete
         v-model="form.skillsLevels"
         :items="skillsLevels"
