@@ -71,16 +71,19 @@
           :items="levelFollwByType"
           item-title="level"
           item-value="levelId"
+          :rules="[rules.ruleRequired]"
           chips
           label="ระดับทักษะ"
           variant="outlined" />
         <v-textarea
           variant="outlined"
           label="คำอธิบาย Knowledge"
+          :rules="[rules.ruleRequired]"
           v-model="skillLevel.knowledgeDesc"></v-textarea>
         <v-textarea
           variant="outlined"
           label="คำอธิบาย Ability"
+          :rules="[rules.ruleRequired]"
           v-model="skillLevel.abilityDesc"></v-textarea>
         <div
           v-if="form.skillsLevels.length !== 1"

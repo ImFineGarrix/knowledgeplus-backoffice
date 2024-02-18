@@ -3,7 +3,7 @@
     <v-form ref="form" class="tw-space-y-4">
       <v-text-field
         v-model.trim="form.name"
-        :rules="[rules.ruleRequired, rules.ruleLength255]"
+        :rules="[rules.ruleRequired]"
         label="ชื่ออาชีพ(ภาษาอังกฤษ)"
         variant="outlined" />
       <v-autocomplete
@@ -26,6 +26,7 @@
         item-title="name"
         item-value="skillLevel"
         label="ทักษะ"
+        :rules="[rules.ruleArray]"
         variant="outlined" />
       <v-textarea
         variant="outlined"

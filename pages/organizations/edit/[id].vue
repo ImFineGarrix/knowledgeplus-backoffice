@@ -53,6 +53,7 @@ export default {
           Swal.fire({
             title: `Update Organization Fail`,
             icon: 'error',
+            text: `${status.code}: ${status.message}`
           })
           this.loading = false
         }

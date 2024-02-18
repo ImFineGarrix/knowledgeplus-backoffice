@@ -12,8 +12,7 @@ class SkillProvider extends HttpRequest {
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
@@ -28,8 +27,7 @@ class SkillProvider extends HttpRequest {
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
@@ -43,8 +41,7 @@ class SkillProvider extends HttpRequest {
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
@@ -58,8 +55,7 @@ class SkillProvider extends HttpRequest {
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
@@ -73,8 +69,7 @@ class SkillProvider extends HttpRequest {
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }

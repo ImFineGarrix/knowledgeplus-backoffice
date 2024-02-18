@@ -2,24 +2,23 @@
   <div>
     <v-form ref="form" class="tw-space-y-2">
       <v-text-field
-        v-model="form.name"
+        v-model.trim="form.name"
         label="ชื่อคอร์ส(ภาษาอังกฤษ)"
         :rules="[rules.ruleRequired]"
         variant="outlined" />
       <v-text-field
-        v-model="form.courseLink"
+        v-model.trim="form.courseLink"
         :rules="[rules.ruleRequired]"
         label="link"
         variant="outlined" />
       <div class="tw-grid tw-gap-10 tw-grid-cols-2">
         <v-text-field
-          v-model="form.learnHours"
-          :rules="[rules.ruleRequired]"
+          v-model.number="form.learnHours"
+          type="number"
           label="เวลา (ชั่วโมง)"
           variant="outlined"></v-text-field>
         <v-text-field
-          v-model="form.academicYear"
-          :rules="[rules.ruleRequired]"
+          v-model.trim="form.academicYear"
           label="ปี (ค.ศ.)"
           variant="outlined"></v-text-field>
       </div>

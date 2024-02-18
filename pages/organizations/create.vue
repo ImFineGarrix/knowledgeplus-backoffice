@@ -45,6 +45,7 @@ export default {
           Swal.fire({
             icon: 'error',
             title: 'Create Organization Fail',
+            text: `${status.code}: ${status.message}`
           })
           this.loading = false
         }

@@ -2,18 +2,18 @@
   <div>
     <v-form ref="form" class="tw-space-y-2">
       <v-text-field
-        v-model="form.name"
-        :rules="[rules.ruleRequired]"
+        v-model.trim="form.name"
+        :rules="[rules.ruleRequired, rules.ruleLength255]"
         variant="outlined"
         label="ชื่อ"></v-text-field>
       <v-text-field
-        v-model="form.email"
+        v-model.trim="form.email"
         :rules="[rules.ruleRequired, rules.ruleEmail]"
         variant="outlined"
         label="อีเมล"></v-text-field>
       <v-text-field
-        v-model="form.password"
-        :rules="[rules.ruleRequired]"
+        v-model.trim="form.password"
+        :rules="[rules.ruleRequired, rules.ruleLength255]"
         variant="outlined"
         label="รหัสผ่าน"></v-text-field>
       <v-autocomplete

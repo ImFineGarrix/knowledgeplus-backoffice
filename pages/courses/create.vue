@@ -38,6 +38,7 @@ export default {
         Swal.fire({
           icon: 'error',
           title: 'Create Course Fail',
+          text: `${status.code}: ${status.message}`
         })
         this.loading = false
       }

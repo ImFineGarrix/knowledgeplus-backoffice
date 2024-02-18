@@ -11,8 +11,7 @@ class AuthProvider extends HttpRequest {
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e
+        e
       }
     }
   }

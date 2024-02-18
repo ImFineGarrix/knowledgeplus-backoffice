@@ -39,6 +39,7 @@ export default {
         Swal.fire({
           icon: 'error',
           title: 'Create Career Group Fail',
+          text: `${status.code}: ${status.message}`
         })
         this.loading = false
       }

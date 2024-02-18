@@ -42,6 +42,7 @@ export default {
           Swal.fire({
             icon: 'error',
             title: 'Create Skill Fail',
+            text: `${status.code}: ${status.message}`
           })
           this.loading = false
         }

@@ -5,7 +5,7 @@
         label="ชื่อกลุ่ม"
         variant="outlined"
         v-model.trim="form.name"
-        :rules="[rules.ruleRequired]"></v-text-field>
+        :rules="[rules.ruleRequired, rules.ruleLength255]"></v-text-field>
       <v-autocomplete
         chips
         multiple
