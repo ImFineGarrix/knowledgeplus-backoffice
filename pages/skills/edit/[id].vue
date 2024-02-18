@@ -52,7 +52,7 @@ export default {
         } else {
           Swal.fire({
             title: `Update Skill Fail`,
-            text: `${status.code}: ${status.message}`,
+            text: `${status.e.code}: ${status.e.message}`,
             icon: 'error',
           })
           this.loading = false

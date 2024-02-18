@@ -44,7 +44,7 @@ export default {
         Swal.fire({
           icon: 'error',
           title: 'Update Admin Fail',
-          text: `${status.code}: ${status.message}`
+          text: `${status.e.code}: ${status.e.message}`
         })
         this.loading = false
       }
