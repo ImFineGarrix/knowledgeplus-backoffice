@@ -13,8 +13,7 @@
         variant="outlined" />
       <div class="tw-grid tw-gap-10 tw-grid-cols-2">
         <v-text-field
-          v-model.number="form.learnHours"
-          type="number"
+          v-model="form.learnHours"
           label="เวลา (ชั่วโมง)"
           variant="outlined"></v-text-field>
         <v-text-field
