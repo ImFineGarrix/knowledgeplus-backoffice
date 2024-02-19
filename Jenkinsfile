@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     sh '''                     
-                        docker run -d --name backoffice-container-${ENV} -p 3001:3001 --network ${ENV} sj2vue-backoffice-nuxt-${ENV}:latest
+                        docker run -d --name backoffice-container-${ENV} -p :3001 --network ${ENV} sj2vue-backoffice-nuxt-${ENV}:latest
                     '''
                 }
             }
