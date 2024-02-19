@@ -4,7 +4,7 @@
       <v-text-field
         v-model.trim="form.name"
         label="ชื่อคอร์ส(ภาษาอังกฤษ)"
-        :rules="[rules.ruleRequired]"
+        :rules="[rules.ruleRequired, rules.ruleLength255]"
         variant="outlined" />
       <v-text-field
         v-model.trim="form.courseLink"
