@@ -14,13 +14,19 @@ export const useLevelStore = defineStore('level', {
 
   actions: {
     setLevel(item) {
+      let hard = []
+      let soft = []
       item.forEach((level) => {
         if (level.levelId <= 6) {
-          this.levels.hard.push(level)
+          hard.push(level)
         } else {
-          this.levels.soft.push(level)
+          soft.push(level)
         }
       })
+      this.levels = {
+        hard,
+        soft
+      }
     },
   },
 })
