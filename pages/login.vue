@@ -28,7 +28,7 @@
             <div
               @click="login()"
               class="font-poppin tw-cursor-pointer tw-text-center tw-text-white tw-text-lg hover:tw-scale-110 tw-transition-all tw-duration-150 tw-font-semibold">
-              LOCK IN >
+              LOGIN >
             </div>
           </div>
         </div>

@@ -101,6 +101,7 @@ export default {
           transformedSkills.push({
             name: `${skill.name} (${this.getLevelName(skillLevel.levelId)})`,
             skillLevel: {
+              skillsLevelsId: skillLevel.skillsLevelsId,
               skillId: skill.skillId,
               levelId: skillLevel.levelId
             }
@@ -118,7 +119,7 @@ export default {
       const { data } = await this.CareerService.getCareerById(id)
       this.form = {
         ...data,
-        skillsLevels: data.skillsLevels.map((skill) => ({skillId: skill.skillId, levelId: skill.levelId})),
+        skillsLevels: data.skillsLevels.map((skill) => ({skillsLevelsId: skill.skillsLevelsId, skillId: skill.skillId, levelId: skill.levelId})),
         groups: data.groups.map((group) => group.groupId),
       }
     },
