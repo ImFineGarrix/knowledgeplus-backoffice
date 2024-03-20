@@ -6,6 +6,15 @@
         label="ชื่อคอร์ส(ภาษาอังกฤษ)"
         :rules="[rules.ruleRequired, rules.ruleLength255]"
         variant="outlined" />
+      <v-autocomplete
+        clearable
+        label="ประเภท"
+        v-model="form.type"
+        :items="typeSkill"
+        item-title="label"
+        item-value="val"
+        :rules="[rules.ruleRequired]"
+        variant="outlined" />
       <v-text-field
         v-model.trim="form.courseLink"
         :rules="[rules.ruleRequired]"
@@ -65,6 +74,7 @@ import SkillProvider from '~/resources/SkillProvider'
 import OrganizationProvider from '~/resources/OrganizationProvider'
 import CourseProvider from '~/resources/CourseProvider'
 import LevelProvider from '~/resources/LevelProvider'
+import { useLevelStore } from '~/stores/Levels'
 
 export default {
   props: {
@@ -87,6 +97,7 @@ export default {
       form: {
         name: '',
         description: '',
+        type: 'HARD',
         learningOutcome: '',
         learnHours: '',
         academicYear: '',
@@ -94,6 +105,16 @@ export default {
         organizationId: null,
         skillsLevels: [],
       },
+      typeSkill: [
+        {
+          label: 'Softskill',
+          val: 'SOFT',
+        },
+        {
+          label: 'Hardskill',
+          val: 'HARD',
+        },
+      ],
       organizations: [],
       skillsLevels: [],
       rules: useFormRules(),
