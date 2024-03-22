@@ -16,9 +16,9 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      titleTemplate: 'Knowledge Back-office',
+      titleTemplate: process.env.BASE_TITLE,
     },
-    baseURL: '/backoffice',
+    baseURL: process.env.BASE_PATH,
   },
   plugins: [{ src: '~/plugins/sweetalert2', mode: 'client' }],
   pages: true,
@@ -48,6 +48,7 @@ export default defineNuxtConfig({
       firebaseStorageBucket: process.env.FIREBASE_STORAGE_BUCKET,
       firebaseAppId: process.env.FIREBASE_APP_ID,
       messagingSenderId: process.env.FIREBASE_MESSAGE_SENDER_ID,
+      nodeEnv: process.env.NODE_ENV,
     },
   },
 })

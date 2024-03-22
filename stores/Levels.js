@@ -2,7 +2,10 @@ import { defineStore } from 'pinia'
 
 export const useLevelStore = defineStore('level', {
   state: () => ({
-    levels: [],
+    levels: {
+      hard: [],
+      soft: []
+    },
   }),
 
   getters: {
@@ -11,7 +14,19 @@ export const useLevelStore = defineStore('level', {
 
   actions: {
     setLevel(item) {
-      this.levels = item
+      let hard = []
+      let soft = []
+      item.forEach((level) => {
+        if (level.levelId <= 6) {
+          hard.push(level)
+        } else {
+          soft.push(level)
+        }
+      })
+      this.levels = {
+        hard,
+        soft
+      }
     },
   },
 })

@@ -1,10 +1,10 @@
 import HttpRequest from './HttpRequest'
 
-class SkillProvider extends HttpRequest {
+class SectionProvider extends HttpRequest {
 
-  async getSkill(page, limit) {
+  async getSection() {
     try {
-      const data = await this.get(`/skills?page=${page}&limit=${limit}`)
+      const data = await this.get(`/sections`)
       return {
         message: 'success',
         status: 200,
@@ -17,9 +17,9 @@ class SkillProvider extends HttpRequest {
     }
   }
 
-  async getSkillById(id) {
+  async getSectionById(id) {
     try {
-      const data = await this.get(`/skills/${id}`)
+      const data = await this.get(`/sections/${id}`)
       return {
         message: 'success',
         status: 200,
@@ -32,9 +32,9 @@ class SkillProvider extends HttpRequest {
     }
   }
 
-  async createSkill(body) {
+  async createSection(body) {
     try {
-      await this.post('/skills', body)
+      await this.post('/sections', body)
       return {
         message: 'success',
         status: 200,
@@ -46,9 +46,9 @@ class SkillProvider extends HttpRequest {
     }
   }
 
-  async updateSkill(id, body) {
+  async updateSection(id, body) {
     try {
-      await this.put(`/skills/${id}`, body)
+      await this.put(`/sections/${id}`, body)
       return {
         message: 'success',
         status: 200
@@ -60,9 +60,9 @@ class SkillProvider extends HttpRequest {
     }
   }
 
-  async deleteSkill(id) {
+  async deleteSection(id) {
     try {
-      await this.delete(`/skills/${id}`)
+      await this.delete(`/sections/${id}`)
       return {
         message: 'success',
         status: 200
@@ -76,4 +76,4 @@ class SkillProvider extends HttpRequest {
 
 }
 
-export default SkillProvider
+export default SectionProvider

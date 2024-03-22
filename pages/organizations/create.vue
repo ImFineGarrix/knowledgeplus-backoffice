@@ -1,8 +1,10 @@
 <template>
   <div>
-    <HeaderBack title="Create Skill" link="/skills" />
+    <HeaderBack title="Create Organization" link="/organizations" />
     <div class="tw-my-8">
-      <FormSkill actionButton="Create" @create-update="createSkill" />
+      <FormOrganization
+        actionButton="Create"
+        @create-update="createOrganization" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
@@ -10,41 +12,41 @@
   </div>
 </template>
 <script>
-import SkillProvider from '~/resources/SkillProvider'
+import OrganizationProvider from '~/resources/OrganizationProvider'
 import FirebaseProvider from '~/resources/FirebaseProvider'
 import Swal from 'sweetalert2'
 export default {
-  data() {
+  data () {
     return {
+      OrganizationService: new OrganizationProvider(),
       FirebaseService: new FirebaseProvider(),
-      SkillService: new SkillProvider(),
-      loading: false,
+      loading: false
     }
   },
   methods: {
-    async createSkill(form) {
+    async createOrganization (form) {
       this.loading = true
       const urlImage = await this.uploadFile(form.imageUrl, form.name)
       if (urlImage !== 'error') {
         const formSkill = {
           ...form,
-          imageUrl: urlImage,
+          imageUrl: urlImage
         }
-        const status = await this.SkillService.createSkill(formSkill)
+
+        const status = await this.OrganizationService.createOrganization(formSkill)
         if (status.message === 'success') {
           Swal.fire({
             icon: 'success',
-            title: 'Create Skill Success',
+            title: 'Create Organization Success',
           }).then(() => {
-            this.$router.push('/skills')
+            this.$router.push('/organizations')
           })
         } else {
           Swal.fire({
             icon: 'error',
-            title: 'Create Skill Fail',
+            title: 'Create Organization Fail',
             text: `${status.e.code}: ${status.e.message}`
           })
-          console.log('status',status)
           this.loading = false
         }
       } else {
@@ -55,6 +57,7 @@ export default {
         this.loading = false
       }
       this.loading = false
+
     },
     async uploadFile(file, name) {
       if (!file) {
@@ -66,8 +69,8 @@ export default {
         return file
       }
 
-      return await this.FirebaseService.uploadFile(`skill/${name}`, file)
+      return await this.FirebaseService.uploadFile(`organization/${name}`, file)
     },
-  },
+  }
 }
 </script>

@@ -1,16 +1,16 @@
 <template>
   <div>
     <HeaderPage
-      title="Admins"
-      link="/admins/create"
+      title="Career Groups"
+      link="/groups/create"
       showBtn
-      titleBtn="Create Admin" />
+      titleBtn="Create Career Groups" />
     <div class="tw-my-8">
       <div v-if="ready">
-        <div v-if="!error.isError && user.role === 'owner'">
-          <div v-if="check.checkEmpty(admins)">
+        <div v-if="!error.isError">
+          <div v-if="check.checkEmpty(groups)">
             <v-card>
-              <DataTable :value="admins">
+              <DataTable :value="groups">
                 <Column field="name" header="ชื่อ">
                   <template #header>
                     <div class="tw-py-6 tw-px-3"></div>
@@ -19,19 +19,31 @@
                     <div class="tw-px-6">{{ slotProps.data.name }}</div>
                   </template>
                 </Column>
-                <Column field="email" header="อีเมล" />
-                <Column field="role" header="ตำแหน่ง" />
+                <Column field="sections" header="สายงาน">
+                  <template #body="slotProps">
+                    <div class="tw-flex tw-gap-4">
+                      <div
+                        v-for="(section, indexSection) in slotProps.data.sections"
+                        :key="`sections-${indexSection}`">
+                        <p
+                          class="tw-px-3 tw-border-2 tw-border-gray-500 tw-rounded-full tw-py-2">
+                          {{ section.name }}
+                        </p>
+                      </div>
+                    </div>
+                  </template>
+                </Column>
                 <Column field="actionButton" header="" class="tw-w-2/12">
                   <template #body="slotProps">
                     <div
                       class="tw-space-x-4 tw-mr-4 tw-flex tw-justify-end tw-py-5">
-                      <NuxtLink :to="`/admins/edit/${slotProps.data.userId}`">
+                      <NuxtLink :to="`/groups/edit/${slotProps.data.groupId}`">
                         <v-icon class="tw-cursor-pointer">mdi-pencil</v-icon>
                       </NuxtLink>
                       <v-icon
                         color="error"
                         class="tw-cursor-pointer"
-                        @click="deleteAdmin(slotProps.data.userId, slotProps.data.name)"
+                        @click="deleteGroup(slotProps.data.groupId, slotProps.data.name)"
                         >mdi-delete</v-icon
                       >
                     </div>
@@ -42,8 +54,8 @@
           </div>
           <EmptyData
             v-else
-            name="NOT HAVE ANY ADMINS"
-            desc="PLEASE ADD ADMIN IN ADMINS PAGE" />
+            name="NOT HAVE ANY CAREER GROUPS"
+            desc="PLEASE ADD CAREER GROUP IN CAREER GROUPS PAGE" />
         </div>
         <MessageError v-else />
       </div>
@@ -52,21 +64,16 @@
   </div>
 </template>
 <script>
-import { useCheck } from '~/composables/check';
-import AdminProvider from '~/resources/AdminProvider'
-import { getAuthDecode } from '~/utils/Auth'
+import { useCheck } from '~/composables/check'
+import GroupProvider from '~/resources/GroupProvider'
 import Swal from 'sweetalert2'
 export default {
   data () {
     return {
-      AdminService: new AdminProvider(),
-      admins: [],
+      GroupService: new GroupProvider(),
+      groups: [],
       check: useCheck(),
       ready: false,
-      user: {
-        email: '',
-        role: ''
-      },
       error: {
         isError: false,
         message: ''
@@ -74,30 +81,23 @@ export default {
     }
   },
   mounted () {
-    this.getAdmin()
-    this.getAuth()
+    this.getGroup()
   },
   methods: {
-    async getAdmin () {
-      const status = await this.AdminService.getAdmin()
+    async getGroup () {
+      const status = await this.GroupService.getGroup()
       if (status.message === 'success') {
-        this.admins = JSON.parse(JSON.stringify(status.data))
+        this.groups = JSON.parse(JSON.stringify(status.data))
       } else {
         this.error.isError = true
       }
       this.ready = true
     },
-    getAuth () {
-      const data = getAuthDecode()
-      if (data) {
-        this.user = data
-      }
-    },
-    async deleteAdmin (id, name) {
+    async deleteGroup (id, name) {
       Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
-        text: `คุณต้องการจะลบแอดมิน ${name}`,
+        text: `คุณต้องการจะลบกลุ่มสายงาน ${name}`,
         showCancelButton: true,
         cancelButtonColor: '#d33',
         confirmButtonText: 'ต้องการลบ',
@@ -105,22 +105,22 @@ export default {
         reverseButtons: true,
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const status = await this.AdminService.deleteAdmin(id)
+          const status = await this.GroupService.deleteGroup(id)
           if (status.message === 'success') {
-            this.getAdmin()
+            this.getGroup()
             Swal.fire({
               icon: 'success',
-              title: 'Delete Admin Success',
+              title: 'Delete Group Success',
             })
           } else {
             Swal.fire({
               icon: 'error',
-              title: 'Delete Admin Fail',
+              title: 'Delete Group Fail',
             })
           }
         }
       })
-    }
+    },
   }
 }
 </script>

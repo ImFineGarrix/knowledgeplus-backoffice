@@ -1,51 +1,60 @@
 <template>
   <div>
-    <HeaderBack title="Create Category" link="/categories" />
+    <HeaderBack title="Edit Section" link="/sections" />
     <div class="tw-my-8">
-      <FormCategory actionButton="Create" @create-update="createCategory" />
+      <FormSection
+        actionButton="Save"
+        :idParams="idParams"
+        @create-update="updateSection" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
     </div>
   </div>
 </template>
-
 <script>
-import CategoryProvider from '~/resources/CategoryProvider'
+import SectionProvider from '~/resources/SectionProvider'
 import FirebaseProvider from '~/resources/FirebaseProvider'
 import Swal from 'sweetalert2'
-
 export default {
   data() {
     return {
+      SectionService: new SectionProvider(),
       FirebaseService: new FirebaseProvider(),
-      CategoryService: new CategoryProvider(),
       loading: false,
     }
   },
+  computed: {
+    idParams() {
+      return this.$route.params.id || ''
+    },
+  },
   methods: {
-    async createCategory(form) {
+    async updateSection(form) {
       this.loading = true
       const urlImage = await this.uploadFile(form.imageUrl, form.name)
       if (urlImage !== 'error') {
-        const formCategory = {
+        const formSection = {
           ...form,
           imageUrl: urlImage,
         }
-        const status = await this.CategoryService.createCategory(formCategory)
+        const status = await this.SectionService.updateSection(
+          this.idParams,
+          formSection
+        )
         if (status.message === 'success') {
           Swal.fire({
-            title: 'Create Category Success',
+            title: 'Update Section Success',
             icon: 'success',
           }).then(() => {
-            this.$router.push('/categories')
+            this.$router.push('/sections')
           })
         } else {
           Swal.fire({
-            title: `Create Category Fail`,
+            title: `Update Section Fail`,
             icon: 'error',
           })
-          this.load = false
+          this.loading = false
         }
       } else {
         Swal.fire({
@@ -60,16 +69,13 @@ export default {
       if (!file) {
         return ''
       }
-
       const typeFile = typeof file
       if (typeFile === 'string') {
         return file
       }
 
-      return await this.FirebaseService.uploadFile(`category/${name}`, file)
+      return await this.FirebaseService.uploadFile(`sections/${name}`, file)
     },
   },
 }
 </script>
-
-<style lang="scss" scoped></style>

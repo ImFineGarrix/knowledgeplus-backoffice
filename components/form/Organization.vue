@@ -3,7 +3,7 @@
     <v-form ref="form" class="tw-space-y-4">
       <v-text-field
         v-model.trim="form.name"
-        label="ชื่อสายงาน(ภาษาอังกฤษ)"
+        label="ชื่อองค์กร"
         :rules="[rules.ruleRequired, rules.ruleLength255]"
         variant="outlined"></v-text-field>
       <div class="tw-space-y-2">
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import CategoryProvider from '~/resources/CategoryProvider'
+import OrganizationProvider from '~/resources/OrganizationProvider'
 import { useRuntimeConfig } from 'nuxt/app'
 import { useFormRules } from '~/composables/rules'
 
@@ -71,7 +71,7 @@ export default {
   },
   data() {
     return {
-      CategoryService: new CategoryProvider(),
+      OrganizationService: new OrganizationProvider(),
       form: {
         name: '',
         imageUrl: null,
@@ -84,15 +84,13 @@ export default {
   },
   mounted() {
     if (this.idParams) {
-      this.getCategoryById(this.idParams)
+      this.getOrganizationById(this.idParams)
     }
   },
   methods: {
-    async getCategoryById(id) {
-      const data = await this.CategoryService.getCategoryById(id)
-      if (data.message === 'success') {
-        this.form = data.data
-      }
+    async getOrganizationById(id) {
+      const { data } = await this.OrganizationService.getOrganizationById(id)
+      this.form = data
     },
     uploadImage(e) {
       const file = e.target.files[0]
@@ -124,5 +122,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped></style>

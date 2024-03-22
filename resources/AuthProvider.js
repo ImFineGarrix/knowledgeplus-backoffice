@@ -1,10 +1,9 @@
 import HttpRequest from './HttpRequest'
 
-class LevelProvider extends HttpRequest {
-
-  async getLevel() {
+class AuthProvider extends HttpRequest {
+  async login(body) {
     try {
-      const data = await this.get(`/levels`)
+      const data = await this.post('/auth/login', body)
       return {
         message: 'success',
         status: 200,
@@ -18,4 +17,4 @@ class LevelProvider extends HttpRequest {
   }
 }
 
-export default LevelProvider
+export default AuthProvider

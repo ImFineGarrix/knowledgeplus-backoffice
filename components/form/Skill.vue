@@ -48,20 +48,59 @@
           </div>
         </div>
       </div>
+      <v-textarea
+        variant="outlined"
+        label="คำอธิบาย"
+        v-model="form.description"></v-textarea>
       <v-autocomplete
         clearable
-        class="custom-autocomplete"
-        :items="levelStore.level"
-        item-title="name"
-        item-value="levelId"
-        v-model="form.levelId"
-        label="ระดับทักษะ"
+        label="ประเภท"
+        v-model="form.type"
+        :items="typeSkill"
+        item-title="label"
+        item-value="val"
         :rules="[rules.ruleRequired]"
         variant="outlined" />
-      <v-textarea
-        v-model="form.description"
-        label="คำอธิบาย"
-        variant="outlined" />
+      <div
+        v-for="(skillLevel, indexSkillLevel) in form.skillsLevels"
+        :key="`skill-level-${indexSkillLevel}`"
+        class="tw-space-y-4">
+        <v-autocomplete
+          clearable
+          v-model="skillLevel.levelId"
+          :items="levelFollwByType"
+          item-title="level"
+          item-value="levelId"
+          :rules="[rules.ruleRequired]"
+          chips
+          label="ระดับทักษะ"
+          variant="outlined" />
+        <v-textarea
+          variant="outlined"
+          label="คำอธิบาย Knowledge"
+          :rules="[rules.ruleRequired]"
+          v-model="skillLevel.knowledgeDesc"></v-textarea>
+        <v-textarea
+          variant="outlined"
+          label="คำอธิบาย Ability"
+          :rules="[rules.ruleRequired]"
+          v-model="skillLevel.abilityDesc"></v-textarea>
+        <div
+          v-if="form.skillsLevels.length !== 1"
+          @click="removeSkillLevelFollyByIndex(indexSkillLevel)"
+          class="tw-cursor-pointer tw-flex tw-justify-end tw-pb-4">
+          <div class="tw-bg-rose-600 tw-py-1 tw-px-5 tw-rounded-md">
+            <v-icon color="white">mdi-minus</v-icon>
+          </div>
+        </div>
+      </div>
+      <div
+        @click="addSkillLevel()"
+        class="tw-cursor-pointer tw-flex tw-pb-4 tw-pt-2">
+        <div class="tw-bg-emerald-600 tw-py-1 tw-px-5 tw-rounded-md">
+          <v-icon color="white">mdi-plus</v-icon>
+        </div>
+      </div>
       <div class="tw-flex tw-justify-end">
         <div
           @click="setForm()"
@@ -77,7 +116,6 @@
 import LevelProvider from '~/resources/LevelProvider'
 import SkillProvider from '~/resources/SkillProvider'
 import { useRuntimeConfig } from 'nuxt/app'
-import { useFormRules } from '~/composables/rules'
 import { useLevelStore } from '~/stores/Levels'
 
 export default {
@@ -97,29 +135,52 @@ export default {
       SkillService: new SkillProvider(),
       form: {
         name: '',
-        levelId: null,
         description: '',
         imageUrl: null,
+        type: null,
+        skillsLevels: [{
+          levelId: null,
+          abilityDesc: '',
+          knowledgeDesc: ''
+        }]
       },
       rules: useFormRules(),
-      levelStore: useLevelStore(),
+      LevelStore: useLevelStore(),
       previewImage: null,
       config: useRuntimeConfig(),
       validImage: false,
+      typeSkill: [
+        {
+          label: 'Softskill',
+          val: 'SOFT',
+        },
+        {
+          label: 'Hardskill',
+          val: 'HARD',
+        },
+      ],
+    }
+  },
+  computed: {
+    levelFollwByType () {
+      if (this.form.type === 'SOFT') {
+        return this.LevelStore.level.soft
+      }
+      return this.LevelStore.level.hard
     }
   },
   mounted() {
     if (this.idParams) {
       this.getSkillById(this.idParams)
     }
-    if (!this.levelStore.level.length) {
+    if (!this.LevelStore.level.length) {
       this.getLevel()
     }
   },
   methods: {
     async getLevel() {
       const { data } = await this.LevelService.getLevel()
-      this.levelStore.setLevel(data)
+      this.LevelStore.setLevel(data)
     },
     async getSkillById(id) {
       const { data } = await this.SkillService.getSkillById(id)
@@ -136,6 +197,16 @@ export default {
     removeImage() {
       this.previewImage = null
       this.form.imageUrl = null
+    },
+    addSkillLevel () {
+      this.form.skillsLevels.push({
+        levelId: null,
+        abilityDesc: '',
+        knowledgeDesc: ''
+      })
+    },
+    removeSkillLevelFollyByIndex (index) {
+      this.form.skillsLevels.splice(index, 1)
     },
     async setForm() {
       const { valid } = await this.$refs.form.validate()

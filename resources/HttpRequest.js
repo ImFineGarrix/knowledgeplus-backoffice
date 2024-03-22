@@ -1,15 +1,18 @@
 import axios from 'axios';
 import humps from 'humps';
 import { useRuntimeConfig } from 'nuxt/app';
+import { getAuthToken } from '~/utils/Auth'
 
 class HttpRequest {
   constructor() {
     const config = useRuntimeConfig()
+    const token = getAuthToken()
     this.axiosInstance = axios.create({
       baseURL: config.public.apiBaseUrl,
       timeout: 120000,
       headers: {
         'Content-Type': 'application/json',
+        [token.key]: token.value
       },
     });
 
