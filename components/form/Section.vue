@@ -1,15 +1,37 @@
 <template>
   <div>
     <v-form ref="form" class="tw-space-y-4">
-      <v-text-field
-        v-model.trim="form.name"
-        label="ชื่อสายงาน(ภาษาอังกฤษ)"
-        :rules="[rules.ruleRequired, rules.ruleLength255]"
-        variant="outlined"></v-text-field>
       <div class="tw-space-y-2">
-        <p class="text-lg tw-font-semibold">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+          ชื่อสายงาน(ภาษาอังกฤษ)<span class="tw-text-rose-600 tw-ml-2">*</span>
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="ให้ผู้ใช้กรอกชื่อของสายงานใหญ่ที่ต้องการสร้างเพื่อแบ่งกลุ่มอาชีพให้ชัดเจน โดยกรอกเป็นภาษาอังกฤษ เช่น Information Technology, Art, Engineer">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>   
+        </div>     
+        <v-text-field
+          v-model.trim="form.name"
+          :rules="[rules.ruleRequired, rules.ruleLength255]"
+          variant="outlined"></v-text-field>
+      </div>
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
           อัปโหลดรูปภาพ<span class="tw-text-rose-600 tw-ml-2">*</span>
-        </p>
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="สามารถอัปโหลดไฟล์ภาพได้โดยการคลิกพื้นที่ภายในกรอบจุดไข่ปลา และกดเลือกไฟล์จากเครื่องของคุณ โดยกำหนดให้เป็นภาพที่เกี่ยวข้องกับสายงานที่คุณกรอกด้านบน เช่น ภาพจานสีแทนสายงาน Art">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
         <div v-if="checkImage()">
           <label for="upload-image" class="tw-cursor-pointer">
             <div

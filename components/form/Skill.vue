@@ -1,18 +1,43 @@
 <template>
   <div>
     <v-form ref="form" class="tw-space-y-2">
-      <v-text-field
-        v-model.trim="form.name"
-        label="ชื่อทักษะ(ภาษาอังกฤษ)"
-        :rules="[rules.ruleRequired, rules.ruleLength255]"
-        variant="outlined" />
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+            ชื่อทักษะ(ภาษาอังกฤษ)<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
+        <v-text-field
+          v-model.trim="form.name"
+          :rules="[rules.ruleRequired, rules.ruleLength255]"
+          variant="outlined" />
+      </div>
       <div class="tw-pb-4 tw-space-y-2">
-        <p class="text-lg tw-font-semibold">
-          อัปโหลดไอคอนทักษะ (แนะนำเป็นไฟล์ SVG)<span
-            class="tw-text-rose-600 tw-ml-2"
-            >*</span
-          >
-        </p>
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+            อัปโหลดไอคอนทักษะ (แนะนำเป็นไฟล์ SVG)<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="สามารถอัปโหลดไฟล์ภาพได้โดยการคลิกพื้นที่ภายในกรอบจุดไข่ปลา และกดเลือกไฟล์จากเครื่องของคุณ โดยกำหนดให้เป็นภาพที่เกี่ยวข้องกับทักษะที่คุณกรอกด้านบน เช่น ภาพ Database สำหรับทักษะที่เกี่ยวข้องกับงานด้าน data">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
         <div v-if="checkImage()">
           <label for="upload-image" class="tw-cursor-pointer">
             <div
@@ -48,58 +73,135 @@
           </div>
         </div>
       </div>
-      <v-textarea
-        variant="outlined"
-        label="คำอธิบาย"
-        v-model="form.description"></v-textarea>
-      <v-autocomplete
-        clearable
-        label="ประเภท"
-        v-model="form.type"
-        :items="typeSkill"
-        item-title="label"
-        item-value="val"
-        :rules="[rules.ruleRequired]"
-        variant="outlined" />
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+          คำอธิบาย
+          </p> 
+          <div class="tw-pl-1">
+            <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>         
+        </div>  
+        <v-textarea
+          variant="outlined"
+          v-model="form.description"></v-textarea>        
+      </div>
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+            ประเภท<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
+        <v-autocomplete
+          clearable
+          v-model="form.type"
+          :items="typeSkill"
+          item-title="label"
+          item-value="val"
+          :rules="[rules.ruleRequired]"
+          variant="outlined" />
+      </div>
       <div
         v-for="(skillLevel, indexSkillLevel) in form.skillsLevels"
         :key="`skill-level-${indexSkillLevel}`"
         class="tw-space-y-4">
-        <v-autocomplete
-          clearable
-          v-model="skillLevel.levelId"
-          :items="levelFollwByType"
-          item-title="level"
-          item-value="levelId"
-          :rules="[rules.ruleRequired]"
-          chips
-          label="ระดับทักษะ"
-          variant="outlined" />
-        <v-textarea
+        <div class="tw-space-y-2">
+          <div class="tw-flex">
+            <p class="text-lg tw-font-semibold">
+              ระดับทักษะ<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+            </p>
+            <div class="tw-pl-1">
+              <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+                <template v-slot:activator="{ props }">
+                  <v-icon v-bind:="props">mdi-information-outline </v-icon>
+                </template>
+              </v-tooltip>
+            </div>  
+          </div>
+          <v-autocomplete
+            clearable
+            v-model="skillLevel.levelId"
+            :items="levelFollwByType"
+            item-title="level"
+            item-value="levelId"
+            :rules="[rules.ruleRequired]"
+            chips
+            variant="outlined" />
+        </div>
+        <div class="tw-space-y-2">
+          <div class="tw-flex">
+            <p class="text-lg tw-font-semibold">
+              คำอธิบาย Knowledge<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+            </p>
+            <div class="tw-pl-1">
+              <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+                <template v-slot:activator="{ props }">
+                  <v-icon v-bind:="props">mdi-information-outline </v-icon>
+                </template>
+              </v-tooltip>
+            </div>  
+          </div>
+          <v-textarea
           variant="outlined"
-          label="คำอธิบาย Knowledge"
           :rules="[rules.ruleRequired]"
           v-model="skillLevel.knowledgeDesc"></v-textarea>
-        <v-textarea
+        </div>
+        <div class="tw-space-y-2">
+          <div class="tw-flex">
+            <p class="text-lg tw-font-semibold">
+              คำอธิบาย Ability<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+            </p>
+            <div class="tw-pl-1">
+              <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+                <template v-slot:activator="{ props }">
+                  <v-icon v-bind:="props">mdi-information-outline </v-icon>
+                </template>
+              </v-tooltip>
+            </div>  
+          </div>
+          <v-textarea
           variant="outlined"
-          label="คำอธิบาย Ability"
           :rules="[rules.ruleRequired]"
           v-model="skillLevel.abilityDesc"></v-textarea>
+        </div>
         <div
-          v-if="form.skillsLevels.length !== 1"
-          @click="removeSkillLevelFollyByIndex(indexSkillLevel)"
-          class="tw-cursor-pointer tw-flex tw-justify-end tw-pb-4">
-          <div class="tw-bg-rose-600 tw-py-1 tw-px-5 tw-rounded-md">
-            <v-icon color="white">mdi-minus</v-icon>
-          </div>
+            v-if="form.skillsLevels.length !== 1"
+            @click="removeSkillLevelFollyByIndex(indexSkillLevel)"
+            class="tw-cursor-pointer tw-flex tw-justify-end tw-pb-4">
+            <div class="tw-bg-rose-600 tw-py-1 tw-px-5 tw-rounded-md">
+              <v-icon color="white">mdi-minus</v-icon>
+            </div>
         </div>
       </div>
       <div
         @click="addSkillLevel()"
         class="tw-cursor-pointer tw-flex tw-pb-4 tw-pt-2">
-        <div class="tw-bg-emerald-600 tw-py-1 tw-px-5 tw-rounded-md">
-          <v-icon color="white">mdi-plus</v-icon>
-        </div>
+          <div class="tw-bg-emerald-600 tw-py-1 tw-px-5 tw-rounded-md">
+            <v-icon color="white">mdi-plus</v-icon>
+          </div>
       </div>
       <div class="tw-flex tw-justify-end">
         <div

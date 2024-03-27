@@ -1,37 +1,99 @@
 <template>
   <div>
     <v-form ref="form" class="tw-space-y-4">
-      <v-text-field
-        v-model.trim="form.name"
-        :rules="[rules.ruleRequired, rules.ruleLength255]"
-        label="ชื่ออาชีพ(ภาษาอังกฤษ)"
-        variant="outlined" />
-      <v-autocomplete
-        chips
-        multiple
-        clearable
-        v-model="form.groups"
-        :rules="[rules.ruleArray]"
-        :items="groups"
-        item-title="name"
-        item-value="groupId"
-        label="กลุ่มสายงาน"
-        variant="outlined" />
-      <v-autocomplete
-        chips
-        multiple
-        clearable
-        v-model="form.skillsLevels"
-        :items="skillsLevels"
-        item-title="name"
-        item-value="skillLevel"
-        label="ทักษะ"
-        :rules="[rules.ruleArray]"
-        variant="outlined" />
-      <v-textarea
-        variant="outlined"
-        label="คำอธิบาย"
-        v-model="form.description"></v-textarea>
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+            ชื่ออาชีพ(ภาษาอังกฤษ)<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="กรุณากรอกชื่ออาชีพที่ต้องการแนะนำในระบบ โดยกำหนดเป็นภาษาอังกฤษ เช่น Frontend Developer">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
+        <v-text-field
+          v-model.trim="form.name"
+          :rules="[rules.ruleRequired, rules.ruleLength255]"
+          variant="outlined" />
+      </div>
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+            กลุ่มสายงาน<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="กรุณาเลือกกลุ่มสายงาน (Group) ที่สอดคล้องกับอาชีพด้านบน โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
+        <v-autocomplete
+          chips
+          multiple
+          clearable
+          v-model="form.groups"
+          :rules="[rules.ruleArray]"
+          :items="groups"
+          item-title="name"
+          item-value="groupId"
+          variant="outlined" />
+      </div>
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+            ทักษะ<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="กรุณาเลือกทักษะที่อาชีพนี้ต้องการในการทำงาน โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
+        <v-autocomplete
+          chips
+          multiple
+          clearable
+          v-model="form.skillsLevels"
+          :items="skillsLevels"
+          item-title="name"
+          item-value="skillLevel"
+          :rules="[rules.ruleArray]"
+          variant="outlined" />
+      </div>
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+            คำอธิบาย
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="สามารถกรอกคำอธิบายของอาชีพ เช่น ทำงานเกี่ยวข้องกับอะไร จุดเด่น จุดด้อย">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>  
+        </div>
+        <v-textarea
+          variant="outlined"
+          label="คำอธิบาย"
+          v-model="form.description"></v-textarea>
+      </div>
       <div class="tw-flex tw-justify-end">
         <div
           @click="setForm()"
