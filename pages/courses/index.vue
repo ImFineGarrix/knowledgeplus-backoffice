@@ -19,6 +19,13 @@
                     <div class="tw-px-6">{{ slotProps.data.name }}</div>
                   </template>
                 </Column>
+                <Column field="courseType" header="ประเภท">
+                  <template #body="slotProps">
+                    <p>
+                      {{ renameSoftAndHardSkill(slotProps.data.courseType) }}
+                    </p>
+                  </template>
+                </Column>
                 <Column field="organization.name" header="องค์กร" />
                 <Column field="learnHours" header="เวลา (ชั่วโมง)" />
                 <Column field="academicYear" header="ปี (ค.ศ.)" />
@@ -126,7 +133,16 @@ export default {
           }
         }
       })
-    }
+    },
+    renameSoftAndHardSkill (type) {
+      if (type === 'SOFT') {
+        return 'Soft Skill'
+      }
+      if (type === 'HARD') {
+        return 'Hard Skill'
+      }
+      return ''
+    },
   }
 }
 </script>
