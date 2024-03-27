@@ -1,15 +1,40 @@
 <template>
   <div>
     <v-form ref="form" class="tw-space-y-4">
-      <v-text-field
+      <div class="tw-space-y-2">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
+            ชื่อองค์กร<span
+              class="tw-text-rose-600 tw-ml-2"
+              >*</span
+            >
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="ให้ผู้ใช้กรอกชื่อขององค์กรที่เป็นเจ้าของคอร์สเรียน/รายวิชา (Course) นั้น ๆ ที่จะให้ข้อมูลแนะนำ เช่น KMUTT">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
+        <v-text-field
         v-model.trim="form.name"
-        label="ชื่อองค์กร"
         :rules="[rules.ruleRequired, rules.ruleLength255]"
         variant="outlined"></v-text-field>
+      </div>
       <div class="tw-space-y-2">
-        <p class="text-lg tw-font-semibold">
+        <div class="tw-flex">
+          <p class="text-lg tw-font-semibold">
           อัปโหลดรูปภาพ<span class="tw-text-rose-600 tw-ml-2">*</span>
-        </p>
+          </p>
+          <div class="tw-pl-1">
+            <v-tooltip text="สามารถอัปโหลดไฟล์ภาพได้โดยการคลิกพื้นที่ภายในกรอบจุดไข่ปลา และกดเลือกไฟล์จากเครื่องของคุณ โดยกำหนดให้เป็นภาพที่เกี่ยวข้องกับองค์กรที่คุณกรอกด้านบน เช่น ภาพตรามหาวิทยาลัย">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind:="props">mdi-information-outline </v-icon>
+              </template>
+            </v-tooltip>
+          </div>
+        </div>
         <div v-if="checkImage()">
           <label for="upload-image" class="tw-cursor-pointer">
             <div
