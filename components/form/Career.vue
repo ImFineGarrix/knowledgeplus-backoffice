@@ -10,7 +10,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณากรอกชื่ออาชีพที่ต้องการแนะนำในระบบ โดยกำหนดเป็นภาษาอังกฤษ เช่น Frontend Developer">
+            <v-tooltip text="กรุณากรอกชื่ออาชีพที่ต้องการแนะนำในระบบ โดยกำหนดเป็นภาษาอังกฤษ">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -20,6 +20,7 @@
         <v-text-field
           v-model.trim="form.name"
           :rules="[rules.ruleRequired, rules.ruleLength255]"
+          placeholder="เช่น Frontend Developer"
           variant="outlined" />
       </div>
       <div class="tw-space-y-2">
@@ -31,7 +32,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกกลุ่มสายงาน (Group) ที่สอดคล้องกับอาชีพด้านบน โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+            <v-tooltip text="กรุณาเลือกกลุ่มสายงาน (Group) ที่สอดคล้องกับอาชีพด้านบน">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -58,7 +59,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกทักษะที่อาชีพนี้ต้องการในการทำงาน โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+            <v-tooltip text="กรุณาเลือกทักษะที่อาชีพนี้ต้องการในการทำงาน">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -82,7 +83,7 @@
             คำอธิบาย
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถกรอกคำอธิบายของอาชีพ เช่น ทำงานเกี่ยวข้องกับอะไร จุดเด่น จุดด้อย">
+            <v-tooltip text="สามารถกรอกคำอธิบายของอาชีพ">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -91,7 +92,7 @@
         </div>
         <v-textarea
           variant="outlined"
-          label="คำอธิบาย"
+          placeholder="ทำงานเกี่ยวข้องกับอะไร จุดเด่น จุดด้อย"
           v-model="form.description"></v-textarea>
       </div>
       <div class="tw-flex tw-justify-end">

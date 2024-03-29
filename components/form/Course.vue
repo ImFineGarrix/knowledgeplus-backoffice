@@ -10,7 +10,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="ให้ผู้ใช้กรอกชื่อของคอร์สเรียน/รายวิชาที่ต้องการแนะนำบนเว็บไซต์ โดยกำหนดเป็นภาษาอังกฤษ เช่น Agile Software Development I">
+            <v-tooltip text="ให้ผู้ใช้กรอกชื่อของคอร์สเรียน/รายวิชาที่ต้องการแนะนำบนเว็บไซต์ โดยกำหนดเป็นภาษาอังกฤษ">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -20,6 +20,7 @@
         <v-text-field
           v-model.trim="form.name"
           :rules="[rules.ruleRequired, rules.ruleLength255]"
+          placeholder="เช่น Agile Software Development I"
           variant="outlined" />
       </div>
       <div class="tw-space-y-2">
@@ -31,7 +32,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกประเภทของทักษะที่ผู้ใช้จะได้รับ (Hardskill/Softskill) ที่สอดคล้องกับคอร์สเรียน โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+            <v-tooltip text="กรุณาเลือกประเภทของทักษะที่ผู้ใช้จะได้รับ (Hardskill/Softskill) ที่สอดคล้องกับคอร์สเรียน">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -56,16 +57,23 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="URL ที่มาของคอร์สเรียน กรอกไว้สำหรับให้ผู้เรียนเข้าถึงเพื่อเรียนคอร์สเรียนนั้น ๆ ในกรณีที่เป็นรายวิชาของมหาวิทยาลัย และไม่มีรายละเอียดคอร์สเรียนบนหน้าเว็บไซต์ สามารถกรอกเป็น link เอกสารหลักสูตรของมหาวิทยาลัยได้">
+            <v-tooltip>
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
+              <div class="tw-p-3">
+                <p class="text-lg">URL ที่มาของคอร์สเรียน กรอกไว้สำหรับให้ผู้เรียนเข้าถึงเพื่อเรียนคอร์สเรียนนั้น ๆ ในกรณีที่เป็นรายวิชาของมหาวิทยาลัย</p>
+                <p class="text-lg">และไม่มีรายละเอียดคอร์สเรียนบนหน้าเว็บไซต์ สามารถกรอกเป็น link เอกสารหลักสูตรของมหาวิทยาลัยได้</p>
+                <p class="tw-pr-3 tw-pt-3 tw-pb-3">บนเว็บไซต์หลักจะอยู่ในรูปปุ่มเพื่อกด link ไปเว็บอื่น</p>
+                <img src="../images/link.png" alt="รูปตัวอย่าง">
+              </div>
             </v-tooltip>
           </div>
         </div>
         <v-text-field
             v-model.trim="form.courseLink"
             :rules="[rules.ruleRequired]"
+            placeholder="เช่น https://www.sit.kmutt.ac.th/bsc-it/curriculum-bsc-it/"
             variant="outlined" />
       </div>
       <div class="tw-grid tw-gap-10 tw-grid-cols-2">
@@ -110,7 +118,7 @@
             คำอธิบาย
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถกรอกคำอธิบายของรายวิชา (บางครั้งตามเว็บไซต์จะใช้ Course Description)">
+            <v-tooltip text="สามารถกรอกคำอธิบายของรายวิชา">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -147,7 +155,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกทักษะที่ผู้ใช้จะได้รับจากคอร์สเรียนนี้ โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+            <v-tooltip text="กรุณาเลือกทักษะที่ผู้ใช้จะได้รับจากคอร์สเรียนนี้">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -174,7 +182,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกองค์กรที่เป็นเจ้าของคอร์สเรียนนี้ โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+            <v-tooltip text="กรุณาเลือกองค์กรที่เป็นเจ้าของคอร์สเรียนนี้">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>

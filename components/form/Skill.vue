@@ -10,7 +10,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+            <v-tooltip text="กรุณากรอกชื่อของทักษะที่ต้องการเพิ่มเข้าไปในระบบ โดยกรอกเป็นภาษาอังกฤษ">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -20,6 +20,7 @@
         <v-text-field
           v-model.trim="form.name"
           :rules="[rules.ruleRequired, rules.ruleLength255]"
+          placeholder="เช่น Software Testing"
           variant="outlined" />
       </div>
       <div class="tw-pb-4 tw-space-y-2">
@@ -31,10 +32,24 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถอัปโหลดไฟล์ภาพได้โดยการคลิกพื้นที่ภายในกรอบจุดไข่ปลา และกดเลือกไฟล์จากเครื่องของคุณ โดยกำหนดให้เป็นภาพที่เกี่ยวข้องกับทักษะที่คุณกรอกด้านบน เช่น ภาพ Database สำหรับทักษะที่เกี่ยวข้องกับงานด้าน data">
+            <v-tooltip>
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
+              <div class="tw-p-3">
+                <p class="text-lg tw-font-semibold">อัปโหลดภาพที่เกี่ยวข้องกับทักษะที่คุณกรอกด้านบน</p>
+                <p class="tw-pr-3 tw-pt-3 tw-pb-3">ผลลัพธ์บนเว็บไซต์หลัก ดังตัวอย่าง</p>
+                <div class="tw-flex">
+                  <div>
+                    <img src="../images/skill_card.png" alt="รูปตัวอย่าง" class="tw-pr-5">
+                    <p class="tw-flex tw-justify-center tw-pt-2">icon บน card หน้า Skills</p>
+                  </div>
+                  <div>
+                    <img src="../images/skill_dt.png" alt="">
+                    <p class="tw-flex tw-justify-center tw-pt-2">icon บน Skill Detail Page</p>
+                  </div>
+                </div>
+              </div>
             </v-tooltip>
           </div>
         </div>
@@ -79,7 +94,7 @@
           คำอธิบาย
           </p> 
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+            <v-tooltip text="สามารถกรอกคำอธิบายของทักษะ โดยกรอกเป็นภาษาอังกฤษ">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -88,6 +103,7 @@
         </div>  
         <v-textarea
           variant="outlined"
+          placeholder="ข้อมูลภาพรวมของทักษะ เช่น เกี่ยวข้องกับอะไร ภาพรวมความสามารถ"
           v-model="form.description"></v-textarea>        
       </div>
       <div class="tw-space-y-2">
@@ -99,7 +115,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+            <v-tooltip text="กรุณาเลือกประเภทของทักษะว่าเป็นเชิงเทคนิค หรือ soft-skill">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -128,7 +144,7 @@
             >
             </p>
             <div class="tw-pl-1">
-              <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+              <v-tooltip text="กรุณาเลือก level ของทักษะเพื่อกรอกคำอธิบายที่ต่างกันในแต่ละ level โดยสามารถกดเครื่องหมาย + ด้านล่างเพื่อเพิ่มข้อมูลใน level อื่น ๆ ได้">
                 <template v-slot:activator="{ props }">
                   <v-icon v-bind:="props">mdi-information-outline </v-icon>
                 </template>
@@ -154,7 +170,7 @@
             >
             </p>
             <div class="tw-pl-1">
-              <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+              <v-tooltip text="กรอกองค์ความรู้ (Knowledge) ที่จำเป็นต้องมีของทักษะใน level ที่ระบุด้านบน เขียนแบ่งเป็นข้อ ๆ โดยกรอกเป็นภาษาอังกฤษ">
                 <template v-slot:activator="{ props }">
                   <v-icon v-bind:="props">mdi-information-outline </v-icon>
                 </template>
@@ -164,6 +180,10 @@
           <v-textarea
           variant="outlined"
           :rules="[rules.ruleRequired]"
+          placeholder="เช่น o Basic troubleshooting techniques
+o Types of application performance statistics
+o Interpretation of application logs
+"
           v-model="skillLevel.knowledgeDesc"></v-textarea>
         </div>
         <div class="tw-space-y-2">
@@ -175,7 +195,7 @@
             >
             </p>
             <div class="tw-pl-1">
-              <v-tooltip text="สามารถกรอกชื่อของ skill ที่ต้องการเพิ่มเข้าไปในระบบ">
+              <v-tooltip text="กรอกความสามารถ (Ability) ที่จำเป็นต้องมีของทักษะใน level ที่ระบุด้านบน เขียนแบ่งเป็นข้อ ๆ โดยกรอกเป็นภาษาอังกฤษ">
                 <template v-slot:activator="{ props }">
                   <v-icon v-bind:="props">mdi-information-outline </v-icon>
                 </template>
@@ -185,6 +205,8 @@
           <v-textarea
           variant="outlined"
           :rules="[rules.ruleRequired]"
+          placeholder="เช่น o Carry out basic troubleshooting to address commonly-encountered problems with the application
+o Draw inferences from the collated performance statistics and logs of the application"
           v-model="skillLevel.abilityDesc"></v-textarea>
         </div>
         <div
