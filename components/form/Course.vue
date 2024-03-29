@@ -4,13 +4,11 @@
       <div class="tw-space-y-2">
         <div class="tw-flex">
           <p class="text-lg tw-font-semibold">
-            ชื่อคอร์ส(ภาษาอังกฤษ)<span
-              class="tw-text-rose-600 tw-ml-2"
-              >*</span
-            >
+            ชื่อคอร์ส(ภาษาอังกฤษ)<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="ให้ผู้ใช้กรอกชื่อของคอร์สเรียน/รายวิชาที่ต้องการแนะนำบนเว็บไซต์ โดยกำหนดเป็นภาษาอังกฤษ">
+            <v-tooltip 
+              text="ให้ผู้ใช้กรอกชื่อของคอร์สเรียน/รายวิชาที่ต้องการแนะนำบนเว็บไซต์ โดยกำหนดเป็นภาษาอังกฤษ">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -26,13 +24,11 @@
       <div class="tw-space-y-2">
         <div class="tw-flex">
           <p class="text-lg tw-font-semibold">
-            ประเภท<span
-              class="tw-text-rose-600 tw-ml-2"
-              >*</span
-            >
+            ประเภท<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกประเภทของทักษะที่ผู้ใช้จะได้รับ (Hardskill/Softskill) ที่สอดคล้องกับคอร์สเรียน">
+            <v-tooltip 
+              text="กรุณาเลือกประเภทของทักษะที่ผู้ใช้จะได้รับ (Hardskill/Softskill) ที่สอดคล้องกับคอร์สเรียน">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -41,7 +37,7 @@
         </div>
         <v-autocomplete
           clearable
-          v-model="form.type"
+          v-model="form.courseType"
           :items="typeSkill"
           item-title="label"
           item-value="val"
@@ -51,10 +47,7 @@
       <div class="tw-space-y-2">
         <div class="tw-flex">
           <p class="text-lg tw-font-semibold">
-            link<span
-              class="tw-text-rose-600 tw-ml-2"
-              >*</span
-            >
+            link<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
             <v-tooltip>
@@ -71,19 +64,18 @@
           </div>
         </div>
         <v-text-field
-            v-model.trim="form.courseLink"
-            :rules="[rules.ruleRequired]"
-            placeholder="เช่น https://www.sit.kmutt.ac.th/bsc-it/curriculum-bsc-it/"
-            variant="outlined" />
+          v-model.trim="form.courseLink"
+          :rules="[rules.ruleRequired]"
+          placeholder="เช่น https://www.sit.kmutt.ac.th/bsc-it/curriculum-bsc-it/"
+          variant="outlined" />
       </div>
       <div class="tw-grid tw-gap-10 tw-grid-cols-2">
         <div class="tw-space-y-2">
           <div class="tw-flex">
-            <p class="text-lg tw-font-semibold">
-              เวลา (ชั่วโมง)
-            </p>
+            <p class="text-lg tw-font-semibold">เวลา (ชั่วโมง)</p>
             <div class="tw-pl-1">
-              <v-tooltip text="กรอกจำนวนเวลาที่ใช้ในการเรียนการสอนทั้งหมดในคอร์สนั้น ๆ โดยคุณสามารถบอกระยะเวลาในการเรียนต่อครั้งได้ เช่น 48 (3 ชั่วโมง/ครั้ง)">
+              <v-tooltip
+                text="กรอกจำนวนเวลาที่ใช้ในการเรียนการสอนทั้งหมดในคอร์สนั้น ๆ โดยคุณสามารถบอกระยะเวลาในการเรียนต่อครั้งได้ เช่น 48 (3 ชั่วโมง/ครั้ง)">
                 <template v-slot:activator="{ props }">
                   <v-icon v-bind:="props">mdi-information-outline </v-icon>
                 </template>
@@ -96,11 +88,10 @@
         </div>
         <div class="tw-space-y-2">
           <div class="tw-flex">
-            <p class="text-lg tw-font-semibold">
-              ปี (ค.ศ.)
-            </p>
+            <p class="text-lg tw-font-semibold">ปี (ค.ศ.)</p>
             <div class="tw-pl-1">
-              <v-tooltip text="กรอกเลขปีค.ศ.ที่คอร์สเรียนถูกกำหนด/สร้างขึ้นมา หรือเลขปีการศึกษาตามที่ระบุในเอกสารหลักสูตรของมหาวิทยาลัย">
+              <v-tooltip
+                text="กรอกเลขปีค.ศ.ที่คอร์สเรียนถูกกำหนด/สร้างขึ้นมา หรือเลขปีการศึกษาตามที่ระบุในเอกสารหลักสูตรของมหาวิทยาลัย">
                 <template v-slot:activator="{ props }">
                   <v-icon v-bind:="props">mdi-information-outline </v-icon>
                 </template>
@@ -114,28 +105,24 @@
       </div>
       <div class="tw-space-y-2">
         <div class="tw-flex">
-          <p class="text-lg tw-font-semibold">
-            คำอธิบาย
-          </p>
+          <p class="text-lg tw-font-semibold">คำอธิบาย</p>
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถกรอกคำอธิบายของรายวิชา">
+            <v-tooltip 
+              text="สามารถกรอกคำอธิบายของรายวิชา">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
             </v-tooltip>
           </div>
         </div>
-        <v-textarea
-          variant="outlined"
-          v-model="form.description"></v-textarea>
+        <v-textarea variant="outlined" v-model="form.description"></v-textarea>
       </div>
       <div class="tw-space-y-2">
         <div class="tw-flex">
-          <p class="text-lg tw-font-semibold">
-            Learning Outcome
-          </p>
+          <p class="text-lg tw-font-semibold">Learning Outcome</p>
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถกรอกผลการเรียนรู้ที่คาดหวัง (Learning Outcome) ของคอร์สเรียน">
+            <v-tooltip
+              text="สามารถกรอกผลการเรียนรู้ที่คาดหวัง (Learning Outcome) ของคอร์สเรียน">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -149,13 +136,11 @@
       <div class="tw-space-y-2">
         <div class="tw-flex">
           <p class="text-lg tw-font-semibold">
-            ทักษะ<span
-              class="tw-text-rose-600 tw-ml-2"
-              >*</span
-            >
+            ทักษะ<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกทักษะที่ผู้ใช้จะได้รับจากคอร์สเรียนนี้">
+            <v-tooltip 
+              text="กรุณาเลือกทักษะที่ผู้ใช้จะได้รับจากคอร์สเรียนนี้">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -176,13 +161,11 @@
       <div class="tw-space-y-2">
         <div class="tw-flex">
           <p class="text-lg tw-font-semibold">
-            องค์กร<span
-              class="tw-text-rose-600 tw-ml-2"
-              >*</span
-            >
+            องค์กร<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกองค์กรที่เป็นเจ้าของคอร์สเรียนนี้">
+            <v-tooltip 
+              text="กรุณาเลือกองค์กรที่เป็นเจ้าของคอร์สเรียนนี้">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -237,7 +220,7 @@ export default {
       form: {
         name: '',
         description: '',
-        type: 'HARD',
+        courseType: 'HARD',
         learningOutcome: '',
         learnHours: '',
         academicYear: '',
