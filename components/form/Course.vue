@@ -18,7 +18,7 @@
         <v-text-field
           v-model.trim="form.name"
           :rules="[rules.ruleRequired, rules.ruleLength255]"
-          placeholder="เช่น Agile Software Development I"
+          placeholder="Agile Software Development I"
           variant="outlined" />
       </div>
       <div class="tw-space-y-2">
@@ -58,7 +58,7 @@
                 <p class="text-lg">URL ที่มาของคอร์สเรียน กรอกไว้สำหรับให้ผู้เรียนเข้าถึงเพื่อเรียนคอร์สเรียนนั้น ๆ ในกรณีที่เป็นรายวิชาของมหาวิทยาลัย</p>
                 <p class="text-lg">และไม่มีรายละเอียดคอร์สเรียนบนหน้าเว็บไซต์ สามารถกรอกเป็น link เอกสารหลักสูตรของมหาวิทยาลัยได้</p>
                 <p class="tw-pr-3 tw-pt-3 tw-pb-3">บนเว็บไซต์หลักจะอยู่ในรูปปุ่มเพื่อกด link ไปเว็บอื่น</p>
-                <img src="../images/link.png" alt="รูปตัวอย่าง">
+                <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Flink.png?alt=media&token=8b8529ac-31d6-4fde-ac12-b9b1df89cd9a" alt="link">
               </div>
             </v-tooltip>
           </div>
@@ -66,7 +66,7 @@
         <v-text-field
           v-model.trim="form.courseLink"
           :rules="[rules.ruleRequired]"
-          placeholder="เช่น https://www.sit.kmutt.ac.th/bsc-it/curriculum-bsc-it/"
+          placeholder="https://www.sit.kmutt.ac.th"
           variant="outlined" />
       </div>
       <div class="tw-grid tw-gap-10 tw-grid-cols-2">

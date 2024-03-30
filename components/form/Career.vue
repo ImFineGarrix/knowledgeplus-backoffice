@@ -20,7 +20,7 @@
         <v-text-field
           v-model.trim="form.name"
           :rules="[rules.ruleRequired, rules.ruleLength255]"
-          placeholder="เช่น Frontend Developer"
+          placeholder="Frontend Developer"
           variant="outlined" />
       </div>
       <div class="tw-space-y-2">
@@ -71,6 +71,7 @@
           multiple
           clearable
           v-model="form.skillsLevels"
+          placeholder="Applications Development"
           :items="skillsLevels"
           item-title="name"
           item-value="skillLevel"

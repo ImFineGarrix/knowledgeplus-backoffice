@@ -20,7 +20,7 @@
         <v-text-field
           v-model.trim="form.name"
           :rules="[rules.ruleRequired, rules.ruleLength255]"
-          placeholder="เช่น Software Testing"
+          placeholder="Software Testing"
           variant="outlined" />
       </div>
       <div class="tw-pb-4 tw-space-y-2">
@@ -41,11 +41,11 @@
                 <p class="tw-pr-3 tw-pt-3 tw-pb-3">ผลลัพธ์บนเว็บไซต์หลัก ดังตัวอย่าง</p>
                 <div class="tw-flex">
                   <div>
-                    <img src="../images/skill_card.png" alt="รูปตัวอย่าง" class="tw-pr-5">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Fskill_card.png?alt=media&token=a21a6d7e-732f-43a4-b5a0-7f0f1d26380e" alt="skill_view1" class="tw-pr-5">
                     <p class="tw-flex tw-justify-center tw-pt-2">icon บน card หน้า Skills</p>
                   </div>
                   <div>
-                    <img src="../images/skill_dt.png" alt="">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Fskill_dt.png?alt=media&token=3a335b84-c5d0-4ec8-a97c-4ba321c6bb1c" alt="skill_view2">
                     <p class="tw-flex tw-justify-center tw-pt-2">icon บน Skill Detail Page</p>
                   </div>
                 </div>
@@ -115,7 +115,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกประเภทของทักษะว่าเป็นเชิงเทคนิค หรือ soft-skill">
+            <v-tooltip text="กรุณาเลือกประเภทของทักษะว่าเป็น hard-skill หรือ soft-skill">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -178,13 +178,10 @@
             </div>  
           </div>
           <v-textarea
-          variant="outlined"
-          :rules="[rules.ruleRequired]"
-          placeholder="เช่น o Basic troubleshooting techniques
-o Types of application performance statistics
-o Interpretation of application logs
-"
-          v-model="skillLevel.knowledgeDesc"></v-textarea>
+            variant="outlined"
+            :rules="[rules.ruleRequired]"
+            placeholder="o Basic troubleshooting techniques"
+            v-model="skillLevel.knowledgeDesc"></v-textarea>
         </div>
         <div class="tw-space-y-2">
           <div class="tw-flex">
@@ -205,8 +202,7 @@ o Interpretation of application logs
           <v-textarea
           variant="outlined"
           :rules="[rules.ruleRequired]"
-          placeholder="เช่น o Carry out basic troubleshooting to address commonly-encountered problems with the application
-o Draw inferences from the collated performance statistics and logs of the application"
+          placeholder="o Carry out basic troubleshooting to address commonly-encountered problems with the application"
           v-model="skillLevel.abilityDesc"></v-textarea>
         </div>
         <div

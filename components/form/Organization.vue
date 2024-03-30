@@ -37,11 +37,11 @@
                 <p class="tw-pr-3 tw-pt-3 tw-pb-3">ผลลัพธ์บนเว็บไซต์หลัก ดังตัวอย่าง</p>
                 <div class="tw-flex">
                   <div>
-                    <img src="../images/organize_card.png" alt="รูปตัวอย่าง" class="tw-pr-5">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Forganize_card.png?alt=media&token=72c428a0-b4a1-4da5-822a-e6a5a910414d" alt="organize_view1" class="tw-pr-5">
                     <p class="tw-flex tw-justify-center tw-pt-2">icon บน card หน้า Courses</p>
                   </div>
                   <div>
-                    <img src="../images/organize_dt.png" alt="">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Forganize_dt.png?alt=media&token=58b41003-9e00-4877-9507-14a529a398af" alt="organize_view2">
                     <p class="tw-flex tw-justify-center tw-pt-2">icon บน Course Detail Page</p>
                   </div>
                 </div>

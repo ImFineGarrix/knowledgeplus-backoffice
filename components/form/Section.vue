@@ -17,7 +17,7 @@
         <v-text-field
           v-model.trim="form.name"
           :rules="[rules.ruleRequired, rules.ruleLength255]"
-          placeholder="เช่น Information Technology, Art, Engineer"
+          placeholder="Information Technology, Art, Engineer"
           variant="outlined"></v-text-field>
       </div>
       <div class="tw-space-y-2">
@@ -34,7 +34,7 @@
                 <p class="text-lg tw-font-semibold">อัปโหลดภาพที่เกี่ยวข้องสายงานที่คุณกรอกด้านบน</p>
                 <p class="tw-pr-3 tw-pt-3 tw-pb-3">ผลลัพธ์บนเว็บไซต์หลัก ดังตัวอย่าง</p>
                 <div>
-                    <img src="../images/section.png" alt="รูปตัวอย่าง">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Fsection.png?alt=media&token=059d1df5-0420-4ea4-8fb0-6e1162b9a612" alt="section">
                     <p class="tw-flex tw-justify-center tw-pt-2">icon บน Career Detail Page (จะแสดง icon ตามสายงานที่อาชีพนั้น ๆ อยู่)</p>
                 </div>
               </div>
