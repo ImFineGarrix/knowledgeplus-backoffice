@@ -73,7 +73,7 @@
             >
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกตำแหน่งของบัญชีที่จะสร้าง (ปัจจุบันมีแค่ Admin ในตัวเลือก) โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+            <v-tooltip text="กรุณาเลือกตำแหน่งของบัญชีที่จะสร้าง">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>

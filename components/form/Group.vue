@@ -7,16 +7,26 @@
           ชื่อกลุ่ม<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p> 
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณากรอกชื่อของกลุ่มงานที่ต้องการสร้างเพื่อแบ่งกลุ่มอาชีพให้มีความเฉพาะเจาะจงยิ่งขึ้น โดยกรอกเป็นภาษาอังกฤษ และชื่อกลุ่มงานต้องสอดคล้องกับสายงานที่มีอยู่แล้ว เช่น Product Development, Data and Artificial Intelligence">
+            <v-tooltip>
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
+              <div class="tw-p-3">
+                <p class="text-lg">กรุณากรอกชื่อของกลุ่มงานที่ต้องการสร้างเพื่อแบ่งกลุ่มอาชีพให้มีความเฉพาะเจาะจงยิ่งขึ้น</p>
+                <p class="text-lg">โดยกรอกเป็นภาษาอังกฤษ และชื่อกลุ่มงานต้องสอดคล้องกับสายงานที่มีอยู่แล้ว</p>
+                <p class="tw-pr-3 tw-pt-3 tw-pb-3">ผลลัพธ์บนเว็บไซต์หลัก ดังตัวอย่าง</p>
+                <div>
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Fgroup.png?alt=media&token=331526a6-da5b-47d5-b3b1-844f35dc15be" alt="group">
+                    <p class="tw-pt-2">ถูกใช้ในส่วน filter career ตาม group</p>
+                </div>
+              </div>
             </v-tooltip>
           </div>         
         </div>  
         <v-text-field
           variant="outlined"
           v-model.trim="form.name"
+          placeholder="Product Development, Data and Artificial Intelligence"
           :rules="[rules.ruleRequired, rules.ruleLength255]"></v-text-field>        
       </div>
       <div class="tw-space-y-2">
@@ -25,7 +35,7 @@
           สายงาน<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="กรุณาเลือกสายงาน (Section)  ที่สอดคล้องกับกลุ่มงานด้านบน โดยสามารถกดที่เครื่องหมายลูกศรเพื่อเลือกตัวเลือกภายใน Drop down list">
+            <v-tooltip text="กรุณาเลือกสายงาน (Section)  ที่สอดคล้องกับกลุ่มงานด้านบน">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>

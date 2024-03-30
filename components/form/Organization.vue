@@ -27,11 +27,25 @@
           <p class="text-lg tw-font-semibold">
           อัปโหลดรูปภาพ<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
-          <div class="tw-pl-1">
-            <v-tooltip text="สามารถอัปโหลดไฟล์ภาพได้โดยการคลิกพื้นที่ภายในกรอบจุดไข่ปลา และกดเลือกไฟล์จากเครื่องของคุณ โดยกำหนดให้เป็นภาพที่เกี่ยวข้องกับองค์กรที่คุณกรอกด้านบน เช่น ภาพตรามหาวิทยาลัย">
+          <div class="tw-pl-1"> 
+            <v-tooltip>
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
+              <div class="tw-p-3">
+                <p class="text-lg tw-font-semibold">อัปโหลดภาพสัญลักษณ์ขององค์กรที่คุณกรอกด้านบน</p>
+                <p class="tw-pr-3 tw-pt-3 tw-pb-3">ผลลัพธ์บนเว็บไซต์หลัก ดังตัวอย่าง</p>
+                <div class="tw-flex">
+                  <div>
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Forganize_card.png?alt=media&token=72c428a0-b4a1-4da5-822a-e6a5a910414d" alt="organize_view1" class="tw-pr-5">
+                    <p class="tw-flex tw-justify-center tw-pt-2">icon บน card หน้า Courses</p>
+                  </div>
+                  <div>
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Forganize_dt.png?alt=media&token=58b41003-9e00-4877-9507-14a529a398af" alt="organize_view2">
+                    <p class="tw-flex tw-justify-center tw-pt-2">icon บน Course Detail Page</p>
+                  </div>
+                </div>
+              </div>
             </v-tooltip>
           </div>
         </div>

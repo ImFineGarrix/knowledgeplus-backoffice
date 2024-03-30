@@ -7,7 +7,7 @@
           ชื่อสายงาน(ภาษาอังกฤษ)<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="ให้ผู้ใช้กรอกชื่อของสายงานใหญ่ที่ต้องการสร้างเพื่อแบ่งกลุ่มอาชีพให้ชัดเจน โดยกรอกเป็นภาษาอังกฤษ เช่น Information Technology, Art, Engineer">
+            <v-tooltip text="ให้ผู้ใช้กรอกชื่อของสายงานใหญ่ที่ต้องการสร้างเพื่อแบ่งกลุ่มอาชีพให้ชัดเจน โดยกรอกเป็นภาษาอังกฤษ">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -17,6 +17,7 @@
         <v-text-field
           v-model.trim="form.name"
           :rules="[rules.ruleRequired, rules.ruleLength255]"
+          placeholder="Information Technology, Art, Engineer"
           variant="outlined"></v-text-field>
       </div>
       <div class="tw-space-y-2">
@@ -25,10 +26,18 @@
           อัปโหลดรูปภาพ<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip text="สามารถอัปโหลดไฟล์ภาพได้โดยการคลิกพื้นที่ภายในกรอบจุดไข่ปลา และกดเลือกไฟล์จากเครื่องของคุณ โดยกำหนดให้เป็นภาพที่เกี่ยวข้องกับสายงานที่คุณกรอกด้านบน เช่น ภาพจานสีแทนสายงาน Art">
+            <v-tooltip>
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
+              <div class="tw-p-3">
+                <p class="text-lg tw-font-semibold">อัปโหลดภาพที่เกี่ยวข้องสายงานที่คุณกรอกด้านบน</p>
+                <p class="tw-pr-3 tw-pt-3 tw-pb-3">ผลลัพธ์บนเว็บไซต์หลัก ดังตัวอย่าง</p>
+                <div>
+                    <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Fsection.png?alt=media&token=059d1df5-0420-4ea4-8fb0-6e1162b9a612" alt="section">
+                    <p class="tw-flex tw-justify-center tw-pt-2">icon บน Career Detail Page (จะแสดง icon ตามสายงานที่อาชีพนั้น ๆ อยู่)</p>
+                </div>
+              </div>
             </v-tooltip>
           </div>
         </div>
