@@ -17,6 +17,13 @@ export default defineNuxtConfig({
   app: {
     head: {
       titleTemplate: process.env.BASE_TITLE,
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: 'https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/it.png?alt=media&token=9fc5261d-9cc2-48a4-bfe3-61d2c20433ad',
+        },
+      ],
     },
     baseURL: process.env.BASE_PATH,
   },

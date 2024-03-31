@@ -62,6 +62,7 @@
         </div>
         <MessageError v-else />
       </div>
+      <Loading v-else />
     </div>
   </div>
 </template>
