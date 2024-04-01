@@ -48,7 +48,7 @@
                       <v-icon
                         color="error"
                         class="tw-cursor-pointer"
-                        @click="deleteOrganization(slotProps.data.adminId, slotProps.data.name)"
+                        @click="deleteOrganization(slotProps.data.organizationId, slotProps.data.name)"
                         >mdi-delete</v-icon
                       >
                     </div>
