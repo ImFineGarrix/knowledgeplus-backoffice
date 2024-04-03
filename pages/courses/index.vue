@@ -87,6 +87,12 @@ export default {
       }
     }
   },
+  watch: {
+    page(newVal) {
+      this.page = newVal
+      this.getCourse()
+    },
+  },
   mounted() {
     this.getCourse()
   },
