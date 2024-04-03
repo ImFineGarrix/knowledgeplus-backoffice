@@ -36,6 +36,10 @@ export default {
       if (urlImage !== 'error') {
         const formSkill = {
           ...form,
+          skillsLevels: form.skillsLevels.map((skill) =>({
+              ...skill,
+              skillId: form.skillId
+            })),
           imageUrl: urlImage,
         }
         const status = await this.SkillService.updateSkill(
