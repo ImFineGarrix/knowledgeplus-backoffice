@@ -7,7 +7,7 @@
             ชื่อคอร์ส(ภาษาอังกฤษ)<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip 
+            <v-tooltip
               text="ให้ผู้ใช้กรอกชื่อของคอร์สเรียน/รายวิชาที่ต้องการแนะนำบนเว็บไซต์ โดยกำหนดเป็นภาษาอังกฤษ">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
@@ -27,11 +27,20 @@
             ประเภท<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip 
-              text="กรุณาเลือกประเภทของทักษะที่ผู้ใช้จะได้รับ (Hardskill/Softskill) ที่สอดคล้องกับคอร์สเรียน">
+            <v-tooltip class="tw-w-7/12">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
+              <div>
+                <p>
+                  กรุณาเลือกประเภทของทักษะที่ผู้ใช้จะได้รับ
+                  (Hardskill/Softskill) ที่สอดคล้องกับคอร์สเรียน
+                </p>
+                <p class="tw-mt-3 tw-text-xl tw-font-bold">Hard Skill</p>
+                <p class="tw-text-sm">- {{ LevelStore.typeDesc.hard }}</p>
+                <p class="tw-mt-3 tw-text-xl tw-font-bold">Soft Skill</p>
+                <p class="tw-text-sm">- {{ LevelStore.typeDesc.soft }}</p>
+              </div>
             </v-tooltip>
           </div>
         </div>
@@ -55,10 +64,21 @@
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
               <div class="tw-p-3">
-                <p class="text-lg">URL ที่มาของคอร์สเรียน กรอกไว้สำหรับให้ผู้เรียนเข้าถึงเพื่อเรียนคอร์สเรียนนั้น ๆ ในกรณีที่เป็นรายวิชาของมหาวิทยาลัย</p>
-                <p class="text-lg">และไม่มีรายละเอียดคอร์สเรียนบนหน้าเว็บไซต์ สามารถกรอกเป็น link เอกสารหลักสูตรของมหาวิทยาลัยได้</p>
-                <p class="tw-pr-3 tw-pt-3 tw-pb-3">บนเว็บไซต์หลักจะอยู่ในรูปปุ่มเพื่อกด link ไปเว็บอื่น</p>
-                <img src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Flink.png?alt=media&token=8b8529ac-31d6-4fde-ac12-b9b1df89cd9a" alt="link">
+                <p class="text-lg">
+                  URL ที่มาของคอร์สเรียน
+                  กรอกไว้สำหรับให้ผู้เรียนเข้าถึงเพื่อเรียนคอร์สเรียนนั้น ๆ
+                  ในกรณีที่เป็นรายวิชาของมหาวิทยาลัย
+                </p>
+                <p class="text-lg">
+                  และไม่มีรายละเอียดคอร์สเรียนบนหน้าเว็บไซต์ สามารถกรอกเป็น link
+                  เอกสารหลักสูตรของมหาวิทยาลัยได้
+                </p>
+                <p class="tw-pr-3 tw-pt-3 tw-pb-3">
+                  บนเว็บไซต์หลักจะอยู่ในรูปปุ่มเพื่อกด link ไปเว็บอื่น
+                </p>
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/knowledge-project-7e224.appspot.com/o/tooltip%2Flink.png?alt=media&token=8b8529ac-31d6-4fde-ac12-b9b1df89cd9a"
+                  alt="link" />
               </div>
             </v-tooltip>
           </div>
@@ -107,8 +127,7 @@
         <div class="tw-flex">
           <p class="text-lg tw-font-semibold">คำอธิบาย</p>
           <div class="tw-pl-1">
-            <v-tooltip 
-              text="สามารถกรอกคำอธิบายของรายวิชา">
+            <v-tooltip text="สามารถกรอกคำอธิบายของรายวิชา">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -139,8 +158,7 @@
             ทักษะ<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip 
-              text="กรุณาเลือกทักษะที่ผู้ใช้จะได้รับจากคอร์สเรียนนี้">
+            <v-tooltip text="กรุณาเลือกทักษะที่ผู้ใช้จะได้รับจากคอร์สเรียนนี้">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
@@ -164,8 +182,7 @@
             องค์กร<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip 
-              text="กรุณาเลือกองค์กรที่เป็นเจ้าของคอร์สเรียนนี้">
+            <v-tooltip text="กรุณาเลือกองค์กรที่เป็นเจ้าของคอร์สเรียนนี้">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>

@@ -121,11 +121,19 @@
             ประเภท<span class="tw-text-rose-600 tw-ml-2">*</span>
           </p>
           <div class="tw-pl-1">
-            <v-tooltip
-              text="กรุณาเลือกประเภทของทักษะว่าเป็น hard-skill หรือ soft-skill">
+            <v-tooltip class="tw-w-7/12">
               <template v-slot:activator="{ props }">
                 <v-icon v-bind:="props">mdi-information-outline </v-icon>
               </template>
+              <div>
+                <p>
+                  กรุณาเลือกประเภทของทักษะว่าเป็น hard-skill หรือ soft-skill
+                </p>
+                <p class="tw-mt-3 tw-text-xl tw-font-bold">Hard Skill</p>
+                <p class="tw-text-sm">- {{ LevelStore.typeDesc.hard }}</p>
+                <p class="tw-mt-3 tw-text-xl tw-font-bold">Soft Skill</p>
+                <p class="tw-text-sm">- {{ LevelStore.typeDesc.soft }}</p>
+              </div>
             </v-tooltip>
           </div>
         </div>
@@ -148,11 +156,35 @@
               ระดับทักษะ<span class="tw-text-rose-600 tw-ml-2">*</span>
             </p>
             <div class="tw-pl-1">
-              <v-tooltip
-                text="กรุณาเลือก level ของทักษะเพื่อกรอกคำอธิบายที่ต่างกันในแต่ละ level โดยสามารถกดเครื่องหมาย + ด้านล่างเพื่อเพิ่มข้อมูลใน level อื่น ๆ ได้">
+              <v-tooltip class="tw-w-9/12">
                 <template v-slot:activator="{ props }">
                   <v-icon v-bind:="props">mdi-information-outline </v-icon>
                 </template>
+                <div>
+                  <p>
+                    กรุณาเลือก level ของทักษะเพื่อกรอกคำอธิบายที่ต่างกันในแต่ละ
+                    level โดยสามารถกดเครื่องหมาย + ด้านล่างเพื่อเพิ่มข้อมูลใน
+                    level อื่น ๆ ได้
+                  </p>
+                  <p class="tw-font-bold tw-text-xl tw-mt-3">Hard Skill</p>
+                  <div
+                    v-for="(hardSkill, indexHardSkill) in LevelStore.levelDesc.hard"
+                    :key="`hardskill-desc-${indexHardSkill}`">
+                    <p class="tw-text-base tw-font-semibold">
+                      {{ hardSkill.name }}
+                    </p>
+                    <p class="tw-text-xs">- {{ hardSkill.desc }}</p>
+                  </div>
+                  <p class="tw-font-bold tw-text-xl tw-mt-3">Soft Skill</p>
+                  <div
+                    v-for="(softSkill, indexSoftSkill) in LevelStore.levelDesc.soft"
+                    :key="`softskill-desc-${indexSoftSkill}`">
+                    <p class="tw-text-base tw-font-semibold">
+                      {{ softSkill.name }}
+                    </p>
+                    <p class="tw-text-xs">- {{ softSkill.desc }}</p>
+                  </div>
+                </div>
               </v-tooltip>
             </div>
           </div>
@@ -259,7 +291,7 @@ export default {
         name: '',
         description: '',
         imageUrl: null,
-        type: null,
+        type: 'HARD',
         skillsLevels: [{
           levelId: null,
           abilityDesc: '',
