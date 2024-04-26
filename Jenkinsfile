@@ -2,18 +2,8 @@ pipeline {
     agent any
 
     stages {
-       stage('Remove') {
-            steps {
-                script {
-                    sh '''
-                        docker rm -f backoffice-container-${ENV} || true
-                        docker image prune -af
-                    '''
-                    echo "${ENV}"
-                }
-            }
-        }
-        stage('Build') {
+
+stage('Build') {
     steps {
         script {
             def envContent = """
@@ -42,6 +32,25 @@ pipeline {
         }
     }
 }
+    
+        stage ('Remove container'){
+            steps {
+              script {
+                    // Run the command and capture the exit code
+                    def exitCode = sh(script: "docker rm -f nuxt-container-${ENV}", returnStatus: true)
+
+                    // Check the exit code to determine success or failure
+                    if (exitCode == 0) {
+                        echo "Container removal was successful"
+                        // Add more steps or logic here if needed
+                    } else {
+                        echo "Container removal failed or was skipped"
+                        // Add more steps or logic here if needed
+                    }
+              }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 script {
@@ -50,6 +59,56 @@ pipeline {
                     '''
                 }
             }
+        }
+
+        stage('Clear Storage') {
+            steps {
+                script {
+                    
+                    echo "Removing unused images"
+                    sh "docker image prune -a -f"
+
+                    echo "Removing unused volumes"
+                    sh "docker volume prune -f"
+
+                    echo "Removing build cached "
+                    sh "docker buildx prune -f"
+              
+                    echo "Removing unused networks "
+                    sh "docker network prune -f"
+
+                }
+            }
+        }
+
+        stage('Health Cheack') {
+            steps {
+                script {
+                    def containerId = sh(script: "docker ps -q --filter name=backoffice-container-${ENV}", returnStdout: true)
+
+                    if (containerId) {
+                        def healthStatus = sh(script: "docker inspect --format '{{.State.Running}}'  ${containerId}", returnStdout: true)
+                        
+                        echo "Helath : ${healthStatus}"
+                        if (healthStatus) {
+                            echo "Container is running healthily."
+                        } else {
+                            error "Unable to retrieve container health status."
+                        }
+                    } else {
+                        error "Container not found. Make sure it is running."
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline successfully completed!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
