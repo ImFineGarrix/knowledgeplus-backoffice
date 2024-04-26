@@ -37,7 +37,7 @@ stage('Build') {
             steps {
               script {
                     // Run the command and capture the exit code
-                    def exitCode = sh(script: "docker rm -f nuxt-container-${ENV}", returnStatus: true)
+                    def exitCode = sh(script: "docker rm -f backoffice-container-${ENV}", returnStatus: true)
 
                     // Check the exit code to determine success or failure
                     if (exitCode == 0) {
@@ -81,7 +81,7 @@ stage('Build') {
             }
         }
 
-        stage('Health Cheack') {
+        stage('Health Check') {
             steps {
                 script {
                     def containerId = sh(script: "docker ps -q --filter name=backoffice-container-${ENV}", returnStdout: true)
