@@ -36,6 +36,10 @@ export default {
       if (urlImage !== 'error') {
         const formSkill = {
           ...form,
+          skillsLevels: form.skillsLevels.map((skill) =>({
+              ...skill,
+              skillId: form.skillId
+            })),
           imageUrl: urlImage,
         }
         const status = await this.SkillService.updateSkill(
@@ -52,6 +56,7 @@ export default {
         } else {
           Swal.fire({
             title: `Update Skill Fail`,
+            text: `${status.e.code}: ${status.e.message}`,
             icon: 'error',
           })
           this.loading = false

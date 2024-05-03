@@ -1,11 +1,11 @@
 <template>
   <div>
-    <HeaderBack title="Edit Jobs" link="/jobs" />
+    <HeaderBack title="Edit Careers" link="/careers" />
     <div class="tw-my-8">
-      <FormJob
+      <FormCareer
         actionButton="Save"
         :idParams="idParams"
-        @create-update="updateJob" />
+        @create-update="updateCareer" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
@@ -14,12 +14,12 @@
 </template>
 <script>
 import Swal from 'sweetalert2'
-import JobProvider from '~/resources/JobProvider'
+import CareerProvider from '~/resources/CareerProvider'
 export default {
   data() {
     return {
-      JobService: new JobProvider(),
-      load: false,
+      CareerService: new CareerProvider(),
+      loading: false,
     }
   },
   computed: {
@@ -28,29 +28,30 @@ export default {
     },
   },
   methods: {
-    async updateJob(form) {
+    async updateCareer(form) {
       this.loading = true
-      const formJob = {
+      const formCareer = {
         ...form,
-        categories: form.categories.map((category) => ({
-          categoryId: category,
-        })),
-        skills: form.skills.map((skill) => ({
-          skillId: skill,
+        groups: form.groups.map((group) => ({
+          groupId: group,
         })),
       }
-      const status = await this.JobService.updateJob(this.idParams, formJob)
+      const status = await this.CareerService.updateCareer(
+        this.idParams,
+        formCareer
+      )
       if (status.message === 'success') {
         Swal.fire({
-          title: 'Update Job Success',
+          title: 'Update Career Success',
           icon: 'success',
         }).then(() => {
-          this.$router.push('/jobs')
+          this.$router.push('/careers')
         })
       } else {
         Swal.fire({
-          title: `Update Job Fail`,
+          title: `Update Career Fail`,
           icon: 'error',
+          text: `${status.e.code}: ${status.e.message}`
         })
         this.loading = false
       }

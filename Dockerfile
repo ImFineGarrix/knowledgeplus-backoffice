@@ -6,6 +6,9 @@ WORKDIR /app
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
+ARG ENV
+
+ENV ENV=$ENV
 
 # Install dependencies
 RUN npm install
@@ -14,6 +17,7 @@ RUN npm install
 COPY . .
 
 # Build the Nuxt.js application
+# RUN npm run build
 RUN npm run build
 
 # Expose the port that Nuxt.js will run on

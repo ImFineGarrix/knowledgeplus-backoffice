@@ -1,10 +1,10 @@
 import HttpRequest from './HttpRequest'
 
-class CategoryProvider extends HttpRequest {
+class GroupProvider extends HttpRequest {
 
-  async getCategory() {
+  async getGroup() {
     try {
-      const data = await this.get(`/categories`)
+      const data = await this.get(`/groups`)
       return {
         message: 'success',
         status: 200,
@@ -12,15 +12,14 @@ class CategoryProvider extends HttpRequest {
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
 
-  async getCategoryById(id) {
+  async getGroupById(id) {
     try {
-      const data = await this.get(`/categories/${id}`)
+      const data = await this.get(`/groups/${id}`)
       return {
         message: 'success',
         status: 200,
@@ -28,57 +27,53 @@ class CategoryProvider extends HttpRequest {
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
 
-  async createCategory(body) {
+  async createGroup(body) {
     try {
-      await this.post('/categories', body)
+      await this.post('/groups', body)
       return {
         message: 'success',
         status: 200,
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
 
-  async updateCategory(id, body) {
+  async updateGroup(id, body) {
     try {
-      await this.put(`/categories/${id}`, body)
+      await this.put(`/groups/${id}`, body)
       return {
         message: 'success',
         status: 200
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
 
-  async deleteCategory(id) {
+  async deleteGroup(id) {
     try {
-      await this.delete(`/categories/${id}`)
+      await this.delete(`/groups/${id}`)
       return {
         message: 'success',
         status: 200
       }
     } catch (e) {
       return {
-        message: 'error',
-        status: e,
+        e
       }
     }
   }
 
 }
 
-export default CategoryProvider
+export default GroupProvider

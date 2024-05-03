@@ -4,15 +4,19 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
+    "build:local": "cp .env.local .env && nuxt build",
     "dev": "nuxt dev --port=3001",
+    "dev:local": "cp .env.local .env && nuxt dev --port=3001",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "PORT=3001 nuxt start"
+    "start": "PORT=3001 nuxt start",
+    "start:local": "cp .env.local .env && PORT=3001 nuxt start"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20.11.17",
     "autoprefixer": "^10.4.16",
     "dayjs-nuxt": "^2.1.9",
     "nuxt": "^3.8.0",
@@ -26,7 +30,6 @@
     "@mdi/font": "^7.3.67",
     "@nuxtjs/dayjs": "^1.4.1",
     "@pinia/nuxt": "^0.5.1",
-    "@types/node": "^20.10.0",
     "axios": "^1.6.0",
     "firebase": "^10.5.2",
     "humps": "^2.0.1",

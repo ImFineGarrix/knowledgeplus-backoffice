@@ -1,8 +1,11 @@
 <template>
   <div>
-    <HeaderBack title="Create Skill" link="/skills" />
+    <HeaderBack title="Edit Organization" link="/organizations" />
     <div class="tw-my-8">
-      <FormSkill actionButton="Create" @create-update="createSkill" />
+      <FormOrganization
+        actionButton="Save"
+        :idParams="idParams"
+        @create-update="updateOrganizartion" />
     </div>
     <div v-if="loading" class="bg-loading">
       <Loading />
@@ -10,41 +13,48 @@
   </div>
 </template>
 <script>
-import SkillProvider from '~/resources/SkillProvider'
+import OrganizationProvider from '~/resources/OrganizationProvider'
 import FirebaseProvider from '~/resources/FirebaseProvider'
 import Swal from 'sweetalert2'
 export default {
-  data() {
+  data () {
     return {
+      OrganizationService: new OrganizationProvider(),
       FirebaseService: new FirebaseProvider(),
-      SkillService: new SkillProvider(),
-      loading: false,
+      loading: false
     }
   },
+  computed: {
+    idParams() {
+      return this.$route.params.id || ''
+    },
+  },
   methods: {
-    async createSkill(form) {
+    async updateOrganizartion (form) {
       this.loading = true
       const urlImage = await this.uploadFile(form.imageUrl, form.name)
       if (urlImage !== 'error') {
-        const formSkill = {
+        const FormOrganization = {
           ...form,
           imageUrl: urlImage,
         }
-        const status = await this.SkillService.createSkill(formSkill)
+        const status = await this.OrganizationService.updateOrganization(
+          this.idParams,
+          FormOrganization
+        )
         if (status.message === 'success') {
           Swal.fire({
+            title: 'Update Organization Success',
             icon: 'success',
-            title: 'Create Skill Success',
           }).then(() => {
-            this.$router.push('/skills')
+            this.$router.push('/organizations')
           })
         } else {
           Swal.fire({
+            title: `Update Organization Fail`,
             icon: 'error',
-            title: 'Create Skill Fail',
             text: `${status.e.code}: ${status.e.message}`
           })
-          console.log('status',status)
           this.loading = false
         }
       } else {
@@ -68,6 +78,6 @@ export default {
 
       return await this.FirebaseService.uploadFile(`skill/${name}`, file)
     },
-  },
+  }
 }
 </script>
